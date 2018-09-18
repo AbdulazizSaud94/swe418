@@ -1,0 +1,4 @@
+#Tue Sep 18 16:35:15 AST 2018
+base.0=/Users/AbdulazizSaud/Documents/Dev/mobile/swe418/build/app/intermediates/transforms/dexMerger/debug/0
+path.0=classes.dex
+renamed.0=classes.dex
