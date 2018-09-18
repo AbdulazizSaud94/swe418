@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/AbdulazizSaud/Documents/Dev/mobile/swe418/build/app/intermediates/res/merged/debug/values_values.arsc.flat",
+            "outputFile": "/Users/AbdulazizSaud/Documents/GitHub/swe418/build/app/intermediates/res/merged/debug/values_values.arsc.flat",
             "map": [
                 {
-                    "source": "/Users/AbdulazizSaud/Documents/Dev/mobile/swe418/android/app/src/main/res/values/styles.xml",
+                    "source": "/Users/AbdulazizSaud/Documents/GitHub/swe418/android/app/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
