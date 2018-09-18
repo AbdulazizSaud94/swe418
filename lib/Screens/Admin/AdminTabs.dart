@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'tabs/home.dart' as _firstTab;
 import 'tabs/dashboard.dart' as _secondTab;
-import 'tabs/settings.dart' as _thirdTab;
 
 class AdminTabs extends StatefulWidget {
   @override
@@ -14,13 +13,13 @@ class TabsState extends State<AdminTabs> {
   PageController _tabController;
 
   var _title_app = null;
-  int _tab = 0;
+  int _tab = 1;
 
   @override
   void initState() {
     super.initState();
     _tabController = new PageController();
-    this._title_app = TabItems[0].title;
+    this._title_app = TabItems[1].title;
   }
 
   @override
@@ -50,12 +49,12 @@ class TabsState extends State<AdminTabs> {
       children: <Widget>[
         new _firstTab.Home(),
         new _secondTab.Dashboard(),
-        new _thirdTab.Settings()
       ],
     ),
 
     //Tabs
     bottomNavigationBar: Theme.of(context).platform == TargetPlatform.iOS ?
+    //IOS 
       new CupertinoTabBar(
         activeColor: Colors.blueGrey,
         currentIndex: _tab,
@@ -66,7 +65,8 @@ class TabsState extends State<AdminTabs> {
             icon: new Icon(TabItem.icon),
           );
         }).toList(),
-      ):
+      )
+      ://Android
       new BottomNavigationBar(
         currentIndex: _tab,
         onTap: onTap,
@@ -126,6 +126,7 @@ class TabsState extends State<AdminTabs> {
             leading: new Icon(Icons.exit_to_app),
             title: new Text('Sign Out'),
             onTap: () {
+              // here we add sign out function 
               Navigator.pop(context);
             }
           ),
@@ -151,10 +152,6 @@ class TabsState extends State<AdminTabs> {
       case 1:
         this._title_app = TabItems[1].title;
       break;
-
-      case 2:
-        this._title_app = TabItems[2].title;
-      break;
     }
   }
 }
@@ -168,5 +165,4 @@ class TabItem {
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Home', icon: Icons.home),
   const TabItem(title: 'Dashboard', icon: Icons.dashboard),
-  const TabItem(title: 'Settings', icon: Icons.settings)
 ];
