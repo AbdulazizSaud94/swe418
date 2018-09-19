@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 void main() => runApp(new MyApp());
 
@@ -10,6 +12,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
+      routes: <String, WidgetBuilder>{
+      },
       home: new MyHomePage(),
     );
   }
@@ -114,7 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     color: Colors.green,
                     elevation: 7.0,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                      },
                       child: Center(
                         child: Text(
                           'LOGIN',
