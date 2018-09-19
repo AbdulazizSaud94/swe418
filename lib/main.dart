@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 //import 'Screens/Home/MyHomePage.dart';
-import 'Screens/Admin/AdminTabs.dart';
+//import 'Screens/Admin/AdminTabs.dart';
 
 //pages
 import 'loginpage.dart';
 import 'homepage.dart';
+import 'profilepage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -16,10 +17,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: ProfilePage(),
       routes: <String, WidgetBuilder>{
         '/loginpage': (BuildContext context) => new MyApp(),
-        '/homepage': (BuildContext context) => new HomePage()
+        '/homepage': (BuildContext context) => new HomePage(),
+        '/profilepage': (BuildContext context) => new ProfilePage()
       },
     );
   }
