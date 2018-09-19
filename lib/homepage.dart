@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,7 +27,16 @@ class HomePageState extends State<HomePage> {
                 borderSide: BorderSide(
                     color: Colors.teal, style: BorderStyle.solid, width: 3.0),
                 child: Text('Logout'),
-                onPressed: () {},
+                onPressed: () {
+                  FirebaseAuth.instance
+                      .signOut()
+                      .then((value) {
+                        Navigator.of(context).pushReplacementNamed('/loginpage');
+                  })
+                      .catchError((e) {
+                        print(e);
+                  });
+                },
               ),
             ],
           ),
