@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -113,7 +115,18 @@ class LoginPageSate extends State<LoginPage> {
                     color: Colors.green,
                     elevation: 7.0,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        FirebaseAuth.instance
+                            .signInWithEmailAndPassword(
+                              email: email,
+                              password: password)
+                            .then((FirebaseUser user) {
+                              Navigator.of(context).pushReplacementNamed('/homepage');
+                        })
+                            .catchError((e) {
+                              print(e);
+                        });
+                      },
                       child: Center(
                         child: Text(
                           'LOGIN',

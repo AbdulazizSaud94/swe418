@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
+//pages
 import 'loginpage.dart';
+import 'homepage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,7 +16,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
       routes: <String, WidgetBuilder>{
-        '/loginpage': (BuildContext context) => new MyApp()
+        '/loginpage': (BuildContext context) => new MyApp(),
+        '/homepage': (BuildContext context) => new HomePage()
       },
     );
   }
