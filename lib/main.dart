@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'Screens/Auth/loginpage.dart';
 import 'Screens/Student/homepage.dart';
 import 'Screens/Admin/AdminTabs.dart';
+import 'Screens/Student/profilepage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: ProfilePage(),
+      home: LoginPage(),
       routes: <String, WidgetBuilder>{
         '/loginpage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
