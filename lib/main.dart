@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/loginpage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
-        '/homepage': (BuildContext context) => new HomePage(),
+        '/HomePage' : (BuildContext context) => new HomePage(),
         '/profilepage': (BuildContext context) => new ProfilePage()
       },
     );
