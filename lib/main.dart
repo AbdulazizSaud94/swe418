@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-//import 'Screens/Home/MyHomePage.dart';
-import 'Screens/Admin/AdminTabs.dart';
 
 //pages
-import 'loginpage.dart';
-import 'homepage.dart';
+import 'Screens/Auth/loginpage.dart';
+import 'Screens/Home/homepage.dart';
+import 'Screens/Admin/AdminTabs.dart';
 
 void main() => runApp(new MyApp());
 
@@ -19,7 +18,8 @@ class MyApp extends StatelessWidget {
       home: LoginPage(),
       routes: <String, WidgetBuilder>{
         '/loginpage': (BuildContext context) => new MyApp(),
-        '/homepage': (BuildContext context) => new HomePage()
+        '/AdminTabs': (BuildContext context) => new AdminTabs(),
+        '/HomePage' : (BuildContext context) => new HomePage(),
       },
     );
   }
