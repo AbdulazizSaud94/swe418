@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'tabs/home.dart' as _firstTab;
 import 'tabs/dashboard.dart' as _secondTab;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:async';
+
 
 class AdminTabs extends StatefulWidget {
   @override
@@ -125,9 +131,16 @@ class TabsState extends State<AdminTabs> {
           new ListTile(
             leading: new Icon(Icons.exit_to_app),
             title: new Text('Sign Out'),
-            onTap: () {
-              // here we add sign out function 
-              Navigator.pop(context);
+            onTap: () {    
+                  FirebaseAuth.instance
+                      .signOut()
+                      .then((value) {
+                        Navigator.of(context).pushReplacementNamed('/loginpage');
+                  })
+                      .catchError((e) {
+                        print(e);
+                  });
+                
             }
           ),
         ],
