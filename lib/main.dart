@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 //pages
 import 'Screens/Auth/loginpage.dart';
-import 'Screens/Home/homepage.dart';
+import 'Screens/Student/homepage.dart';
 import 'Screens/Admin/AdminTabs.dart';
 
 void main() => runApp(new MyApp());

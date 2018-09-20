@@ -123,10 +123,12 @@ class LoginPageSate extends State<LoginPage> {
                               .then((FirebaseUser user) {
                                 Firestore.instance.collection('Users')
                                 .document(user.uid).get().then((userRole){
-                                  if(userRole["Role"].toString().contains("Admin")){
+                                  if(userRole["Role"].toString().contains("Admin"))
                                     Navigator.of(context).pushReplacementNamed('/AdminTabs');
-                                    }
-                                    else {Navigator.of(context).pushReplacementNamed('/HomePage');}
+                                  else if(userRole["Role"].toString().contains("Student"))
+                                    Navigator.of(context).pushReplacementNamed('/HomePage');
+                                  else if(userRole["Role"].toString().contains("Housing"))
+                                   Navigator.of(context).pushReplacementNamed('/HousingTabs');
                                     });
                                     })
                                     .catchError((e) {
