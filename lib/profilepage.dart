@@ -18,7 +18,10 @@ class ProfilePageState extends State<ProfilePage> {
           Positioned(
             width: 350.0,
             left: 25.0,
-            top: MediaQuery.of(context).size.height / 5,
+            top: MediaQuery
+                .of(context)
+                .size
+                .height / 5,
             child: Column(
               children: <Widget>[
                 Container(
@@ -34,43 +37,60 @@ class ProfilePageState extends State<ProfilePage> {
                         BoxShadow(blurRadius: 20.0, color: Colors.black)
                       ]),
                 ),
+                SizedBox(height: 35.0),
+                Text(
+                  'Rick sanchez',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           )
         ],
       ),
+
       drawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the Drawer if there isn't enough vertical
         // space to fit everything.
-        child: ListView(
+        child: ListView
+          (
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text('Drawer Header'),
+          children: <
+              Widget>[
+            Container(
+              height: 70.0,
+              child
+                  : DrawerHeader(
+                child: Text('Drawer Header'
+                ),
+                decoration: BoxDecoration(
+                    color: Colors.
+                    white12
+                ),
+              ),
             ),
             ListTile(
-              title: Text('Item 1'),
-              onTap: () {
+              title
+                  : Text('Item 1'),
+              onTap:
+                  () {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
                 Navigator.pop(context);
-              },
+              }
+              ,
             ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+          ]
+          ,
+        )
+        ,
+      )
+      ,
     );
   }
 }
