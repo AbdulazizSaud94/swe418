@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -120,13 +120,21 @@ class LoginPageSate extends State<LoginPage> {
                             .signInWithEmailAndPassword(
                               email: email,
                               password: password)
-                            .then((FirebaseUser user) {
-                              Navigator.of(context).pushReplacementNamed('/homepage');
-                        })
-                            .catchError((e) {
-                              print(e);
-                        });
-                      },
+                              .then((FirebaseUser user) {
+                                Firestore.instance.collection('Users')
+                                .document(user.uid).get().then((userRole){
+                                  if(userRole["Role"].toString().contains("Admin"))
+                                    Navigator.of(context).pushReplacementNamed('/AdminTabs');
+                                  else if(userRole["Role"].toString().contains("Student"))
+                                    Navigator.of(context).pushReplacementNamed('/HomePage');
+                                  else if(userRole["Role"].toString().contains("Housing"))
+                                   Navigator.of(context).pushReplacementNamed('/HousingTabs');
+                                    });
+                                    })
+                                    .catchError((e) {
+                                      print(e);
+                                      });
+                                      },
                       child: Center(
                         child: Text(
                           'LOGIN',
@@ -149,3 +157,4 @@ class LoginPageSate extends State<LoginPage> {
     );
   }
 }
+
