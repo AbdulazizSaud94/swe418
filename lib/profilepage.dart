@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+String email = 's201235200@kfupm.com';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -6,6 +9,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  String email = 's201235200@kfupm.com';
+  int mobile = 05327655677;
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -18,17 +24,14 @@ class ProfilePageState extends State<ProfilePage> {
           Positioned(
             width: 350.0,
             left: 25.0,
-            top: MediaQuery
-                .of(context)
-                .size
-                .height / 5,
+            top: MediaQuery.of(context).size.height / 5,
             child: Column(
               children: <Widget>[
                 Container(
                   width: 150.0,
                   height: 150.0,
                   decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: Colors.blueGrey,
                       image: DecorationImage(
                           image: NetworkImage('http://i.imgur.com/XyDjKCL.png'),
                           fit: BoxFit.cover),
@@ -45,52 +48,43 @@ class ProfilePageState extends State<ProfilePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                SizedBox(height: 15.0),
+                Text(
+                  email,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                SizedBox(height: 25.0),
               ],
             ),
-          )
-        ],
-      ),
-
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the Drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView
-          (
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <
-              Widget>[
-            Container(
-              height: 70.0,
-              child
-                  : DrawerHeader(
-                child: Text('Drawer Header'
+          ),
+          Positioned(
+            left: 20.0,
+            top: 500.0,
+            child: Container(
+              height: 45.0,
+              width: 114.0,
+              child: RaisedButton(
+                child: const Text(
+                  'Send Email',
+                  style: TextStyle(
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                decoration: BoxDecoration(
-                    color: Colors.
-                    white12
-                ),
+                color: Colors.blueAccent,
+                elevation: 1.0,
+                splashColor: Colors.blueGrey,
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0)),
+                onPressed: _launchEmail,
               ),
             ),
-            ListTile(
-              title
-                  : Text('Item 1'),
-              onTap:
-                  () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              }
-              ,
-            ),
-          ]
-          ,
-        )
-        ,
-      )
-      ,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -108,5 +102,15 @@ class getClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
+  }
+}
+
+_launchEmail() async {
+  const email = 's201235200@kfupm.com';
+  const url = 'mailto:' + email + '?subject=News&body=New%20plugin';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
