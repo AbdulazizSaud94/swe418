@@ -37,7 +37,7 @@ class LoginPageSate extends State<LoginPage> {
           if (userRole["Role"].toString().contains("Admin"))
             Navigator.of(context).pushReplacementNamed('/AdminTabs');
           else if (userRole["Role"].toString().contains("Student"))
-            Navigator.of(context).pushReplacementNamed('/HomePage');
+            Navigator.of(context).pushReplacementNamed('/profilepage');
           else if (userRole["Role"].toString().contains("Housing"))
             Navigator.of(context).pushReplacementNamed('/HousingTabs');
         });
@@ -97,7 +97,9 @@ class LoginPageSate extends State<LoginPage> {
                         validator: (value) => value.isEmpty
                             ? 'Email field can\'t be empty'
                             : null,
+                        keyboardType: TextInputType.emailAddress,
                         onSaved: (value) => email = value,
+                        maxLength: 128,
                         decoration: InputDecoration(
                           labelText: 'User Email',
                           labelStyle: TextStyle(
@@ -118,6 +120,7 @@ class LoginPageSate extends State<LoginPage> {
                             ? 'Password field can\'t be empty'
                             : null,
                         onSaved: (value) => password = value,
+                        maxLength: 128,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
