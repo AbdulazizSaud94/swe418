@@ -1,5 +1,6 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '9.0'
+use_frameworks!
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -53,6 +54,12 @@ target 'Runner' do
     pod p[:name], :path => File.join(symlink, 'ios')
   }
 end
+
+# Firebase
+  pod 'Firebase'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
+
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|

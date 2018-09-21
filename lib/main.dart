@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'Screens/Auth/loginpage.dart';
 import 'Screens/Student/homepage.dart';
 import 'Screens/Admin/AdminTabs.dart';
+import 'Screens/Student/profilepage.dart';
 
 void main() => runApp(new MyApp());
 
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         '/loginpage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
         '/HomePage' : (BuildContext context) => new HomePage(),
+        '/profilepage': (BuildContext context) => new ProfilePage()
       },
     );
   }
