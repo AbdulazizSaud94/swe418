@@ -94,12 +94,32 @@ class LoginPageSate extends State<LoginPage> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        validator: (value) => value.isEmpty
-                            ? 'Email field can\'t be empty'
-                            : null,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            // The form is empty
+                            return "Field can\'t be empty";
+                          }
+                          // This is just a regular expression for email addresses
+                          String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+                              "\\@" +
+                              "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                              "(" +
+                              "\\." +
+                              "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                              ")+";
+                          RegExp regExp = new RegExp(p);
+
+                          if (regExp.hasMatch(value)) {
+                            // So, the email is valid
+                            return null;
+                          }
+
+                          // The pattern of the email didn't match the regex above.
+                          return 'Email is not valid';
+                        },
                         keyboardType: TextInputType.emailAddress,
                         onSaved: (value) => email = value,
-                        maxLength: 128,
+                        maxLength: 64,
                         decoration: InputDecoration(
                           labelText: 'User Email',
                           labelStyle: TextStyle(
@@ -120,7 +140,7 @@ class LoginPageSate extends State<LoginPage> {
                             ? 'Password field can\'t be empty'
                             : null,
                         onSaved: (value) => password = value,
-                        maxLength: 128,
+                        maxLength: 64,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
