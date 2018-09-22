@@ -108,7 +108,7 @@ class TabsState extends State<AdminTabs> {
             title: new Text('Add Users'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context).pushNamed('/AddUsers');
+              Navigator.of(context).pushNamed('/adduserpage');
             }
           ),
           new ListTile(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddUserPage extends StatefulWidget {
   @override
@@ -19,6 +21,13 @@ class AddUserPageState extends State<AddUserPage> {
       return true;
     }
     return false;
+  }
+
+  void validateAndSubmit() {
+    if (validateAndSave()) {
+      FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      Navigator.of(context).pushReplacementNamed('/AdminTabs');
+    }
   }
 
   @override
@@ -124,7 +133,7 @@ class AddUserPageState extends State<AddUserPage> {
                     ),
                     splashColor: Colors.lightGreen,
                     onPressed: () {
-                      validateAndSave();
+                      validateAndSubmit();
                     }),
               ),
             ],
