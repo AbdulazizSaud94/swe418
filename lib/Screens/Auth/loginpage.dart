@@ -154,6 +154,9 @@ class LoginPageSate extends State<LoginPage> {
                         alignment: Alignment(1.0, 0.0),
                         padding: EdgeInsets.only(top: 15.0, left: 20.0),
                         child: InkWell(
+                          onTap: (){
+                            FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+                          },
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
