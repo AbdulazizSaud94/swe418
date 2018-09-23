@@ -37,7 +37,7 @@ class LoginPageSate extends State<LoginPage> {
           if (userRole["Role"].toString().contains("Admin"))
             Navigator.of(context).pushReplacementNamed('/AdminTabs');
           else if (userRole["Role"].toString().contains("Student"))
-            Navigator.of(context).pushReplacementNamed('/HomePage');
+            Navigator.of(context).pushReplacementNamed('/profilepage');
           else if (userRole["Role"].toString().contains("Housing"))
             Navigator.of(context).pushReplacementNamed('/HousingTabs');
         });
@@ -94,10 +94,32 @@ class LoginPageSate extends State<LoginPage> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        validator: (value) => value.isEmpty
-                            ? 'Email field can\'t be empty'
-                            : null,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            // The form is empty
+                            return "Field can\'t be empty";
+                          }
+                          // This is just a regular expression for email addresses
+                          String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
+                              "\\@" +
+                              "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                              "(" +
+                              "\\." +
+                              "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                              ")+";
+                          RegExp regExp = new RegExp(p);
+
+                          if (regExp.hasMatch(value)) {
+                            // So, the email is valid
+                            return null;
+                          }
+
+                          // The pattern of the email didn't match the regex above.
+                          return 'Email is not valid';
+                        },
+                        keyboardType: TextInputType.emailAddress,
                         onSaved: (value) => email = value,
+                        maxLength: 64,
                         decoration: InputDecoration(
                           labelText: 'User Email',
                           labelStyle: TextStyle(
@@ -118,6 +140,7 @@ class LoginPageSate extends State<LoginPage> {
                             ? 'Password field can\'t be empty'
                             : null,
                         onSaved: (value) => password = value,
+                        maxLength: 64,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
@@ -131,6 +154,9 @@ class LoginPageSate extends State<LoginPage> {
                         alignment: Alignment(1.0, 0.0),
                         padding: EdgeInsets.only(top: 15.0, left: 20.0),
                         child: InkWell(
+                          onTap: (){
+                            FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+                          },
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
