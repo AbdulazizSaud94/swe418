@@ -10,6 +10,8 @@ class AddUserPage extends StatefulWidget {
 class AddUserPageState extends State<AddUserPage> {
   final formKey = GlobalKey<FormState>();
   String email;
+  String name;
+  String role;
   String password;
   String repeatPassword;
 
@@ -25,7 +27,9 @@ class AddUserPageState extends State<AddUserPage> {
 
   void validateAndSubmit() {
     if (validateAndSave()) {
-      FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      Firestore.instance.collection('Users').document().setData({'Email': email,'Name': name, 'Role': role});
       Navigator.of(context).pushReplacementNamed('/AdminTabs');
     }
   }
@@ -79,7 +83,24 @@ class AddUserPageState extends State<AddUserPage> {
                       color: Colors.black54),
                 ),
               ),
-              SizedBox(height: 45.0),
+              SizedBox(height: 20.0),
+              TextFormField(
+                maxLength: 64,
+                onSaved: (value) => name = value,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Field can\'t be empty';
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'User name:',
+                  labelStyle: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ),
+              SizedBox(height: 20.0),
               TextFormField(
                 maxLength: 64,
                 onSaved: (value) => password = value,
@@ -99,7 +120,7 @@ class AddUserPageState extends State<AddUserPage> {
                 ),
                 obscureText: true,
               ),
-              SizedBox(height: 45.0),
+              SizedBox(height: 20.0),
               TextFormField(
                 maxLength: 64,
                 onSaved: (value) => repeatPassword = value,
@@ -119,7 +140,24 @@ class AddUserPageState extends State<AddUserPage> {
                       color: Colors.black54),
                 ),
               ),
-              SizedBox(height: 45.0),
+              SizedBox(height: 20.0),
+              TextFormField(
+                maxLength: 64,
+                onSaved: (value) => role = value,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Field can\'t be empty';
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'User Role:',
+                  labelStyle: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ),
+              SizedBox(height: 20.0),
               Container(
                 height: 50.0,
                 width: 130.0,
