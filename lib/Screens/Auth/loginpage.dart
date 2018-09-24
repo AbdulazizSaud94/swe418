@@ -167,7 +167,7 @@ class LoginPageSate extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 55.0),
+                      SizedBox(height: 20.0),
                       Container(
                         height: 50.0,
                         width: 500.0,

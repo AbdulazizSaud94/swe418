@@ -112,21 +112,21 @@ class TabsState extends State<AdminTabs> {
             }
           ),
           new ListTile(
-            leading: new Icon(Icons.edit),
-            title: new Text('Edit Users'),
+            leading: new Icon(Icons.list),
+            title: new Text('Users List'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context).pushNamed('/EditUsers');
+              Navigator.of(context).pushNamed('/UserList');
             }
           ),
-          new ListTile(
-            leading: new Icon(Icons.delete),
-            title: new Text('Delete Users'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.of(context).pushNamed('/DeleteUsers');
-            }
-          ),
+          // new ListTile(
+          //   leading: new Icon(Icons.delete),
+          //   title: new Text('Delete Users'),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     Navigator.of(context).pushNamed('/DeleteUsers');
+          //   }
+          // ),
           new Divider(),
           new ListTile(
             leading: new Icon(Icons.exit_to_app),
