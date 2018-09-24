@@ -6,6 +6,7 @@ import 'Screens/Student/homepage.dart';
 import 'Screens/Admin/AdminTabs.dart';
 import 'Screens/Student/profilepage.dart';
 import 'Screens/Admin/adduserpage.dart';
+import 'Screens/Admin/UsersList.dart';
 
 
 void main() => runApp(new MyApp());
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
         '/HomePage' : (BuildContext context) => new HomePage(),
         '/profilepage': (BuildContext context) => new ProfilePage(),
-        '/adduserpage': (BuildContext context) => new AddUserPage()
+        '/adduserpage': (BuildContext context) => new AddUserPage(),
+        '/UserList': (BuildContext context) => new UsersList()
       },
     );
   }

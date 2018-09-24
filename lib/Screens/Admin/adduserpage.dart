@@ -11,7 +11,7 @@ class AddUserPageState extends State<AddUserPage> {
   final formKey = GlobalKey<FormState>();
   String email;
   String name;
-  String role = "Role";
+  String role = "Student";
   String password;
   String repeatPassword;
 
@@ -30,7 +30,7 @@ class AddUserPageState extends State<AddUserPage> {
       FirebaseUser user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       Firestore.instance.collection('Users').document(user.uid).setData({'Email': email,'Name': name, 'Role': role});
-      await Navigator.of(context).pushReplacementNamed('/AdminTabs');
+      Navigator.of(context).pushReplacementNamed('/AdminTabs');
     }
   }
 
