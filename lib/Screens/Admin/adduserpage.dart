@@ -11,7 +11,7 @@ class AddUserPageState extends State<AddUserPage> {
   final formKey = GlobalKey<FormState>();
   String email;
   String name;
-  String role;
+  String role = "Role";
   String password;
   String repeatPassword;
 
@@ -30,9 +30,10 @@ class AddUserPageState extends State<AddUserPage> {
       FirebaseUser user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       Firestore.instance.collection('Users').document(user.uid).setData({'Email': email,'Name': name, 'Role': role});
-      Navigator.of(context).pushReplacementNamed('/AdminTabs');
+      await Navigator.of(context).pushReplacementNamed('/AdminTabs');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,8 @@ class AddUserPageState extends State<AddUserPage> {
         padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
         child: Form(
           key: formKey,
-          child: Column(
+          child: ListView(
+            shrinkWrap: true,
             children: <Widget>[
               TextFormField(
                 keyboardType: TextInputType.emailAddress,
@@ -141,22 +143,28 @@ class AddUserPageState extends State<AddUserPage> {
                 ),
               ),
               SizedBox(height: 20.0),
-              TextFormField(
-                maxLength: 64,
-                onSaved: (value) => role = value,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Field can\'t be empty';
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: 'User Role:',
-                  labelStyle: TextStyle(
+              new DropdownButton<String>(
+                hint: Text(role, style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black54),
-                ),
-              ),
+                      color: Colors.black54)),
+                items: <String>['Student', 'Housing', 'Security'].map((String value) {
+                  return new DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                    );
+                    }).toList(),
+                    onChanged: (value) {
+
+                      this.setState((){
+                        Text(value, style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54));
+                        role = value;
+                      });
+                      },
+                    ),         
               SizedBox(height: 20.0),
               Container(
                 height: 50.0,
