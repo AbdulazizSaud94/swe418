@@ -25,11 +25,11 @@ class AddUserPageState extends State<AddUserPage> {
     return false;
   }
 
-  void validateAndSubmit() {
+  void validateAndSubmit() async {
     if (validateAndSave()) {
-      FirebaseAuth.instance
+      FirebaseUser user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      Firestore.instance.collection('Users').document().setData({'Email': email,'Name': name, 'Role': role});
+      Firestore.instance.collection('Users').document(user.uid).setData({'Email': email,'Name': name, 'Role': role});
       Navigator.of(context).pushReplacementNamed('/AdminTabs');
     }
   }

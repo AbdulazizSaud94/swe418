@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: AddUserPage(),
+      home: LoginPage(),
       routes: <String, WidgetBuilder>{
         '/loginpage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
