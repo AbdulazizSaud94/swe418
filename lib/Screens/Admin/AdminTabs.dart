@@ -108,7 +108,7 @@ class TabsState extends State<AdminTabs> {
             title: new Text('Add Users'),
             onTap: () {
               Navigator.pop(context);
-              Navigator.of(context).pushNamed('/adduserpage');
+              Navigator.of(context).pushNamed('/AddUserPage');
             }
           ),
           new ListTile(
@@ -135,7 +135,7 @@ class TabsState extends State<AdminTabs> {
                   FirebaseAuth.instance
                       .signOut()
                       .then((value) {
-                        Navigator.of(context).pushReplacementNamed('/loginpage');
+                        Navigator.of(context).pushReplacementNamed('/LoginPage');
                   })
                       .catchError((e) {
                         print(e);

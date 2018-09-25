@@ -31,7 +31,7 @@ class HomePageState extends State<HomePage> {
                   FirebaseAuth.instance
                       .signOut()
                       .then((value) {
-                        Navigator.of(context).pushReplacementNamed('/loginpage');
+                        Navigator.of(context).pushReplacementNamed('/LoginPage');
                   })
                       .catchError((e) {
                         print(e);
