@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 //pages
-import 'Screens/Auth/loginpage.dart';
-import 'Screens/Student/homepage.dart';
+import 'Screens/Auth/LoginPage.dart';
+import 'Screens/Student/HomePage.dart';
 import 'Screens/Admin/AdminTabs.dart';
-import 'Screens/Student/profilepage.dart';
-import 'Screens/Admin/adduserpage.dart';
+import 'Screens/Student/ProfilePage.dart';
+import 'Screens/Admin/AddUserPage.dart';
 import 'Screens/Admin/UsersList.dart';
 
 
@@ -21,12 +21,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
       routes: <String, WidgetBuilder>{
-        '/loginpage': (BuildContext context) => new MyApp(),
+        '/LoginPage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
         '/HomePage' : (BuildContext context) => new HomePage(),
-        '/profilepage': (BuildContext context) => new ProfilePage(),
-        '/adduserpage': (BuildContext context) => new AddUserPage(),
-        '/UserList': (BuildContext context) => new UsersList()
+        '/ProfilePage': (BuildContext context) => new ProfilePage(),
+        '/AddUserPage': (BuildContext context) => new AddUserPage(),
+        '/UsersList': (BuildContext context) => new UsersList()
       },
     );
   }

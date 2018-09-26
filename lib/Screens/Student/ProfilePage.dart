@@ -113,7 +113,7 @@ class ProfilePageState extends State<ProfilePage> {
                 title: new Text('Sign Out'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
-                    Navigator.of(context).pushReplacementNamed('/loginpage');
+                    Navigator.of(context).pushReplacementNamed('/LoginPage');
                   }).catchError((e) {
                     print(e);
                   });

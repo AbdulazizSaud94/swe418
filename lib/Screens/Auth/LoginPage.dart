@@ -37,7 +37,7 @@ class LoginPageSate extends State<LoginPage> {
           if (userRole["Role"].toString().contains("Admin"))
             Navigator.of(context).pushReplacementNamed('/AdminTabs');
           else if (userRole["Role"].toString().contains("Student"))
-            Navigator.of(context).pushReplacementNamed('/profilepage');
+            Navigator.of(context).pushReplacementNamed('/HomePage');
           else if (userRole["Role"].toString().contains("Housing"))
             Navigator.of(context).pushReplacementNamed('/HousingTabs');
         });
