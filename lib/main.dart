@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         '/HomePage' : (BuildContext context) => new HomePage(),
         '/ProfilePage': (BuildContext context) => new ProfilePage(),
         '/AddUserPage': (BuildContext context) => new AddUserPage(),
-        '/UserList': (BuildContext context) => new UsersList()
+        '/UsersList': (BuildContext context) => new UsersList()
       },
     );
   }
