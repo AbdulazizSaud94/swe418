@@ -195,7 +195,13 @@ class LoginPageSate extends State<LoginPage> {
                                   });
                                 }).catchError((e) {
                                   final snackBar = SnackBar(
-                                    content: Text('Incorrect user email or password!'),
+                                    content: Text(
+                                        'Incorrect user email or password!',
+                                      style: TextStyle(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   );
 
                                   // Find the Scaffold in the Widget tree and use it to show a SnackBar!
