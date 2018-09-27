@@ -23,6 +23,10 @@ class UnlockDoorState extends State<UnlockDoor> {
      {'Email': email, 'Name': name, 'Building': building, 'Room': room, 'Comment':comment, 'Status': "Pending", 'Created': created,
      'Housing_Emp': ""}
    );
+   final snackBar = new SnackBar(
+     content: new Text('Request Sent'),
+     
+   ); 
  }
   @override
   Widget build(BuildContext context) {
