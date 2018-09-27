@@ -22,8 +22,8 @@ class HomePageState extends State<HomePage> {
               new RaisedButton(
                 
                 onPressed: (){
-                  Navigator.pop(context);
-                  Navigator.of(context).pushNamed('/UnlockDoor');
+                  //Navigator.pop(context);
+                  Navigator.of(context).pushReplacementNamed('/UnlockDoor');
                 },
               ),
               SizedBox(

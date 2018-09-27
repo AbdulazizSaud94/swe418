@@ -10,6 +10,7 @@ class UnlockDoor extends StatefulWidget {
 class UnlockDoorState extends State<UnlockDoor> {
   final formKey = GlobalKey<FormState>();
   String email;
+  String uid;
   String name;
   String building;
   String room;
@@ -21,12 +22,12 @@ class UnlockDoorState extends State<UnlockDoor> {
    formKey.currentState.save();
    Firestore.instance.collection('Requests').document('UnlockDoor').collection('UnlockDoor').document().setData(
      {'Email': email, 'Name': name, 'Building': building, 'Room': room, 'Comment':comment, 'Status': "Pending", 'Created': created,
-     'Housing_Emp': ""}
+     'Housing_Emp': "", 'UID': uid}
    );
    final snackBar = new SnackBar(
      content: new Text('Request Sent'),
-     
    ); 
+   Scaffold.of(context).showSnackBar(snackBar);
  }
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,12 @@ class UnlockDoorState extends State<UnlockDoor> {
         name = data['Name'];
         building = data['Building'];
         room = data['Room'];
+        uid = user.uid;
+        print('reeeeeeeeeeeeeeeeee');
+        print(data['Email']);
       });
     });
+    
     return new Scaffold(
       appBar: new AppBar(
         title: new Text("Unlock Door Request"),

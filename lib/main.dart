@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         '/ProfilePage': (BuildContext context) => new ProfilePage(),
         '/AddUserPage': (BuildContext context) => new AddUserPage(),
         '/UsersList': (BuildContext context) => new UsersList(),
-        '/UnlockDoor': (BuildContext context) => new UnlockDoor(),
+        '/UnlockDoor': (BuildContext context) => new UnlockDoor()
       },
     );
   }
