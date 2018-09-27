@@ -19,6 +19,16 @@ class HomePageState extends State<HomePage> {
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              new RaisedButton(
+                
+                onPressed: (){
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/UnlockDoor');
+                },
+              ),
+              SizedBox(
+                height: 15.0,
+              ),
               new Text('You are logged in'),
               SizedBox(
                 height: 15.0,

@@ -3,10 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'tabs/home.dart' as _firstTab;
 import 'tabs/dashboard.dart' as _secondTab;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'dart:async';
 
 
 class AdminTabs extends StatefulWidget {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'EditUserPage.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class UsersList extends StatelessWidget {
   @override
