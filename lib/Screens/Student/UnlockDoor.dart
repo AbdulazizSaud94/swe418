@@ -16,7 +16,7 @@ class UnlockDoorState extends State<UnlockDoor> {
   String comment ;
   DateTime created;
 
- void validateAndSubmit() async {
+ void validateAndSubmit(BuildContext context) async {
    created = DateTime.now();
    formKey.currentState.save();
    Firestore.instance.collection('Requests').document('UnlockDoor').collection('UnlockDoor').document().setData(
@@ -83,7 +83,7 @@ class UnlockDoorState extends State<UnlockDoor> {
                     ),
                     splashColor: Colors.lightGreen,
                     onPressed: () {
-                      validateAndSubmit();
+                      validateAndSubmit(context);
                     }),
               ),                                
             ],
