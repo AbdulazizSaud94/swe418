@@ -557,6 +557,12 @@ class RequestsPageState extends State<RequestsPage> {
             new Divider(),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
+                title: new Text('Profile Page'),
+                onTap: () {
+                   Navigator.of(context).pushReplacementNamed('/ProfilePage');
+                }),
+            new ListTile(
+                leading: new Icon(Icons.exit_to_app),
                 title: new Text('Sign Out'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
