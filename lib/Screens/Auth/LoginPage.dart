@@ -26,9 +26,7 @@ class LoginPageSate extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: new ListView(
         children: <Widget>[
           Container(
             child: Stack(
@@ -186,7 +184,8 @@ class LoginPageSate extends State<LoginPage> {
                                         .toString()
                                         .contains("Student"))
                                       Navigator.of(context)
-                                          .pushReplacementNamed('/RequestsPage');
+                                          .pushReplacementNamed(
+                                              '/RequestsPage');
                                     else if (userRole["Role"]
                                         .toString()
                                         .contains("Housing"))
@@ -196,7 +195,8 @@ class LoginPageSate extends State<LoginPage> {
                                 }).catchError((e) {
                                   print('Error: $e');
                                   final snackBar = SnackBar(
-                                    content: Text('Incorrect user email or password!'),
+                                    content: Text(
+                                        'Incorrect user email or password!'),
                                   );
 
                                   // Find the Scaffold in the Widget tree and use it to show a SnackBar!
