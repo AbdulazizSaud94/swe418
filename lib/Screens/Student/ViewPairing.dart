@@ -4,23 +4,24 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class RequestPairing extends StatelessWidget {
+String email;
+class ViewPairing extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
+   email=getdata('email');
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Request Pairing'),
+        title: new Text('Pairing Requests'),
       ),
       body: new StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('Users').where('Status',isEqualTo:'single').snapshots(),
+      stream: Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').where('To',isEqualTo:'$email').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) return new Text('Loading...');
         return new ListView(
          shrinkWrap: true,
           children: snapshot.data.documents.map((DocumentSnapshot document) {
             return new ListTile(
-              title: new Text(document['Name']),
-              subtitle:new Text('Major: '+document['Major']+'     Status: '+document['Status']),
+              title: new Text(document['From']),
               trailing: new Row(
                 
                 mainAxisSize: MainAxisSize.min,
@@ -31,7 +32,6 @@ class RequestPairing extends StatelessWidget {
                       child: Icon(Icons.check),
                       textColor: Colors.blueAccent, 
                         onPressed: () {
-                          Navigator.of(context).pushReplacementNamed('/ViewPairing');
                           _handlePressed(context, document);},
                     ),
                   ),
@@ -43,7 +43,7 @@ class RequestPairing extends StatelessWidget {
                       child: Icon(Icons.email),
                       textColor: Colors.blueAccent, 
                         onPressed: (){
-                        String email = document['Email'];
+                        String email = document['From'];
                         String url = 'mailto:' + email + '?subject=Pairing Request';
                           if ( canLaunch(url) != null) {
                              launch(url);
@@ -70,7 +70,7 @@ class RequestPairing extends StatelessWidget {
         confirmDialog(context).then((bool value) async {
           if(value){
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
-      Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').document().setData({'From': user.email,'To': document['Email']});
+      Firestore.instance.collection('Requests').document('Pairing').collection('HousingPairing').document().setData({'Student1': user.email,'Student2': document['From']});
       
             }
           });
@@ -99,4 +99,23 @@ Future<bool> confirmDialog(BuildContext context){
       );
     }
   );}
+  setUser()async{
+  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+  String email=user.email;
+  return email;
+  }
+
+  String getdata(String geter) {
+   
+  FirebaseAuth.instance.currentUser().then((FirebaseUser user){
+    Firestore.instance.collection("Users").document(user.uid).get().then((data){
+     email=data['Email'];
+  
+    });
+  });
+
+    if (geter=='email')
+    return email;
+   return '0';
+}
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -238,8 +240,14 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
+                                confirmDialog(context).then((bool value) async {
+                                if(value)
+                                Navigator.of(context).pushReplacementNamed('/ViewPairing');
+                                else 
+                                 Navigator.of(context).pushReplacementNamed('/RequestPairing');
+
                                 //TODO
-                              },
+                              });}
                             ),
                           ),
                         );
@@ -577,3 +585,23 @@ class RequestsPageState extends State<RequestsPage> {
     );
   }
 }
+Future<bool> confirmDialog(BuildContext context){
+  return showDialog<bool>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return new AlertDialog(
+        title: new Text("Pairing Requests"),
+        actions: <Widget>[
+          new FlatButton(
+            child: Text("Recieved"),
+            onPressed:() => Navigator.of(context).pop(true),
+          ),
+          new FlatButton(
+            child: Text("Send new Request"),
+            onPressed:() => Navigator.of(context).pop(false),
+          ),
+        ],
+      );
+    }
+  );}

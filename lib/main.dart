@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swe418/Screens/Student/ViewPairing.dart';
 
 //pages
 import 'Screens/Auth/LoginPage.dart';
@@ -30,7 +31,9 @@ class MyApp extends StatelessWidget {
         '/AddUserPage': (BuildContext context) => new AddUserPage(),
         '/UsersList': (BuildContext context) => new UsersList(),
         '/RequestsPage': (BuildContext context) => new RequestsPage(),
-        '/RequestPairing': (BuildContext context) => new RequestPairing()
+        '/RequestPairing': (BuildContext context) => new RequestPairing(),
+        '/ViewPairing': (BuildContext context) => new ViewPairing()
+
       },
     );
   }

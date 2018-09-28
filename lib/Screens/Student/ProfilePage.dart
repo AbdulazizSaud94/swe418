@@ -17,12 +17,14 @@ class ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    name=getdata('name');
+    email=getdata('email');
     return new Scaffold(
         body: new Stack(
           children: <Widget>[
             ClipPath(
               child: Container(color: Colors.lightGreen.withOpacity(0.8)),
-              clipper: getClipper(),
+              clipper: GetClipper(),
             ),
             Positioned(
               width: 350.0,
@@ -45,20 +47,23 @@ class ProfilePageState extends State<ProfilePage> {
                         ]),
                   ),
                   SizedBox(height: 35.0),
-                  Text(
-                    name=getdata('name'),
-                    style: TextStyle(
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  new Text(
+                    'Hello, $name!',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    
+                    style: new TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 15.0),
-                  Text(
-                    email=getdata('email'),
-                    style: TextStyle(
+                  new Text(
+                    '$email',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: new TextStyle(
                       fontSize: 18.0,
-                      fontStyle: FontStyle.italic,
-                    ),
+                      fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 25.0),
                 ],
@@ -111,7 +116,7 @@ class ProfilePageState extends State<ProfilePage> {
             new Divider(),
              new ListTile(
                 leading: new Icon(Icons.exit_to_app),
-                title: new Text('Requests Page'),
+               title: new Text('Requests Page'),
                 onTap: () {
                    Navigator.of(context).pushReplacementNamed('/RequestsPage');
                 }),
@@ -130,7 +135,7 @@ class ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class getClipper extends CustomClipper<Path> {
+class GetClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = new Path();
