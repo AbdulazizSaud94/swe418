@@ -186,7 +186,7 @@ class LoginPageSate extends State<LoginPage> {
                                         .toString()
                                         .contains("Student"))
                                       Navigator.of(context)
-                                          .pushReplacementNamed('/RequestsPage');
+                                          .pushReplacementNamed('/ProfilePage');
                                     else if (userRole["Role"]
                                         .toString()
                                         .contains("Housing"))
