@@ -6,7 +6,6 @@ class RequestsPage extends StatefulWidget {
   RequestsPageState createState() => new RequestsPageState();
 }
 
-
 class RequestsPageState extends State<RequestsPage> {
   @override
   Widget build(BuildContext context) {
@@ -90,7 +89,9 @@ class RequestsPageState extends State<RequestsPage> {
                         splashColor: Colors.blueGrey,
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(10.0)),
-                        onPressed: () {},
+                        onPressed: () {
+                          //TODO
+                        },
                       ),
                     ),
                   ],
@@ -105,80 +106,149 @@ class RequestsPageState extends State<RequestsPage> {
             mainAxisSpacing: 5.0,
             shrinkWrap: true,
             children: <Widget>[
-
-              buildCard('SingleRoom', 'View and create SingleRoom requests', 2, '/AdminTabs'),
-              buildCard('ChangeRoom', 'View and create ChangeRoom requests', 3, '/AdminTabs'),
-              buildCard('Pairing', 'View and create Pairing requests', 4, '/AdminTabs'),
+//1 Swap request
               Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                elevation: 7.0,
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 12.0),
-                    Container(
-                      height: 60.0,
-                      width: 60.0,
-                      child: new Icon(
-                        Icons.accessibility,
-                        size: 50.0,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.0),
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'SingleRoom',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      'View and create SingleRoom requests',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    SizedBox(height: 15.0),
-                    new Builder(builder: (BuildContext context) {
-                      return Expanded(
-                        child: Container(
-                          width: 175.0,
-                          child: RaisedButton(
-                            child: const Text(
-                              'SHOW',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            color: Colors.green,
-                            splashColor: Colors.blueGrey,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.only(
-                                  bottomRight: Radius.circular(10.0),
-                                  bottomLeft: Radius.circular(10.0)),
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pushReplacementNamed('/AdminTabs');
-                            },
-                          ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 7.0,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 12.0),
+                      Container(
+                        height: 60.0,
+                        width: 60.0,
+                        child: new Icon(
+                          Icons.swap_horiz,
+                          size: 50.0,
                         ),
-                      );
-                    }),
-                  ],
-                ),
-                  margin: EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 10.0)
-              ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'SWAP',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'View and create \nSwap requests',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 15.0),
+                      new Builder(builder: (BuildContext context) {
+                        return Expanded(
+                          child: Container(
+                            width: 175.0,
+                            child: RaisedButton(
+                              child: const Text(
+                                'ENTER',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.green,
+                              splashColor: Colors.blueGrey,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0)),
+                              ),
+                              onPressed: () {
+                                //TODO
+                              },
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                  margin: EdgeInsets.fromLTRB(10.0, 0.0, 25.0, 10.0)),
 
+//2 Pairing request
+              Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 7.0,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 12.0),
+                      Container(
+                        height: 60.0,
+                        width: 60.0,
+                        child: new Icon(
+                          Icons.group,
+                          size: 50.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Pairing',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'View and create \nPairing requests',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 15.0),
+                      new Builder(builder: (BuildContext context) {
+                        return Expanded(
+                          child: Container(
+                            width: 175.0,
+                            child: RaisedButton(
+                              child: const Text(
+                                'ENTER',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.green,
+                              splashColor: Colors.blueGrey,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0)),
+                              ),
+                              onPressed: () {
+                                //TODO
+                              },
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                  margin: EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 10.0)),
+
+//3 Single Room request
               Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -201,7 +271,7 @@ class RequestsPageState extends State<RequestsPage> {
                       ),
                       SizedBox(height: 8.0),
                       Text(
-                        'SingleRoom',
+                        'Single Room',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,
@@ -209,7 +279,8 @@ class RequestsPageState extends State<RequestsPage> {
                       ),
                       SizedBox(height: 5.0),
                       Text(
-                        'View and create SingleRoom requests',
+                        'View and create \nSingle Room requests',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 12.0,
@@ -223,7 +294,7 @@ class RequestsPageState extends State<RequestsPage> {
                             width: 175.0,
                             child: RaisedButton(
                               child: const Text(
-                                'SHOW',
+                                'ENTER',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15.0,
@@ -238,7 +309,7 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushReplacementNamed('/AdminTabs');
+                                //TODO
                               },
                             ),
                           ),
@@ -246,8 +317,220 @@ class RequestsPageState extends State<RequestsPage> {
                       }),
                     ],
                   ),
-                  margin: EdgeInsets.fromLTRB(10.0, 0.0, 25.0, 10.0)
-              ),
+                  margin: EdgeInsets.fromLTRB(10.0, 0.0, 25.0, 10.0)),
+
+//4 Change Room request
+              Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 7.0,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 12.0),
+                      Container(
+                        height: 60.0,
+                        width: 60.0,
+                        child: new Icon(
+                          Icons.card_travel,
+                          size: 50.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Change Room',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'View and create \nChange Room requests',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 15.0),
+                      new Builder(builder: (BuildContext context) {
+                        return Expanded(
+                          child: Container(
+                            width: 175.0,
+                            child: RaisedButton(
+                              child: const Text(
+                                'ENTER',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.green,
+                              splashColor: Colors.blueGrey,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0)),
+                              ),
+                              onPressed: () {
+                                //TODO
+                              },
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                  margin: EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 10.0)),
+
+//5 Maintenance request
+              Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 7.0,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 12.0),
+                      Container(
+                        height: 60.0,
+                        width: 60.0,
+                        child: new Icon(
+                          Icons.build,
+                          size: 50.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Maintenance',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'View and create \nMaintenance requests',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 15.0),
+                      new Builder(builder: (BuildContext context) {
+                        return Expanded(
+                          child: Container(
+                            width: 175.0,
+                            child: RaisedButton(
+                              child: const Text(
+                                'ENTER',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.green,
+                              splashColor: Colors.blueGrey,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0)),
+                              ),
+                              onPressed: () {
+                                //TODO
+                              },
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                  margin: EdgeInsets.fromLTRB(10.0, 0.0, 25.0, 10.0)),
+
+//6 Door unlock request
+              Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  elevation: 7.0,
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 12.0),
+                      Container(
+                        height: 60.0,
+                        width: 60.0,
+                        child: new Icon(
+                          Icons.lock_open,
+                          size: 50.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Text(
+                        'Door Unlock',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'View and create \nDoor Unlock requests',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 15.0),
+                      new Builder(builder: (BuildContext context) {
+                        return Expanded(
+                          child: Container(
+                            width: 175.0,
+                            child: RaisedButton(
+                              child: const Text(
+                                'ENTER',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              color: Colors.green,
+                              splashColor: Colors.blueGrey,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0),
+                                    bottomLeft: Radius.circular(10.0)),
+                              ),
+                              onPressed: () {
+                                //TODO
+                              },
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                  margin: EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 10.0)),
             ],
           ),
         ],
@@ -288,79 +571,3 @@ class RequestsPageState extends State<RequestsPage> {
     );
   }
 }
-
-Widget buildCard(String type, String description, int cardIndex, String route) {
-  return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 7.0,
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 12.0),
-          Container(
-            height: 60.0,
-            width: 60.0,
-            child: new Icon(
-              Icons.refresh,
-              size: 50.0,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            type,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 15.0,
-            ),
-          ),
-          SizedBox(height: 5.0),
-          Text(
-            description,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 12.0,
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(height: 15.0),
-          new Builder(builder: (BuildContext context) {
-            return Expanded(
-              child: Container(
-                width: 175.0,
-                child: RaisedButton(
-                  child: const Text(
-                    'SHOW',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  color: Colors.green,
-                  splashColor: Colors.blueGrey,
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.only(
-                        bottomRight: Radius.circular(10.0),
-                        bottomLeft: Radius.circular(10.0)),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushReplacementNamed(route);
-                  },
-                ),
-              ),
-            );
-          }),
-        ],
-      ),
-      margin: cardIndex.isEven
-          ? EdgeInsets.fromLTRB(10.0, 0.0, 25.0, 10.0)
-          : EdgeInsets.fromLTRB(25.0, 0.0, 5.0, 10.0)
-  );
-}
-
-
