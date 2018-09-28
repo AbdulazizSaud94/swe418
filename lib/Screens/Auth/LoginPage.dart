@@ -194,6 +194,7 @@ class LoginPageSate extends State<LoginPage> {
                                           .pushReplacementNamed('/HousingTabs');
                                   });
                                 }).catchError((e) {
+                                  print('Error: $e');
                                   final snackBar = SnackBar(
                                     content: Text('Incorrect user email or password!'),
                                   );
