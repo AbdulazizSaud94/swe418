@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'UnlockDoor.dart';
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -530,7 +531,8 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                //TODO
+                                Navigator.of(context)
+                                    .pushNamed('/UnlockDoor');
                               },
                             ),
                           ),
