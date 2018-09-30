@@ -2,24 +2,32 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 String name;
 String email;
 
 class ProfilePage extends StatefulWidget {
-  
+
   @override
   ProfilePageState createState() => new ProfilePageState();
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  
+
 
   @override
   Widget build(BuildContext context) {
     name=getdata('name');
     email=getdata('email');
     return new Scaffold(
+        appBar: new AppBar(
+          title: new Text(
+            'Profile',
+          ),
+          backgroundColor: Colors.lightGreen.withOpacity(0.8),
+        ),
         body: new Stack(
           children: <Widget>[
             ClipPath(
@@ -29,7 +37,7 @@ class ProfilePageState extends State<ProfilePage> {
             Positioned(
               width: 350.0,
               left: 25.0,
-              top: MediaQuery.of(context).size.height / 5,
+              top: MediaQuery.of(context).size.height / 13,
               child: Column(
                 children: <Widget>[
                   Container(
@@ -39,7 +47,7 @@ class ProfilePageState extends State<ProfilePage> {
                         color: Colors.blueGrey,
                         image: DecorationImage(
                             image:
-                                NetworkImage('http://i.imgur.com/XyDjKCL.png'),
+                                NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
                             fit: BoxFit.cover),
                         borderRadius: BorderRadius.all(Radius.circular(75.0)),
                         boxShadow: [
@@ -51,7 +59,7 @@ class ProfilePageState extends State<ProfilePage> {
                     'Hello, $name!',
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    
+
                     style: new TextStyle(
                       fontSize: 25.0,
                       fontWeight: FontWeight.bold),
@@ -74,9 +82,10 @@ class ProfilePageState extends State<ProfilePage> {
               top: 500.0,
               child: Container(
                 height: 45.0,
-                width: 114.0,
-                child: RaisedButton(
-                  child: const Text(
+                width: 130.0,
+                child: RaisedButton.icon(
+                  icon: Icon(FontAwesomeIcons.envelope),
+                  label: Text(
                     'Send Email',
                     style: TextStyle(
                       fontSize: 13.0,
@@ -161,7 +170,7 @@ _launchEmail() async {
 }
 
  String getdata(String geter) {
-   
+
   FirebaseAuth.instance.currentUser().then((FirebaseUser user){
     Firestore.instance.collection("Users").document(user.uid).get().then((data){
      email=data['Email'];
