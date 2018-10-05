@@ -28,7 +28,7 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Users List'),
+        title: new Text('Unlock Door Requests'),
       ),
       body: new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance
