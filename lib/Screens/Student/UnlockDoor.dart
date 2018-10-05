@@ -9,24 +9,30 @@ class UnlockDoor extends StatefulWidget {
 
 class UnlockDoorState extends State<UnlockDoor> {
   final formKey = GlobalKey<FormState>();
+  String building;
+  String room;
+  String name;
+  String email;
   DateTime created;
   String comment;
-  DocumentSnapshot _document;
   String uid;
 
   @override
   void initState() {
-    super.initState();
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
-      Firestore.instance
-          .collection("Users")
-          .document(user.uid)
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+      this.uid = user.uid;
+      await Firestore.instance
+          .collection('Users')
+          .document(uid)
           .get()
           .then((data) {
-        _document = data;
-        uid = user.uid;
+        this.name = data['Name'];
+        this.email = data['Email'];
+        this.building = data['Building'];
+        this.room = data['Room'];
       });
     });
+    super.initState();
   }
 
   void validateAndSubmit() async {
@@ -38,10 +44,10 @@ class UnlockDoorState extends State<UnlockDoor> {
         .collection('UnlockDoor')
         .document()
         .setData({
-      'Email': _document.data['Email'],
-      'Name': _document.data['Name'],
-      'Building': _document.data['Building'],
-      'Room': _document.data['Room'],
+      'Email': email,
+      'Name': name,
+      'Building': building,
+      'Room': room,
       'Comment': comment,
       'Status': "Pending",
       'Created': created,
@@ -57,57 +63,75 @@ class UnlockDoorState extends State<UnlockDoor> {
       appBar: new AppBar(
         title: new Text("Unlock Door Request"),
       ),
-      body: new Container(
-        padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
-        child: new Form(
-          key: formKey,
-          child: new ListView(
-            children: <Widget>[
-              Text(
-                'Requesting Door Unlock:',
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: 15.0),
-              // Text(
-              //   "building: ${_document.data['Building']}, Room: ${_document.data['Room']}",
-              //   style: TextStyle(
-              //     fontSize: 15.0,
-              //     fontStyle: FontStyle.italic,
-              //   ),
-              // ),
-              TextFormField(
-                maxLength: 200,
-                onSaved: (value) => comment = value,
-                decoration: InputDecoration(
-                  labelText: 'Comment (optional)',
-                  labelStyle: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black54),
-                ),
-              ),
-              Container(
-                height: 50.0,
-                width: 130.0,
-                child: RaisedButton(
-                    child: Text(
-                      'Send Request',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+      body: new FutureBuilder<DocumentSnapshot>(
+        future: Firestore.instance.collection('Users').document(uid).get(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.active:
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            case ConnectionState.done:
+              if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else {
+                return new Container(
+                  padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                  child: new Form(
+                    key: formKey,
+                    child: new ListView(
+                      children: <Widget>[
+                        Text(
+                          'Requesting Door Unlock:',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 15.0),
+                        Text(
+                          "building: $building, Room: $room",
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                        Container(
+                          child: TextFormField(
+                            maxLength: 200,
+                            onSaved: (value) => this.comment = value,
+                            decoration: InputDecoration(
+                              labelText: 'Comment (optional)',
+                              labelStyle: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          height: 50.0,
+                          width: 130.0,
+                          child: RaisedButton(
+                              child: Text(
+                                'Send Request',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              splashColor: Colors.lightGreen,
+                              onPressed: () {
+                                _handlePressed(context);
+                              }),
+                        ),
+                      ],
                     ),
-                    splashColor: Colors.lightGreen,
-                    onPressed: () {
-                      _handlePressed(context);
-                    }),
-              ),
-            ],
-          ),
-        ),
+                  ),
+                );
+              }
+          }
+        },
       ),
     );
   }
