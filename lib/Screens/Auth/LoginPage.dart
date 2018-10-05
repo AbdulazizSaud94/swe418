@@ -189,7 +189,7 @@ class LoginPageSate extends State<LoginPage> {
                                         .toString()
                                         .contains("Housing"))
                                       Navigator.of(context)
-                                          .pushReplacementNamed('/HousingTabs');
+                                          .pushReplacementNamed('/HousingPage');
                                   });
                                 }).catchError((e) {
                                   print('Error: $e');

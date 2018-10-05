@@ -11,6 +11,9 @@ import 'Screens/Admin/UsersList.dart';
 import 'Screens/Student/RequestsPage.dart';
 import 'Screens/Student/UnlockDoor.dart';
 import 'Screens/Student/RequestPairing.dart';
+import 'Screens/Student/SUnlockDoorList.dart';
+import 'Screens/Housing/HousingRequestsPage.dart';
+import 'Screens/Housing/HUnlockDoorList.dart';
 
 
 
@@ -35,7 +38,10 @@ class MyApp extends StatelessWidget {
         '/RequestsPage': (BuildContext context) => new RequestsPage(),
         '/UnlockDoor' : (BuildContext context) => new UnlockDoor(),
         '/RequestPairing': (BuildContext context) => new RequestPairing(),
-        '/ViewPairing': (BuildContext context) => new ViewPairing()
+        '/ViewPairing': (BuildContext context) => new ViewPairing(),
+        '/UnlockDoorList': (BuildContext context) => new SUnlockDoorList(),
+        '/HousingPage': (BuildContext context) => new HousingRequestsPage(),
+        '/HUnlockDoorList': (BuildContext context) => new HUnlockDoorList(),
       },
     );
   }
