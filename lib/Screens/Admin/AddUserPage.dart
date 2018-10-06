@@ -25,16 +25,6 @@ class AddUserPageState extends State<AddUserPage> {
     return false;
   }
 
-  void validateAndSubmit() async {
-    if (validateAndSave()) {
-      FirebaseUser user = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      Firestore.instance.collection('Users').document(user.uid).setData({'Email': email,'Name': name, 'Role': role});
-      Navigator.of(context).pushReplacementNamed('/AdminTabs');
-    }
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -144,44 +134,74 @@ class AddUserPageState extends State<AddUserPage> {
               ),
               SizedBox(height: 20.0),
               new DropdownButton<String>(
-                hint: Text(role, style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black54)),
-                items: <String>['Student', 'Housing', 'Security'].map((String value) {
+                hint: Text(role,
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54)),
+                items: <String>['Student', 'Housing', 'Security']
+                    .map((String value) {
                   return new DropdownMenuItem<String>(
                     value: value,
                     child: new Text(value),
-                    );
-                    }).toList(),
-                    onChanged: (value) {
-
-                      this.setState((){
-                        Text(value, style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54));
-                        role = value;
-                      });
-                      },
-                    ),         
-              SizedBox(height: 20.0),
-              Container(
-                height: 50.0,
-                width: 130.0,
-                child: RaisedButton(
-                    child: Text(
-                      'Create User',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    splashColor: Colors.lightGreen,
-                    onPressed: () {
-                      validateAndSubmit();
-                    }),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  this.setState(() {
+                    Text(value,
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54));
+                    role = value;
+                  });
+                },
               ),
+              SizedBox(height: 20.0),
+              new Builder(builder: (BuildContext context) {
+                return Container(
+                  height: 50.0,
+                  width: 130.0,
+                  child: RaisedButton(
+                      child: Text(
+                        'Create User',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      splashColor: Colors.lightGreen,
+                      onPressed: () async {
+                        if (validateAndSave()) {
+                          FirebaseUser user = await FirebaseAuth.instance
+                              .createUserWithEmailAndPassword(
+                                  email: email, password: password)
+                              .catchError((e) {
+                            print('Oops Error: $e');
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Error: User already registered!',
+                                style: TextStyle(
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+
+                            // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                            Scaffold.of(context).showSnackBar(snackBar);
+                          });
+                          Firestore.instance
+                              .collection('Users')
+                              .document(user.uid)
+                              .setData(
+                                  {'Email': email, 'Name': name, 'Role': role});
+                          Navigator.of(context)
+                              .pushReplacementNamed('/AdminTabs');
+                        }
+                      }),
+                );
+              }),
             ],
           ),
         ),

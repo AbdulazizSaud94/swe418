@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'UnlockDoor.dart';
 
-class RequestsPage extends StatefulWidget {
+class HousingRequestsPage extends StatefulWidget {
   @override
   RequestsPageState createState() => new RequestsPageState();
 }
 
-class RequestsPageState extends State<RequestsPage> {
+class RequestsPageState extends State<HousingRequestsPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -100,6 +99,7 @@ class RequestsPageState extends State<RequestsPage> {
                   ],
                 ),
               ),
+              
             ],
           ),
           SizedBox(height: 40.0),
@@ -532,7 +532,7 @@ class RequestsPageState extends State<RequestsPage> {
                               ),
                               onPressed: () {
                                 Navigator.of(context)
-                                    .pushNamed('/UnlockDoorList');
+                                    .pushNamed('/HUnlockDoorList');
                               },
                             ),
                           ),
@@ -567,9 +567,8 @@ class RequestsPageState extends State<RequestsPage> {
             new Divider(),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
-                title: new Text('Profile Page'),
+                title: new Text('something '),
                 onTap: () {
-                   Navigator.of(context).pushReplacementNamed('/ProfilePage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),

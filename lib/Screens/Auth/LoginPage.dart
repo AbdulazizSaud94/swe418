@@ -23,36 +23,10 @@ class LoginPageSate extends State<LoginPage> {
     return false;
   }
 
-  //method to validate input with fire base and login
-  void validateAndSubmit() {
-    if (validateAndSave()) {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((FirebaseUser user) {
-        Firestore.instance
-            .collection('Users')
-            .document(user.uid)
-            .get()
-            .then((userRole) {
-          if (userRole["Role"].toString().contains("Admin"))
-            Navigator.of(context).pushReplacementNamed('/AdminTabs');
-          else if (userRole["Role"].toString().contains("Student"))
-            Navigator.of(context).pushReplacementNamed('/HomePage');
-          else if (userRole["Role"].toString().contains("Housing"))
-            Navigator.of(context).pushReplacementNamed('/HomePage');
-        });
-      }).catchError((e) {
-        print(e);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      resizeToAvoidBottomPadding: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: new ListView(
         children: <Widget>[
           Container(
             child: Stack(
@@ -154,8 +128,9 @@ class LoginPageSate extends State<LoginPage> {
                         alignment: Alignment(1.0, 0.0),
                         padding: EdgeInsets.only(top: 15.0, left: 20.0),
                         child: InkWell(
-                          onTap: (){
-                            FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+                          onTap: () {
+                            FirebaseAuth.instance
+                                .sendPasswordResetEmail(email: email);
                           },
                           child: Text(
                             'Forgot Password?',
@@ -168,26 +143,74 @@ class LoginPageSate extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: 20.0),
-                      Container(
-                        height: 50.0,
-                        width: 500.0,
-                        child: RaisedButton(
-                          child: const Text(
-                            'LOGIN',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 19.0,
-                              fontWeight: FontWeight.bold,
+                      new Builder(
+                          // Create an inner BuildContext so that the onPressed methods
+                          // can refer to the Scaffold with Scaffold.of().
+                          builder: (BuildContext context) {
+                        return Container(
+                          height: 50.0,
+                          width: 500.0,
+                          child: RaisedButton(
+                            child: const Text(
+                              'LOGIN',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 19.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
+                            color: Colors.green,
+                            elevation: 1.0,
+                            splashColor: Colors.blueGrey,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(30.0)),
+                            onPressed: () {
+                              if (validateAndSave()) {
+                                FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                        email: email, password: password)
+                                    .then((FirebaseUser user) {
+                                  Firestore.instance
+                                      .collection('Users')
+                                      .document(user.uid)
+                                      .get()
+                                      .then((userRole) {
+                                    if (userRole["Role"]
+                                        .toString()
+                                        .contains("Admin"))
+                                      Navigator.of(context)
+                                          .pushReplacementNamed('/AdminTabs');
+                                    else if (userRole["Role"]
+                                        .toString()
+                                        .contains("Student"))
+                                      Navigator.of(context)
+                                          .pushReplacementNamed('/ProfilePage');
+                                    else if (userRole["Role"]
+                                        .toString()
+                                        .contains("Housing"))
+                                      Navigator.of(context)
+                                          .pushReplacementNamed('/HousingPage');
+                                  });
+                                }).catchError((e) {
+                                  print('Error: $e');
+                                  final snackBar = SnackBar(
+                                    content: Text(
+                                        'Incorrect user email or password!',
+                                      style: TextStyle(
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  );
+
+                                  // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                  Scaffold.of(context).showSnackBar(snackBar);
+                                });
+                              }
+                            },
                           ),
-                          color: Colors.green,
-                          elevation: 1.0,
-                          splashColor: Colors.blueGrey,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)),
-                          onPressed: validateAndSubmit,
-                        ),
-                      ),
+                        );
+                      }),
                     ],
                   ),
                 ),
