@@ -226,8 +226,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
@@ -245,8 +243,6 @@
 				"${BUILT_PRODUCTS_DIR}/url_launcher/url_launcher.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
@@ -300,15 +296,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Runner-checkManifestLockResult.txt",
 			);
@@ -477,6 +469,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.swe418;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos11.4;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -500,6 +493,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.swe418;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos11.4;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
