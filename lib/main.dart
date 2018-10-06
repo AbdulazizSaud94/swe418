@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swe418/Screens/Student/ViewPairing.dart';
 
 //pages
 import 'Screens/Auth/LoginPage.dart';
@@ -7,7 +8,17 @@ import 'Screens/Admin/AdminTabs.dart';
 import 'Screens/Student/ProfilePage.dart';
 import 'Screens/Admin/AddUserPage.dart';
 import 'Screens/Admin/UsersList.dart';
+<<<<<<< HEAD
 import 'Screens/Student/SingleRoomRequestPage.dart';
+=======
+import 'Screens/Student/RequestsPage.dart';
+import 'Screens/Student/UnlockDoor.dart';
+import 'Screens/Student/RequestPairing.dart';
+import 'Screens/Student/SUnlockDoorList.dart';
+import 'Screens/Housing/HousingRequestsPage.dart';
+import 'Screens/Housing/HUnlockDoorList.dart';
+
+>>>>>>> 656b7d476ac61e1ce9260b4ca462bdb2a10f0f99
 
 
 void main() => runApp(new MyApp());
@@ -28,7 +39,17 @@ class MyApp extends StatelessWidget {
         '/ProfilePage': (BuildContext context) => new ProfilePage(),
         '/AddUserPage': (BuildContext context) => new AddUserPage(),
         '/UsersList': (BuildContext context) => new UsersList(),
+<<<<<<< HEAD
         '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage()
+=======
+        '/RequestsPage': (BuildContext context) => new RequestsPage(),
+        '/UnlockDoor' : (BuildContext context) => new UnlockDoor(),
+        '/RequestPairing': (BuildContext context) => new RequestPairing(),
+        '/ViewPairing': (BuildContext context) => new ViewPairing(),
+        '/UnlockDoorList': (BuildContext context) => new SUnlockDoorList(),
+        '/HousingPage': (BuildContext context) => new HousingRequestsPage(),
+        '/HUnlockDoorList': (BuildContext context) => new HUnlockDoorList(),
+>>>>>>> 656b7d476ac61e1ce9260b4ca462bdb2a10f0f99
       },
     );
   }

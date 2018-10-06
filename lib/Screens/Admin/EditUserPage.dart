@@ -38,9 +38,7 @@ class EditState extends State<EditUserPage> {
   }
 
   @override
-  Widget build(BuildContext contexr){
-    print("REEEEEEEEEEEEEEEEEEEEEEEEEE");
-    print(document['email']);
+  Widget build(BuildContext context){
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Edit On ${document["Name"]}'),

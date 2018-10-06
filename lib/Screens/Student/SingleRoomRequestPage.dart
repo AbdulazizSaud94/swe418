@@ -65,6 +65,19 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                 ),
                 maxLines: 5,
               ),
+                            FlatButton(
+                child: Icon(Icons.attach_file),
+                textColor: Colors.blueAccent,
+                onPressed: () {
+                  // Navigator.pop(context);
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => new EditUserPage(
+                  //               document: document,
+                  //             )));
+                },
+              ),
               SizedBox(height: 20.0),
               Container(
                 height: 50.0,
@@ -82,19 +95,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                       //validateAndSubmit();
                     }),
               ),
-              FlatButton(
-                child: Icon(Icons.attach_file),
-                textColor: Colors.blueAccent,
-                onPressed: () {
-                  // Navigator.pop(context);
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => new EditUserPage(
-                  //               document: document,
-                  //             )));
-                },
-              ),
+
             ],
           ),
         ),
