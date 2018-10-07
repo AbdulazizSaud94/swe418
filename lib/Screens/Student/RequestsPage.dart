@@ -243,9 +243,9 @@ class RequestsPageState extends State<RequestsPage> {
                               onPressed: () {
                                 confirmDialog(context).then((bool value) async {
                                 if(value)
-                                Navigator.of(context).pushReplacementNamed('/ViewPairing');
+                                Navigator.of(context).pushNamed('/ViewPairing');
                                 else 
-                                 Navigator.of(context).pushReplacementNamed('/RequestPairing');
+                                 Navigator.of(context).pushNamed('/RequestPairing');
 
                                 //TODO
                               });}
