@@ -318,7 +318,7 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushReplacementNamed('/SingleRoomRequestPage');
+                                Navigator.of(context).pushNamed('/SingleRoomRequestPage');
                               },
                             ),
                           ),

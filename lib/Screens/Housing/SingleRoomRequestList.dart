@@ -50,9 +50,8 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return new ExpansionTile(
-                    title: new Text('Request: ${document['SingleRoom']}'),
+                    title: new Text('Request: ${document['Request_Body']}'),
                     children: <Widget>[
-                      new Text('Name: ${document['Name']}'),
                       new Text('Status: ${document['Status']}'),
                       new Text('Created: ${document['Created'].toString()}'),
                     ],
@@ -62,10 +61,20 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                         new Container(
                           width: 50.0,
                           child: new FlatButton(
-                            child: Icon(Icons.recent_actors),
+                            child: Icon(Icons.done),
                             textColor: Colors.blueAccent,
                             onPressed: () {
-                              _handlePressed(context, document);
+                              _approvePressed(context, document);
+                            },
+                          ),
+                        ),
+                        new Container(
+                          width: 50.0,
+                          child: new FlatButton(
+                            child: Icon(Icons.remove),
+                            textColor: Colors.blueAccent,
+                            onPressed: () {
+                              _declinePressed(context, document);
                             },
                           ),
                         ),
@@ -79,25 +88,57 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
     );
   }
 
-  void _handlePressed(BuildContext context, DocumentSnapshot document) {
-    confirmDialog(context).then((bool value) async {
+  void _approvePressed(BuildContext context, DocumentSnapshot document) {
+    confirmDialog1(context).then((bool value) async {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'Status' : 'Done'});
+          await transaction.update(ds.reference, {'Status' : 'Approved'});
+        });
+      }
+    });
+  }
+
+  void _declinePressed(BuildContext context, DocumentSnapshot document) {
+    confirmDialog2(context).then((bool value) async {
+      if (value) {
+        Firestore.instance.runTransaction((transaction) async {
+          DocumentSnapshot ds = await transaction.get(document.reference);
+          await transaction.update(ds.reference, {'Status' : 'Declined'});
         });
       }
     });
   }
 }
 
-Future<bool> confirmDialog(BuildContext context) {
+Future<bool> confirmDialog1(BuildContext context) {
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Mark This As Done?"),
+          title: new Text("Approve Request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+}
+
+Future<bool> confirmDialog2(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Decline Request?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
