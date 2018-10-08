@@ -13,13 +13,13 @@ class RequestMaintenance extends StatefulWidget {
 
 class RequestMaintenanceState extends State<RequestMaintenance> {
   final formKey = GlobalKey<FormState>();
+  String title;
+  String details;
   String building;
   String floor;
   String room;
   DateTime created;
   String uid;
-  String title;
-  String details;
   QuerySnapshot doc;
 
   File _image;
@@ -55,6 +55,8 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         .collection('Maintenance')
         .document()
         .setData({
+      'Title': title,
+      'Details': details,
       'Building': building,
       'Floor': floor,
       'Room': room,
@@ -62,8 +64,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
       'Created': created,
       'Housing_Emp': "",
       'UID': uid,
-      'Title': title,
-      'Details': details,
 
 
     });
@@ -254,11 +254,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                             }),
                       ),
                       SizedBox(height: 35.0),
-                      Container(
-                        child: _image == null
-                            ? new Text('No image selected.')
-                            : new Image.file(_image),
-                      ),
                       new FloatingActionButton(
                         onPressed: getImage,
                         tooltip: 'Pick Image',
