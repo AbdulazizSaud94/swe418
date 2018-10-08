@@ -10,6 +10,8 @@ class RequestMaintenance extends StatefulWidget {
 }
 
 class RequestMaintenanceState extends State<RequestMaintenance> {
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,11 +37,17 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
           ),
           body: TabBarView(
             children: [
+              Container(),
               Container(
-                child: Text('test1'),
-              ),
-              Container(
-                child: Text('test2'),
+                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                child: Form(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: <Widget>[
+                      TextFormField(),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
