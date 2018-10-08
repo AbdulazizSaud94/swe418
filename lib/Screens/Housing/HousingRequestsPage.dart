@@ -241,14 +241,8 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                confirmDialog(context).then((bool value) async {
-                                if(value)
-                                Navigator.of(context).pushReplacementNamed('/ViewPairing');
-                                else 
-                                 Navigator.of(context).pushReplacementNamed('/RequestPairing');
-
-                                //TODO
-                              });}
+                                Navigator.of(context).pushNamed('/ViewPairing');
+                              }
                             ),
                           ),
                         );
