@@ -18,7 +18,7 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
           .collection('Requests')
           .document('SingleRoom')
           .collection('SingleRoom')
-          .where("Status", isEqualTo: 'Declined')
+          .where("Status", isEqualTo: 'Pending')
           .getDocuments();
     });
     super.initState();
