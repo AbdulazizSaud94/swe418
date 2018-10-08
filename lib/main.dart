@@ -17,6 +17,7 @@ import 'Screens/Housing/HUnlockDoorList.dart';
 import 'Screens/Student/RequestMaintenance.dart';
 import 'Screens/Housing/SingleRoomRequestList.dart';
 import 'Screens/Housing/HMaintenanceList.dart';
+import 'Screens/Student/SingleRoomRequestPage.dart';
 
 
 
@@ -48,7 +49,9 @@ class MyApp extends StatelessWidget {
         '/HUnlockDoorList': (BuildContext context) => new HUnlockDoorList(),
         '/RequestMaintenance': (BuildContext context) => new RequestMaintenance(),
         '/SingleRoomRequestList': (BuildContext context) => new SingleRoomRequestList(),
+        '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage(),
         '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
+
 
 
       },
