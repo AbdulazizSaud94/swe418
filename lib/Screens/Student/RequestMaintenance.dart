@@ -44,7 +44,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         .document()
         .setData({
       'Building': building,
-      'Fllor': floor,
+      'Floor': floor,
       'Room': room,
       'Status': "Pending",
       'Created': created,
@@ -77,8 +77,11 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                 ),
               ],
             ),
-            title: Text('Maintenance Requests'),
+            title: Text('Maintenance Requests',
+            style: TextStyle(
+                 fontWeight: FontWeight.bold),
           ),
+            ),
           body: TabBarView(
             children: [
               //First tab
