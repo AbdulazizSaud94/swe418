@@ -4,23 +4,36 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 String name;
 String email;
+String uid;
 
 class ProfilePage extends StatefulWidget {
-
   @override
   ProfilePageState createState() => new ProfilePageState();
 }
 
 class ProfilePageState extends State<ProfilePage> {
-
+  @override
+  void initState() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+      uid = user.uid;
+      await Firestore.instance
+          .collection("Users")
+          .document(user.uid)
+          .get()
+          .then((data) {
+        email = data['Email'];
+        name = data['Name'];
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    name=getdata('name');
-    email=getdata('email');
+    // name=getdata('name');
+    // email=getdata('email');
     return new Scaffold(
         appBar: new AppBar(
           title: new Text(
@@ -28,80 +41,94 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           backgroundColor: Colors.lightGreen.withOpacity(0.8),
         ),
-        body: new Stack(
-          children: <Widget>[
-            ClipPath(
-              child: Container(color: Colors.lightGreen.withOpacity(0.8)),
-              clipper: GetClipper(),
-            ),
-            Positioned(
-              width: 350.0,
-              left: 25.0,
-              top: MediaQuery.of(context).size.height / 13,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: 150.0,
-                    height: 150.0,
-                    decoration: BoxDecoration(
-                        color: Colors.blueGrey,
-                        image: DecorationImage(
-                            image:
-                                NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
-                            fit: BoxFit.cover),
-                        borderRadius: BorderRadius.all(Radius.circular(75.0)),
-                        boxShadow: [
-                          BoxShadow(blurRadius: 20.0, color: Colors.black)
-                        ]),
-                  ),
-                  SizedBox(height: 35.0),
-                  new Text(
-                    'Hello, $name!',
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-
-                    style: new TextStyle(
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 15.0),
-                  new Text(
-                    '$email',
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: new TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 25.0),
-                ],
-              ),
-            ),
-            Positioned(
-              left: 20.0,
-              top: 500.0,
-              child: Container(
-                height: 45.0,
-                width: 130.0,
-                child: RaisedButton.icon(
-                  icon: Icon(FontAwesomeIcons.envelope),
-                  label: Text(
-                    'Send Email',
-                    style: TextStyle(
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.bold,
+        body: new FutureBuilder<DocumentSnapshot>(
+          future: Firestore.instance.collection('Users').document(uid).get(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.active:
+              case ConnectionState.waiting:
+                return new Center(
+                  child: new CircularProgressIndicator(),
+                );
+              case ConnectionState.done:
+                return new Stack(
+                  children: <Widget>[
+                    ClipPath(
+                      child:
+                          Container(color: Colors.lightGreen.withOpacity(0.8)),
+                      clipper: GetClipper(),
                     ),
-                  ),
-                  color: Colors.blueAccent,
-                  elevation: 1.0,
-                  splashColor: Colors.blueGrey,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  onPressed: _launchEmail,
-                ),
-              ),
-            ),
-          ],
+                    Positioned(
+                      width: 350.0,
+                      left: 25.0,
+                      top: MediaQuery.of(context).size.height / 13,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            width: 150.0,
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                                color: Colors.blueGrey,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        'https://i.stack.imgur.com/l60Hf.png'),
+                                    fit: BoxFit.cover),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(75.0)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 20.0, color: Colors.black)
+                                ]),
+                          ),
+                          SizedBox(height: 35.0),
+                          new Text(
+                            'Hello, $name!',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: new TextStyle(
+                                fontSize: 25.0, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 15.0),
+                          new Text(
+                            '$email',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: new TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 25.0),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      left: 20.0,
+                      top: 500.0,
+                      child: Container(
+                        height: 45.0,
+                        width: 130.0,
+                        child: RaisedButton.icon(
+                          icon: Icon(FontAwesomeIcons.envelope),
+                          label: Text(
+                            'Send Email',
+                            style: TextStyle(
+                              fontSize: 13.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          color: Colors.blueAccent,
+                          elevation: 1.0,
+                          splashColor: Colors.blueGrey,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
+                          onPressed: _launchEmail,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+            }
+          },
         ),
         //Drawer
         drawer: new Drawer(
@@ -123,11 +150,11 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ),
             new Divider(),
-             new ListTile(
+            new ListTile(
                 leading: new Icon(Icons.exit_to_app),
-               title: new Text('Requests Page'),
+                title: new Text('Requests Page'),
                 onTap: () {
-                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
+                  Navigator.of(context).pushReplacementNamed('/RequestsPage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
@@ -169,17 +196,18 @@ _launchEmail() async {
   }
 }
 
- String getdata(String geter) {
-
-  FirebaseAuth.instance.currentUser().then((FirebaseUser user){
-    Firestore.instance.collection("Users").document(user.uid).get().then((data){
-     email=data['Email'];
-     name=data['Name'];
+String getdata(String geter) {
+  FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+    Firestore.instance
+        .collection("Users")
+        .document(user.uid)
+        .get()
+        .then((data) {
+      email = data['Email'];
+      name = data['Name'];
     });
   });
-   if (geter=='name')
-    return name;
-    if (geter=='email')
-    return email;
-   return '0';
+  if (geter == 'name') return name;
+  if (geter == 'email') return email;
+  return '0';
 }
