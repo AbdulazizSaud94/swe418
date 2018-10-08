@@ -98,8 +98,8 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                     new StreamBuilder<QuerySnapshot>(
                         stream: Firestore.instance
                             .collection('Requests')
-                            .document('UnlockDoor')
-                            .collection('UnlockDoor')
+                            .document('Maintenance')
+                            .collection('Maintenance')
                             .where('UID', isEqualTo: uid)
                             .where('Status', isEqualTo: 'Pending')
                             .snapshots(),
@@ -118,9 +118,11 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                                     .map((DocumentSnapshot document) {
                                   return new ListTile(
                                     title: new Text(
-                                        'Created: ${document['Created'].toString()}'),
+                                        'Title: ${document['Title']}'),
                                     subtitle: new Text(
-                                        'Status: ${document['Status']}'),
+//                                        'Status: ${document['Status']}'),
+                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+
                                     onTap: () {}, // view user detaild TODO
                                   );
                                 }).toList(),
@@ -135,6 +137,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
               Container(
                 padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: Form(
+                  key: formKey,
                   child: ListView(
                     shrinkWrap: true,
                     children: <Widget>[
@@ -308,24 +311,25 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
     });
   }
 
-  Future<bool> confirmDialog(BuildContext context) {
-    return showDialog<bool>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new AlertDialog(
-            title: new Text("Submit Request?"),
-            actions: <Widget>[
-              new FlatButton(
-                child: Text("Yes"),
-                onPressed: () => Navigator.of(context).pop(true),
-              ),
-              new FlatButton(
-                child: Text("No"),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-            ],
-          );
-        });
-  }
+}
+
+Future<bool> confirmDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Submit Request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
 }
