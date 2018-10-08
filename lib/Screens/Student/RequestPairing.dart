@@ -70,7 +70,7 @@ class RequestPairing extends StatelessWidget {
         confirmDialog(context).then((bool value) async {
           if(value){
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
-      Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').document().setData({'From': user.email,'To': document['Email']});
+      Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').document().setData({'From': user.email,'To': document['Email'], 'Status':'Pending'});
       
             }
           });

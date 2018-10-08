@@ -171,7 +171,7 @@ _launchEmail() async {
 
  String getdata(String geter) {
 
-  FirebaseAuth.instance.currentUser().then((FirebaseUser user){
+  FirebaseAuth.instance.currentUser().then((FirebaseUser user) async{
     Firestore.instance.collection("Users").document(user.uid).get().then((data){
      email=data['Email'];
      name=data['Name'];

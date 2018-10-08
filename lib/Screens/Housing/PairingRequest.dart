@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ViewPairing extends StatefulWidget {
   ViewPairingState createState() => new ViewPairingState();
@@ -25,8 +24,7 @@ class ViewPairingState extends State<ViewPairing> {
           stream: Firestore.instance
              .collection('Requests')
             .document('Pairing')
-            .collection('PairingRequests')
-            .where('To', isEqualTo: uid) 
+            .collection('HousingRequests')
             .where('Status', isEqualTo: 'Pending')
               .snapshots(),
           builder:
@@ -43,8 +41,8 @@ class ViewPairingState extends State<ViewPairing> {
                     snapshot.data.documents.map((DocumentSnapshot document) {
                   return new ListTile(
                     title:
-                        new Text('From: ${document['From'].toString()}'),
-                   
+                        new Text('Student1: ${document['Student1'].toString()}'),
+                   subtitle: new Text('Student2: ${document['Student2'].toString()}'),
                  
                   trailing: new Row(
                       mainAxisSize: MainAxisSize.min,
@@ -52,10 +50,10 @@ class ViewPairingState extends State<ViewPairing> {
                         new Container(
                           width: 50.0,
                           child: new FlatButton(
-                            child: Icon(Icons.email),
+                            child: Icon(Icons.done),
                             textColor: Colors.blueAccent,
                             onPressed: () {
-                             _handlePressed(context, document, "email");
+                             _handlePressed(context, document, "Approve");
                             },
                           ),
                         ),
@@ -63,10 +61,10 @@ class ViewPairingState extends State<ViewPairing> {
                         new Container(
                           width: 50.0,
                           child: new FlatButton(
-                            child: Icon(Icons.done),
+                            child: Icon(Icons.remove),
                             textColor: Colors.blueAccent,
                             onPressed: () {
-                              _handlePressed(context, document, "send");
+                              _handlePressed(context, document, "Decline");
                             },
                           ),
                         ),
@@ -78,23 +76,20 @@ class ViewPairingState extends State<ViewPairing> {
   }
 
   void _handlePressed(BuildContext context, DocumentSnapshot document, String check) async {
-    if(check.contains('email')){
-      String url = 'mailto:' + document['From'] + '?subject=Pairing Request ';
-            if (await canLaunch(url)) {
-              await launch(url);
-            } else {
-              throw 'Could not launch $url';
-            }
+    
+    if(check.contains('Decline')){
+    Firestore.instance.runTransaction((transaction) async {
+          DocumentSnapshot ds = await transaction.get(document.reference);
+          await transaction.update(ds.reference, {'Status' : 'Decline'});
+        });
 
     }
-    else if (check.contains('send')){
+    else if (check.contains('Approve')){
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'Status' : 'Waiting For Housing'});
+          await transaction.update(ds.reference, {'Status' : 'Approve'});
         });
-      Firestore.instance.collection('Requests').document('Pairing').collection('HousingPairing').document().setData({'Student1': uid,'Student2': document['From'], 'Status':'Pending'});
-
-
+     
     }
    
   }
