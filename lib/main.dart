@@ -14,9 +14,15 @@ import 'Screens/Student/RequestPairing.dart';
 import 'Screens/Student/SUnlockDoorList.dart';
 import 'Screens/Housing/HousingRequestsPage.dart';
 import 'Screens/Housing/HUnlockDoorList.dart';
-import 'Screens/Student/SingleRoomRequestPage.dart';
+import 'Screens/Student/RequestMaintenance.dart';
 import 'Screens/Housing/SingleRoomRequestList.dart';
+<<<<<<< HEAD
 import 'Screens/Housing/PairingRequest.dart';
+=======
+import 'Screens/Housing/HMaintenanceList.dart';
+import 'Screens/Student/SingleRoomRequestPage.dart';
+
+>>>>>>> master
 
 
 
@@ -45,9 +51,17 @@ class MyApp extends StatelessWidget {
         '/UnlockDoorList': (BuildContext context) => new SUnlockDoorList(),
         '/HousingPage': (BuildContext context) => new HousingRequestsPage(),
         '/HUnlockDoorList': (BuildContext context) => new HUnlockDoorList(),
+<<<<<<< HEAD
         '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage(),
         '/PairingRequest':(BuildContext context) => new PairingRequest(),
+=======
+        '/RequestMaintenance': (BuildContext context) => new RequestMaintenance(),
+>>>>>>> master
         '/SingleRoomRequestList': (BuildContext context) => new SingleRoomRequestList(),
+        '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage(),
+        '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
+
+
 
       },
     );

@@ -453,7 +453,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                //TODO
+                                Navigator.of(context).pushNamed('/HMaintenanceList');
                               },
                             ),
                           ),

@@ -45,40 +45,40 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
   }
 
   Future<bool> confirmDialog(BuildContext context) {
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text("Send Request"),
-          actions: <Widget>[
-            new FlatButton(
-              child: Text("Yes"),
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-            new FlatButton(
-              child: Text("No"),
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-          ],
-        );
-      });
+    return showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: new Text("Send Request"),
+            actions: <Widget>[
+              new FlatButton(
+                child: Text("Yes"),
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+              new FlatButton(
+                child: Text("No"),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+            ],
+          );
+        });
   }
-Future<bool> sucessDialog(BuildContext context) {
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text("Request has been created"),
-          actions: <Widget>[
-            new FlatButton(
-              child: Text("Ok"),
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-          ],
-        );
-      });
+  Future<bool> sucessDialog(BuildContext context) {
+    return showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: new Text("Request has been created"),
+            actions: <Widget>[
+              new FlatButton(
+                child: Text("Ok"),
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+            ],
+          );
+        });
   }
 
   void _handlePressed(BuildContext context) {
@@ -124,10 +124,10 @@ Future<bool> sucessDialog(BuildContext context) {
                 ),
                 maxLines: 5,
               ),
-                FlatButton(
-                  child: Icon(Icons.attach_file),
-                  textColor: Colors.blueAccent,
-                  onPressed: () {
+              FlatButton(
+                child: Icon(Icons.attach_file),
+                textColor: Colors.blueAccent,
+                onPressed: () {
                 },
               ),
               SizedBox(height: 20.0),
