@@ -124,7 +124,7 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             new Divider(),
              new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(Icons.receipt),
                title: new Text('Requests Page'),
                 onTap: () {
                    Navigator.of(context).pushReplacementNamed('/RequestsPage');

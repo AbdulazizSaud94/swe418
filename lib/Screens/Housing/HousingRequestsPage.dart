@@ -241,7 +241,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/ViewPairing');
+                                Navigator.of(context).pushNamed('/PairingRequest');
                               }
                             ),
                           ),

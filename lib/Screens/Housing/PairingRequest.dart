@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ViewPairing extends StatefulWidget {
-  ViewPairingState createState() => new ViewPairingState();
+class PairingRequest extends StatefulWidget {
+  PairingRequestState createState() => new PairingRequestState();
 }
 
-class ViewPairingState extends State<ViewPairing> {
+class PairingRequestState extends State<PairingRequest> {
   String uid;
   
   
@@ -24,7 +24,7 @@ class ViewPairingState extends State<ViewPairing> {
           stream: Firestore.instance
              .collection('Requests')
             .document('Pairing')
-            .collection('HousingRequests')
+            .collection('HousingPairing')
             .where('Status', isEqualTo: 'Pending')
               .snapshots(),
           builder:
@@ -87,7 +87,7 @@ class ViewPairingState extends State<ViewPairing> {
     else if (check.contains('Approve')){
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'Status' : 'Approve'});
+          await transaction.update(ds.reference, {'Status' : 'Approved'});
         });
      
     }

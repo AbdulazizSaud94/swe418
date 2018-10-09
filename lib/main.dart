@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:swe418/Screens/Student/ViewPairing.dart';
+
 
 //pages
 import 'Screens/Auth/LoginPage.dart';
@@ -16,9 +16,10 @@ import 'Screens/Housing/HousingRequestsPage.dart';
 import 'Screens/Housing/HUnlockDoorList.dart';
 import 'Screens/Student/RequestMaintenance.dart';
 import 'Screens/Housing/SingleRoomRequestList.dart';
+import 'Screens/Housing/PairingRequest.dart';
 import 'Screens/Housing/HMaintenanceList.dart';
 import 'Screens/Student/SingleRoomRequestPage.dart';
-
+import 'package:swe418/Screens/Student/ViewPairing.dart';
 
 
 
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         '/SingleRoomRequestList': (BuildContext context) => new SingleRoomRequestList(),
         '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage(),
         '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
+        '/PairingRequest': (BuildContext context) => new PairingRequest(),
 
 
 
