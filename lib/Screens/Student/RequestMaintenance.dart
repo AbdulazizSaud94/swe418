@@ -1,8 +1,10 @@
 import 'dart:async';
-
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RequestMaintenance extends StatefulWidget {
   @override
@@ -11,14 +13,24 @@ class RequestMaintenance extends StatefulWidget {
 
 class RequestMaintenanceState extends State<RequestMaintenance> {
   final formKey = GlobalKey<FormState>();
+  String title;
+  String details;
   String building;
   String floor;
   String room;
   DateTime created;
   String uid;
-  String title;
-  String details;
   QuerySnapshot doc;
+
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   void initState() {
@@ -43,6 +55,8 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         .collection('Maintenance')
         .document()
         .setData({
+      'Title': title,
+      'Details': details,
       'Building': building,
       'Floor': floor,
       'Room': room,
@@ -50,9 +64,12 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
       'Created': created,
       'Housing_Emp': "",
       'UID': uid,
-      'Title': title,
-      'Details': details,
+
+
     });
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('MaintenanceRequests/${uid}_${created}');
+    final StorageUploadTask task = firebaseStorageRef.putFile(_image);
+
     Navigator.of(context).pop();
   }
 
@@ -77,11 +94,11 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                 ),
               ],
             ),
-            title: Text('Maintenance Requests',
-            style: TextStyle(
-                 fontWeight: FontWeight.bold),
-          ),
+            title: Text(
+              'Maintenance Requests',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
+          ),
           body: TabBarView(
             children: [
               //First tab
@@ -120,8 +137,8 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                                 children: snapshot.data.documents
                                     .map((DocumentSnapshot document) {
                                   return new ListTile(
-                                    title: new Text(
-                                        'Title: ${document['Title']}'),
+                                    title:
+                                        new Text('Title: ${document['Title']}'),
                                     subtitle: new Text(
 //                                        'Status: ${document['Status']}'),
                                         'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
@@ -237,6 +254,12 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                             }),
                       ),
                       SizedBox(height: 35.0),
+                      new FloatingActionButton(
+                        onPressed: getImage,
+                        tooltip: 'Pick Image',
+                        child: new Icon(Icons.add_a_photo),
+                      ),
+                      SizedBox(height: 35.0),
                       Container(
                         height: 45.0,
                         padding: EdgeInsets.only(left: 70.0, right: 70.0),
@@ -314,7 +337,10 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
     });
   }
 
+
 }
+
+
 
 Future<bool> confirmDialog(BuildContext context) {
   return showDialog<bool>(
