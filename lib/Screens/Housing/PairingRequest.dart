@@ -87,7 +87,7 @@ class PairingRequestState extends State<PairingRequest> {
     else if (check.contains('Approve')){
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'Status' : 'Approve'});
+          await transaction.update(ds.reference, {'Status' : 'Approved'});
         });
      
     }
