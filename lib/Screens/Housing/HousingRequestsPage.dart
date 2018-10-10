@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'housing_change_room_request.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -382,6 +382,9 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
+
+                                Navigator.push(
+                                    context, MaterialPageRoute(builder: (context) => HousingChangeRoomPage()));
                                 //TODO
                               },
                             ),

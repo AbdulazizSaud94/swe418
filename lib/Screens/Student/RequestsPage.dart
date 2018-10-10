@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'change_room_request.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'UnlockDoor.dart';
@@ -389,6 +389,8 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
+                                Navigator.push(
+                                    context, MaterialPageRoute(builder: (context) => ChangeRoomPage()));
                                 //TODO
                               },
                             ),
