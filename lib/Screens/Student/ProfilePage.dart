@@ -4,23 +4,37 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 String name;
 String email;
 
 class ProfilePage extends StatefulWidget {
-
   @override
   ProfilePageState createState() => new ProfilePageState();
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  String name;
+  String email;
+  String uid;
 
+  @override
+  void initState() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+      this.uid = user.uid;
+      await Firestore.instance
+          .collection('Users')
+          .document(uid)
+          .get()
+          .then((data) {
+        this.name = data['Name'];
+        this.email = data['Email'];
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    name=getdata('name');
-    email=getdata('email');
     return new Scaffold(
         appBar: new AppBar(
           title: new Text(
@@ -35,6 +49,28 @@ class ProfilePageState extends State<ProfilePage> {
               clipper: GetClipper(),
             ),
             Positioned(
+              left: 300.0,
+              child: Container(
+                height: 30.0,
+                width: 110.0,
+                child: RaisedButton(
+                    child: const Text(
+                      'Edit Profile',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    color: Colors.grey,
+                    elevation: 1.0,
+                    splashColor: Colors.blueGrey,
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0)),
+                    onPressed: () {}),
+              ),
+            ),
+            Positioned(
               width: 350.0,
               left: 25.0,
               top: MediaQuery.of(context).size.height / 13,
@@ -46,8 +82,8 @@ class ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                         color: Colors.blueGrey,
                         image: DecorationImage(
-                            image:
-                                NetworkImage('https://i.stack.imgur.com/l60Hf.png'),
+                            image: NetworkImage(
+                                'https://i.stack.imgur.com/l60Hf.png'),
                             fit: BoxFit.cover),
                         borderRadius: BorderRadius.all(Radius.circular(75.0)),
                         boxShadow: [
@@ -59,10 +95,8 @@ class ProfilePageState extends State<ProfilePage> {
                     'Hello, $name!',
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-
                     style: new TextStyle(
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold),
+                        fontSize: 25.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 15.0),
                   new Text(
@@ -70,35 +104,19 @@ class ProfilePageState extends State<ProfilePage> {
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     style: new TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold),
+                        fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 25.0),
                 ],
               ),
             ),
             Positioned(
-              left: 20.0,
-              top: 500.0,
+              top: 320.0,
               child: Container(
-                height: 45.0,
-                width: 130.0,
-                child: RaisedButton.icon(
-                  icon: Icon(FontAwesomeIcons.envelope),
-                  label: Text(
-                    'Send Email',
-                    style: TextStyle(
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  color: Colors.blueAccent,
-                  elevation: 1.0,
-                  splashColor: Colors.blueGrey,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  onPressed: _launchEmail,
-                ),
+                color: Colors.black.withOpacity(0.58),
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                width: 225.0,
+                height: 2.0,
               ),
             ),
           ],
@@ -123,11 +141,11 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ),
             new Divider(),
-             new ListTile(
+            new ListTile(
                 leading: new Icon(Icons.exit_to_app),
-               title: new Text('Requests Page'),
+                title: new Text('Requests Page'),
                 onTap: () {
-                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
+                  Navigator.of(context).pushReplacementNamed('/RequestsPage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
@@ -158,28 +176,4 @@ class GetClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
   }
-}
-
-_launchEmail() async {
-  String url = 'mailto:' + email + '?subject=News&body=New%20plugin';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
-
- String getdata(String geter) {
-
-  FirebaseAuth.instance.currentUser().then((FirebaseUser user){
-    Firestore.instance.collection("Users").document(user.uid).get().then((data){
-     email=data['Email'];
-     name=data['Name'];
-    });
-  });
-   if (geter=='name')
-    return name;
-    if (geter=='email')
-    return email;
-   return '0';
 }
