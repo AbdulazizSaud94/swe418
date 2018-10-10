@@ -36,8 +36,8 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
       this.uid = user.uid;
       doc = await Firestore.instance
           .collection('Requests')
-          .document('Maintenance')
-          .collection('Maintenance')
+          .document('SingleRoom')
+          .collection('SingleRoom')
           .where("UID", isEqualTo: uid)
           .getDocuments();
     });
