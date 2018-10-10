@@ -112,7 +112,7 @@ class ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Positioned(
-            top: 350.0,
+            top: 352.0,
             child: Container(
               color: Colors.black.withOpacity(0.58),
               margin: const EdgeInsets.symmetric(vertical: 16.0),
@@ -131,7 +131,7 @@ class ProfilePageState extends State<ProfilePage> {
                       'Information',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 23.0,
+                        fontSize: 24.0,
                         fontStyle: FontStyle.italic,
                       ),
                     ),
@@ -197,49 +197,83 @@ class ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Positioned(
-            child: ListView(
+
+            child: Container(
+              padding: EdgeInsets.only(top: 450.0),
+              child: ListView(
               shrinkWrap: true,
               children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 450.0),
-                  child: Stack(
-                    children: <Widget>[
-                      ExpansionTile(
-                        title: Text(
-                          'Intrestst & Hobbies',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        children: <Widget>[
-                          Text('dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
-                        ],
-                      ),
-                      Container(padding: EdgeInsets.only(top: 100.0),
-                        child:
-                        ExpansionTile(
-                          title: Text(
-                            'Things I dislike',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          children: <Widget>[
-                            Text('dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
-                          ],
-                        ),
-                      ),
-
-                    ],
+                ExpansionTile(
+                  title: Text(
+                    'Intrests & Hobbies',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-
+                  children: <Widget>[
+                    Text('dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
+                  ],
+                ),
+                ExpansionTile(
+                  title: Text(
+                    'Things I dislike',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  children: <Widget>[
+                    Text('dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
+                  ],
                 ),
               ],
-            ),
+            ),),
+//            child: ListView(
+//              shrinkWrap: true,
+//              children: <Widget>[
+//                Container(
+//                  padding: EdgeInsets.only(top: 450.0),
+//                  child: Stack(
+//                    children: <Widget>[
+//                      ExpansionTile(
+//                        title: Text(
+//                          'Intrestst & Hobbies',
+//                          style: TextStyle(
+//                            color: Colors.black,
+//                            fontSize: 20.0,
+//                            fontWeight: FontWeight.bold,
+//                          ),
+//                        ),
+//                        children: <Widget>[
+//                          Text('dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
+//                        ],
+//                      ),
+//                      Container(padding: EdgeInsets.only(top: 100.0),
+//                        child:
+//                        ExpansionTile(
+//                          title: Text(
+//                            'Things I dislike',
+//                            style: TextStyle(
+//                              color: Colors.black,
+//                              fontSize: 20.0,
+//                              fontWeight: FontWeight.bold,
+//                            ),
+//                          ),
+//                          children: <Widget>[
+//                            Text('dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
+//                          ],
+//                        ),
+//                      ),
+//
+//                    ],
+//                  ),
+//
+//                ),
+//              ],
+//            ),
 
 
           ),

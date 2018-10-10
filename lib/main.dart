@@ -17,6 +17,7 @@ import 'Screens/Housing/HUnlockDoorList.dart';
 import 'Screens/Student/RequestMaintenance.dart';
 import 'Screens/Housing/SingleRoomRequestList.dart';
 import 'Screens/Housing/HMaintenanceList.dart';
+import 'Screens/Student/test.dart';
 
 
 
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         '/RequestMaintenance': (BuildContext context) => new RequestMaintenance(),
         '/SingleRoomRequestList': (BuildContext context) => new SingleRoomRequestList(),
         '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
+        '/test': (BuildContext context) => new ExpansionTileSample(),
 
 
       },
