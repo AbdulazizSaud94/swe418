@@ -4,9 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'EditProfile.dart';
 
-
-
-
 class ProfilePage extends StatefulWidget {
   @override
   ProfilePageState createState() => new ProfilePageState();
@@ -24,7 +21,6 @@ class ProfilePageState extends State<ProfilePage> {
   String major;
   String smoking;
 
-
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -41,6 +37,8 @@ class ProfilePageState extends State<ProfilePage> {
         this.graduationTerm = data['GraduationTerm'];
         this.smoking = data['Smoking'];
         this.mobile = data['Mobile'];
+        this.intrestsHobbies = data['IntrestsHobbies'];
+        this.dislike = data['Dislikes'];
       });
     });
     super.initState();
@@ -85,8 +83,17 @@ class ProfilePageState extends State<ProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditProfile(name: name, city: city, major: major, graduationTerm: graduationTerm,
-                          smoking: smoking, mobile: mobile,),
+                        builder: (context) => EditProfile(
+                              name: name,
+                              city: city,
+                              major: major,
+                              graduationTerm: graduationTerm,
+                              smoking: smoking,
+                              mobile: mobile,
+                              intrestsHobbies: intrestsHobbies,
+                              dislike: dislike,
+                              uid: uid,
+                            ),
                       ),
                     );
                   }),
@@ -95,7 +102,7 @@ class ProfilePageState extends State<ProfilePage> {
           Positioned(
             width: 350.0,
             left: 25.0,
-            top: MediaQuery.of(context).size.height / 13,
+            top: MediaQuery.of(context).size.height / 40,
             child: Column(
               children: <Widget>[
                 Container(
@@ -120,20 +127,26 @@ class ProfilePageState extends State<ProfilePage> {
                   style: new TextStyle(
                       fontSize: 25.0, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 15.0),
-                FlatButton(onPressed: (){}, child: Text(
-                  '$email',
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: new TextStyle(
-                      fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),),
+                FlatButton(
+                  onPressed: _launchEmail,
+                  child: Text(
+                    '$email',
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: new TextStyle(
+                      color: Colors.black54,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
                 SizedBox(height: 25.0),
               ],
             ),
           ),
           Positioned(
-            top: 352.0,
+            top: 310.0,
             child: Container(
               color: Colors.black.withOpacity(0.58),
               margin: const EdgeInsets.symmetric(vertical: 16.0),
@@ -142,7 +155,7 @@ class ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Positioned(
-            top: 342.0,
+            top: 300.0,
             child: Container(
               child: Stack(
                 children: <Widget>[
@@ -162,7 +175,7 @@ class ProfilePageState extends State<ProfilePage> {
             ),
           ),
           Positioned(
-            top: 380.0,
+            top: 338.0,
             child: Stack(
               children: <Widget>[
                 Container(
@@ -224,6 +237,34 @@ class ProfilePageState extends State<ProfilePage> {
                           ),
                         ],
                       ),
+                      Row(
+                        children: <Widget>[
+                          Container(padding: EdgeInsets.only(top: 200.0)),
+                          Text(
+                            'Mobile Number:',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16.0),
+                          ),
+                          Text(
+                            '  $mobile',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(padding: EdgeInsets.only(top: 240.0)),
+                          Text(
+                            'Major:',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16.0),
+                          ),
+                          Text(
+                            '  $major',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -232,7 +273,7 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           Positioned(
             child: Container(
-              padding: EdgeInsets.only(top: 480.0),
+              padding: EdgeInsets.only(top: 470.0),
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
@@ -246,8 +287,7 @@ class ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     children: <Widget>[
-                      Text(
-                          'dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
+                      Text('$intrestsHobbies'),
                     ],
                   ),
                   ExpansionTile(
@@ -260,8 +300,7 @@ class ProfilePageState extends State<ProfilePage> {
                       ),
                     ),
                     children: <Widget>[
-                      Text(
-                          'dddcdkovidohiehweh ewfhefwh0dfvbkbovepernowiowih0\nguqwigg8fg8f8f9qwdf87qdw8f7f7dqw8gwdgg0qwd0gwdq90g09hdqw\nwdgiuqg9qwdg98qdwg08dqw0'),
+                      Text('$dislike'),
                     ],
                   ),
                 ],
@@ -311,6 +350,15 @@ class ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  _launchEmail() async {
+    String url = 'mailto:' + email + '?subject=News&body=New%20plugin';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
 
 class GetClipper extends CustomClipper<Path> {
@@ -327,8 +375,4 @@ class GetClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
   }
-
-
 }
-
-

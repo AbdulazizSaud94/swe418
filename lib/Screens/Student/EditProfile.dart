@@ -16,8 +16,21 @@ class EditProfile extends StatefulWidget {
   final String graduationTerm;
   final String smoking;
   final String mobile;
+  final String intrestsHobbies;
+  final String dislike;
+  final String uid;
 
-  EditProfile({this.name, this.city, this.major, this.graduationTerm, this.smoking, this.mobile});
+  //constructor
+  EditProfile(
+      {this.name,
+      this.city,
+      this.major,
+      this.graduationTerm,
+      this.smoking,
+      this.mobile,
+      this.intrestsHobbies,
+      this.dislike,
+      this.uid});
 }
 
 class EditProfileState extends State<EditProfile> {
@@ -145,6 +158,44 @@ class EditProfileState extends State<EditProfile> {
                 ),
               ),
               SizedBox(height: 30.0),
+              TextFormField(
+                  initialValue: widget.intrestsHobbies,
+                  maxLines: 3,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    labelText: 'Intrests & Hobbies:',
+                    labelStyle: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54),
+                  ),
+                  onSaved: (value) => newIntrestsHobbies = value,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      // The form is empty
+                      return "Field can\'t be empty";
+                    }
+                  }),
+              SizedBox(height: 30.0),
+              TextFormField(
+                  initialValue: widget.intrestsHobbies,
+                  maxLines: 3,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    labelText: 'Things I dislike:',
+                    labelStyle: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54),
+                  ),
+                  onSaved: (value) => newDislike = value,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      // The form is empty
+                      return "Field can\'t be empty";
+                    }
+                  }),
+              SizedBox(height: 30.0),
               Text(
                 'City:',
                 style: TextStyle(
@@ -246,6 +297,7 @@ class EditProfileState extends State<EditProfile> {
                 items: <String>[
                   'I Don\'t Smoke',
                   'I Smoke',
+                  'Not Specified',
                 ].map((String value) {
                   return new DropdownMenuItem<String>(
                     value: value,
@@ -263,6 +315,31 @@ class EditProfileState extends State<EditProfile> {
                   });
                 },
               ),
+              SizedBox(height: 40.0),
+              Container(
+                height: 50.0,
+                padding: EdgeInsets.only(left: 65.0, right: 65.0),
+                child: RaisedButton(
+                    child: Text(
+                      'Save Changes',
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    splashColor: Colors.lightGreen,
+                    onPressed: () async {
+                      if (validateAndSave()) {
+                        Firestore.instance
+                            .collection('Users')
+                            .document(widget.uid)
+                            .updateData({'Name': newName});
+                        Navigator.of(context)
+                            .pop();
+                      }
+                    }),
+              ),
+              SizedBox(height: 60.0),
             ],
           ),
         ),
