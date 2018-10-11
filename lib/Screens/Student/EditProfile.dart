@@ -9,13 +9,28 @@ import 'package:image_picker/image_picker.dart';
 class EditProfile extends StatefulWidget {
   @override
   EditProfileState createState() => new EditProfileState();
+
+  final String name;
+  final String city;
+  final String major;
+  final String graduationTerm;
+  final String smoking;
+  final String mobile;
+
+  EditProfile({this.name, this.city, this.major, this.graduationTerm, this.smoking, this.mobile});
 }
 
 class EditProfileState extends State<EditProfile> {
   final formKey = GlobalKey<FormState>();
   String uid;
-  String name;
-  String city = "City";
+  String newName;
+  String newCity = 'City';
+  String newMobile;
+  String newIntrestsHobbies;
+  String newDislike;
+  String newGraduationTerm;
+  String newMajor;
+  String newSmoking = 'Do you smoke?';
 
   DateTime birthDate = new DateTime(2000);
 
@@ -31,21 +46,6 @@ class EditProfileState extends State<EditProfile> {
         birthDate = picked;
       });
     }
-  }
-
-  @override
-  void initState() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      this.uid = user.uid;
-      await Firestore.instance
-          .collection('Users')
-          .document(uid)
-          .get()
-          .then((data) {
-        this.name = data['Name'];
-      });
-    });
-    super.initState();
   }
 
   //method to check for empty fields
@@ -66,17 +66,15 @@ class EditProfileState extends State<EditProfile> {
         title: new Text('Edit Profile'),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+        padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0),
         child: Form(
           key: formKey,
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
               TextFormField(
-                initialValue: name,
-                keyboardType: TextInputType.emailAddress,
-                maxLength: 64,
-                onSaved: (value) => name = value,
+                initialValue: widget.name,
+                onSaved: (value) => newName = value,
                 validator: (value) {
                   if (value.isEmpty) {
                     // The form is empty
@@ -86,14 +84,76 @@ class EditProfileState extends State<EditProfile> {
                 decoration: InputDecoration(
                   labelText: 'Name: ',
                   labelStyle: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 20.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.black54),
                 ),
               ),
-              SizedBox(height: 15.0),
+              SizedBox(height: 30.0),
+              TextFormField(
+                initialValue: widget.major,
+                onSaved: (value) => newMajor = value,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    // The form is empty
+                    return "Field can\'t be empty";
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Major: ',
+                  labelStyle: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ),
+              SizedBox(height: 30.0),
+              TextFormField(
+                initialValue: widget.graduationTerm,
+                onSaved: (value) => newGraduationTerm = value,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    // The form is empty
+                    return "Field can\'t be empty";
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Garduation Term: ',
+                  labelStyle: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ),
+              SizedBox(height: 30.0),
+              TextFormField(
+                initialValue: widget.mobile,
+                onSaved: (value) => newGraduationTerm = value,
+                keyboardType: TextInputType.phone,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    // The form is empty
+                    return "Field can\'t be empty";
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Mobile Number: ',
+                  labelStyle: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ),
+              SizedBox(height: 30.0),
+              Text(
+                'City:',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               DropdownButton<String>(
-                hint: Text(city,
+                hint: Text(widget.city,
                     style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -137,19 +197,71 @@ class EditProfileState extends State<EditProfile> {
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.black54));
-                    city = value;
+                    newCity = value;
                   });
                 },
               ),
-              SizedBox(height: 15.0),
-              Container(
-                height: 30.0,
-                width: 110.0,
-                child:
-                    RaisedButton(
-                      child: Text('Select Date'),
-                      onPressed: (){selectDate(context);},
+              SizedBox(height: 30.0),
+              Row(
+                children: <Widget>[
+                  Text(
+                    'Birth Date:',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  Container(
+                    height: 30.0,
+                    padding: EdgeInsets.only(right: 50.0, left: 20.0),
+                    child: RaisedButton(
+                      child: Text(
+                        'Select Date',
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () {
+                        selectDate(context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 30.0),
+              Text(
+                'Do you smoke?',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              DropdownButton<String>(
+                hint: Text(widget.smoking,
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54)),
+                items: <String>[
+                  'I Don\'t Smoke',
+                  'I Smoke',
+                ].map((String value) {
+                  return new DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  this.setState(() {
+                    Text(value,
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54));
+                    newSmoking = value;
+                  });
+                },
               ),
             ],
           ),

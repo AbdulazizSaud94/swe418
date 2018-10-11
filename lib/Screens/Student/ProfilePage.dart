@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'EditProfile.dart';
 
-String name;
-String email;
+
+
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -16,6 +16,14 @@ class ProfilePageState extends State<ProfilePage> {
   String name;
   String email;
   String uid;
+  String city;
+  String mobile;
+  String intrestsHobbies;
+  String dislike;
+  String graduationTerm;
+  String major;
+  String smoking;
+
 
   @override
   void initState() {
@@ -28,6 +36,11 @@ class ProfilePageState extends State<ProfilePage> {
           .then((data) {
         this.name = data['Name'];
         this.email = data['Email'];
+        this.major = data['Major'];
+        this.city = data['City'];
+        this.graduationTerm = data['GraduationTerm'];
+        this.smoking = data['Smoking'];
+        this.mobile = data['Mobile'];
       });
     });
     super.initState();
@@ -69,7 +82,13 @@ class ProfilePageState extends State<ProfilePage> {
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/EditProfile');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfile(name: name, city: city, major: major, graduationTerm: graduationTerm,
+                          smoking: smoking, mobile: mobile,),
+                      ),
+                    );
                   }),
             ),
           ),
@@ -102,13 +121,13 @@ class ProfilePageState extends State<ProfilePage> {
                       fontSize: 25.0, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 15.0),
-                new Text(
+                FlatButton(onPressed: (){}, child: Text(
                   '$email',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                   style: new TextStyle(
                       fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
+                ),),
                 SizedBox(height: 25.0),
               ],
             ),
@@ -172,7 +191,7 @@ class ProfilePageState extends State<ProfilePage> {
                                 fontWeight: FontWeight.bold, fontSize: 16.0),
                           ),
                           Text(
-                            '  Jeddah',
+                            '  $city',
                             style: TextStyle(fontSize: 16.0),
                           ),
                         ],
@@ -186,7 +205,21 @@ class ProfilePageState extends State<ProfilePage> {
                                 fontWeight: FontWeight.bold, fontSize: 16.0),
                           ),
                           Text(
-                            '  181',
+                            '  $graduationTerm',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Container(padding: EdgeInsets.only(top: 150.0)),
+                          Text(
+                            'Smoking:',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16.0),
+                          ),
+                          Text(
+                            '  $smoking',
                             style: TextStyle(fontSize: 16.0),
                           ),
                         ],
@@ -199,7 +232,7 @@ class ProfilePageState extends State<ProfilePage> {
           ),
           Positioned(
             child: Container(
-              padding: EdgeInsets.only(top: 450.0),
+              padding: EdgeInsets.only(top: 480.0),
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
@@ -294,4 +327,8 @@ class GetClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
   }
+
+
 }
+
+
