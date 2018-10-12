@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
 class SingleRoomRequestPage extends StatefulWidget {
   @override
@@ -13,6 +16,34 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
   String request;
   String status = 'Pending';
   DateTime created;
+  String uid;
+  QuerySnapshot doc;
+
+
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+  }
+
+    @override
+  void initState() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+      this.uid = user.uid;
+      doc = await Firestore.instance
+          .collection('Requests')
+          .document('SingleRoom')
+          .collection('SingleRoom')
+          .where("UID", isEqualTo: uid)
+          .getDocuments();
+    });
+    super.initState();
+  }
+
 
   //method to check for empty fields
   bool validateAndSave() {
@@ -25,6 +56,9 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
   }
 
   void validateAndSubmit() async {
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
+    final StorageUploadTask task = firebaseStorageRef.putFile(_image);
+
     created = DateTime.now();
     formKey.currentState.save();
     await Firestore.instance
@@ -36,12 +70,17 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
       'Request_Body': request,
       'Status': status,
       'Created': created,
+      'User_ID': uid,
+      //'Reference': firebaseStorageRef.getDownloadURL().toString(),
     });
+    
+   // print(firebaseStorageRef.getDownloadURL().toString());
+  
     sucessDialog(context).then((bool value) async {
-      if (value) {
-        Navigator.of(context).pushReplacementNamed('/RequestsPage');
-      }
-    });
+        if (value) {
+          Navigator.of(context).pushReplacementNamed('/RequestsPage');
+        }
+      });
   }
 
   Future<bool> confirmDialog(BuildContext context) {
@@ -128,6 +167,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                 child: Icon(Icons.attach_file),
                 textColor: Colors.blueAccent,
                 onPressed: () {
+                  getImage();
                 },
               ),
               SizedBox(height: 20.0),
