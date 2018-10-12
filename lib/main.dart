@@ -19,7 +19,8 @@ import 'Screens/Housing/SingleRoomRequestList.dart';
 import 'Screens/Housing/PairingRequest.dart';
 import 'Screens/Housing/HMaintenanceList.dart';
 import 'Screens/Student/SingleRoomRequestPage.dart';
-import 'Screens/Student/Compliants.dart';
+import 'Screens/Student/Complaints.dart';
+import 'Screens/Housing/HComplaintsList.dart';
 import 'package:swe418/Screens/Student/ViewPairing.dart';
 
 
@@ -53,7 +54,8 @@ class MyApp extends StatelessWidget {
         '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage(),
         '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
         '/PairingRequest': (BuildContext context) => new PairingRequest(),
-        '/Complaints': (BuildContext context) => new Compliants()
+        '/Complaints': (BuildContext context) => new Complaints(),
+        '/HComplaintsList': (BuildContext context) => new HComplaintsList()
 
 
 

@@ -6,12 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Compliants extends StatefulWidget {
+class Complaints extends StatefulWidget {
   @override
-  CompliantsState createState() => new CompliantsState();
+  ComplaintsState createState() => new ComplaintsState();
 }
 
-class CompliantsState extends State<Compliants> {
+class ComplaintsState extends State<Complaints> {
   final formKey = GlobalKey<FormState>();
   String title;
   String details;

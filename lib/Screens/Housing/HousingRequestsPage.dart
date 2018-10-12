@@ -563,8 +563,9 @@ class RequestsPageState extends State<HousingRequestsPage> {
             new Divider(),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
-                title: new Text('something '),
+                title: new Text('Complaints'),
                 onTap: () {
+                  Navigator.of(context).pushNamed('/HComplaintsList');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
