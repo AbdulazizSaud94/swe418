@@ -241,14 +241,8 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                confirmDialog(context).then((bool value) async {
-                                if(value)
-                                Navigator.of(context).pushNamed('/ViewPairing');
-                                else 
                                  Navigator.of(context).pushNamed('/RequestPairing');
-
-                                //TODO
-                              });}
+                            }
                             ),
                           ),
                         );
@@ -549,8 +543,8 @@ class RequestsPageState extends State<RequestsPage> {
         ],
       ),
       //Drawer
-      drawer: new Drawer(
-        child: new ListView(
+             drawer: new Drawer(
+            child: new ListView(
           children: <Widget>[
             new Container(
               height: 120.0,
@@ -568,17 +562,17 @@ class RequestsPageState extends State<RequestsPage> {
               ),
             ),
             new Divider(),
-            new ListTile(
-                leading: new Icon(Icons.exit_to_app),
-                title: new Text('Profile Page'),
+             new ListTile(
+                leading: new Icon(Icons.receipt),
+               title: new Text('Requests Page'),
                 onTap: () {
-                   Navigator.of(context).pushReplacementNamed('/ProfilePage');
+                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.radio),
                 title: new Text('Complaints'),
                 onTap: () {
-                    Navigator.of(context).pushNamed('/Complaints');
+                  Navigator.of(context).pushNamed('/Complaints');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
@@ -591,8 +585,7 @@ class RequestsPageState extends State<RequestsPage> {
                   });
                 }),
           ],
-        ),
-      ),
+        ))
     );
   }
 }
