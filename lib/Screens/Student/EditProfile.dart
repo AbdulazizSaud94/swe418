@@ -332,7 +332,7 @@ class EditProfileState extends State<EditProfile> {
                     splashColor: Colors.lightGreen,
                     onPressed: () async {
                       if (validateAndSave()) {
-                        Firestore.instance
+                        await Firestore.instance
                             .collection('Users')
                             .document(widget.uid)
                             .updateData({'Name': newName, 'Email': widget.email, 'Role': 'Student', 'Mobile': newMobile, 'Major': newMajor,
