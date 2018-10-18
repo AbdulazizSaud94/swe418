@@ -195,9 +195,7 @@ class AddUserPageState extends State<AddUserPage> {
                               .collection('Users')
                               .document(user.uid)
                               .setData(
-                                  {'Email': email, 'Name': name, 'Role': role, 'Major': 'Not Specified', 'City': 'Dhahran'
-                                    , 'GraduationTerm': 'Not Specified', 'Smoking': 'Not Specified', 'Mobile': 'Not Specified',
-                                  'IntrestsHobbies': 'Not Specified', 'Dislikes': 'Not Specified'});
+                                  {'Email': email, 'Name': name, 'Role': role});
                           Navigator.of(context)
                               .pushReplacementNamed('/AdminTabs');
                         }
@@ -211,4 +209,3 @@ class AddUserPageState extends State<AddUserPage> {
     );
   }
 }
-

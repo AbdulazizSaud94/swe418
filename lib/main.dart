@@ -18,15 +18,9 @@ import 'Screens/Student/RequestMaintenance.dart';
 import 'Screens/Housing/SingleRoomRequestList.dart';
 import 'Screens/Housing/PairingRequest.dart';
 import 'Screens/Housing/HMaintenanceList.dart';
-<<<<<<< HEAD
 import 'Screens/Student/SingleRoomRequestPage.dart';
 import 'Screens/Student/Complaints.dart';
 import 'Screens/Housing/HComplaintsList.dart';
-=======
-import 'Screens/Student/EditProfile.dart';
-
-
->>>>>>> Abdulaziz_branch
 
 
 void main() => runApp(new MyApp());
@@ -57,15 +51,11 @@ class MyApp extends StatelessWidget {
         '/SingleRoomRequestList': (BuildContext context) => new SingleRoomRequestList(),
         '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage(),
         '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
-<<<<<<< HEAD
         '/PairingRequest': (BuildContext context) => new PairingRequest(),
         '/Complaints': (BuildContext context) => new Complaints(),
         '/HComplaintsList': (BuildContext context) => new HComplaintsList()
 
 
-=======
-        '/EditProfile': (BuildContext context) => new EditProfile(),
->>>>>>> Abdulaziz_branch
 
       },
     );
