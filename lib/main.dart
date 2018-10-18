@@ -21,6 +21,10 @@ import 'Screens/Housing/HMaintenanceList.dart';
 import 'Screens/Student/SingleRoomRequestPage.dart';
 import 'Screens/Student/Complaints.dart';
 import 'Screens/Housing/HComplaintsList.dart';
+import 'Screens/Student/EditProfile.dart';
+
+
+
 
 
 void main() => runApp(new MyApp());
@@ -53,8 +57,8 @@ class MyApp extends StatelessWidget {
         '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
         '/PairingRequest': (BuildContext context) => new PairingRequest(),
         '/Complaints': (BuildContext context) => new Complaints(),
-        '/HComplaintsList': (BuildContext context) => new HComplaintsList()
-
+        '/HComplaintsList': (BuildContext context) => new HComplaintsList(),
+        '/EditProfile': (BuildContext context) => new EditProfile(),
 
 
       },
