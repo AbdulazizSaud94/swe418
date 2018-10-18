@@ -93,6 +93,7 @@ class ProfilePageState extends State<ProfilePage> {
                               intrestsHobbies: intrestsHobbies,
                               dislike: dislike,
                               uid: uid,
+                              email: email,
                             ),
                       ),
                     );

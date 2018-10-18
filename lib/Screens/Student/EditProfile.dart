@@ -19,6 +19,7 @@ class EditProfile extends StatefulWidget {
   final String intrestsHobbies;
   final String dislike;
   final String uid;
+  final String email;
 
   //constructor
   EditProfile(
@@ -30,7 +31,8 @@ class EditProfile extends StatefulWidget {
       this.mobile,
       this.intrestsHobbies,
       this.dislike,
-      this.uid});
+      this.uid,
+      this.email});
 }
 
 class EditProfileState extends State<EditProfile> {
@@ -333,9 +335,10 @@ class EditProfileState extends State<EditProfile> {
                         Firestore.instance
                             .collection('Users')
                             .document(widget.uid)
-                            .updateData({'Name': newName});
+                            .updateData({'Name': newName, 'Email': widget.email, 'Role': 'Student', 'Mobile': newMobile, 'Major': newMajor,
+                        'City': newCity, 'GraduationTerm': newGraduationTerm, 'Smoking': newSmoking, 'IntrestsHobbies': newIntrestsHobbies, 'Dislikes': newDislike});
                         Navigator.of(context)
-                            .pop();
+                            .pushReplacementNamed('/ProfilePage');
                       }
                     }),
               ),
