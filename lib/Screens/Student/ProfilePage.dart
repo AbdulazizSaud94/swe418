@@ -84,17 +84,17 @@ class ProfilePageState extends State<ProfilePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => EditProfile(
-                              name: name,
-                              city: city,
-                              major: major,
-                              graduationTerm: graduationTerm,
-                              smoking: smoking,
-                              mobile: mobile,
-                              intrestsHobbies: intrestsHobbies,
-                              dislike: dislike,
-                              uid: uid,
-                              email: email,
-                            ),
+                          name: name,
+                          city: city,
+                          major: major,
+                          graduationTerm: graduationTerm,
+                          smoking: smoking,
+                          mobile: mobile,
+                          intrestsHobbies: intrestsHobbies,
+                          dislike: dislike,
+                          uid: uid,
+                          email: email,
+                        ),
                       ),
                     );
                   }),
@@ -330,21 +330,11 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ),
             new Divider(),
-             new ListTile(
-                leading: new Icon(Icons.receipt),
-               title: new Text('Requests Page'),
-
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
                 title: new Text('Requests Page'),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
-                }),
-            new ListTile(
-                leading: new Icon(Icons.radio),
-                title: new Text('Complaints'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/Complaints');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
@@ -386,28 +376,4 @@ class GetClipper extends CustomClipper<Path> {
   bool shouldReclip(CustomClipper<Path> oldClipper) {
     return true;
   }
-}
-
-_launchEmail() async {
-  String url = 'mailto:' + email + '?subject=News&body=New%20plugin';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
-
- String getdata(String geter) {
-
-  FirebaseAuth.instance.currentUser().then((FirebaseUser user) async{
-    Firestore.instance.collection("Users").document(user.uid).get().then((data){
-     email=data['Email'];
-     name=data['Name'];
-    });
-  });
-   if (geter=='name')
-    return name;
-    if (geter=='email')
-    return email;
-   return '0';
 }
