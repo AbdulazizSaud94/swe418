@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:map_view/map_view.dart';
 //pages
 import 'Screens/Auth/LoginPage.dart';
 import 'Screens/Student/HomePage.dart';
@@ -22,13 +21,16 @@ import 'Screens/Student/SingleRoomRequestPage.dart';
 import 'Screens/Student/Complaints.dart';
 import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
+import 'Map.dart';
 
 
 
 
 
-void main() => runApp(new MyApp());
-
+void main() {
+    MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
+  runApp(new MyApp());
+} 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: MapPage(),
       routes: <String, WidgetBuilder>{
         '/LoginPage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
