@@ -22,7 +22,7 @@ import 'Screens/Student/SingleRoomRequestPage.dart';
 import 'Screens/Student/Complaints.dart';
 import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
-
+import 'Screens/Housing/InspectionForm.dart';
 
 
 
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         '/Complaints': (BuildContext context) => new Complaints(),
         '/HComplaintsList': (BuildContext context) => new HComplaintsList(),
         '/EditProfile': (BuildContext context) => new EditProfile(),
-
+        '/InspectionForm':(BuildContext context) => new InspectionForm(),
 
       },
     );
