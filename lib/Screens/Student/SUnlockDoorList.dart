@@ -10,10 +10,29 @@ class SUnlockDoorList extends StatefulWidget {
 class UnlockDoorListState extends State<SUnlockDoorList> {
   String uid;
   QuerySnapshot doc;
+  final formKey = GlobalKey<FormState>();
+  String building;
+  String room;
+  String name;
+  String email;
+  DateTime created;
+  String comment;
+
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       this.uid = user.uid;
+      await Firestore.instance
+          .collection('Users')
+          .document(uid)
+          .get()
+          .then((data) {
+        this.name = data['Name'];
+        this.email = data['Email'];
+        this.building = data['Building'];
+        this.room = data['Room'];
+      });
+
       doc = await Firestore.instance
           .collection('Requests')
           .document('UnlockDoor')
@@ -24,93 +43,171 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
     super.initState();
   }
 
+  void validateAndSubmit() async {
+    created = DateTime.now();
+    formKey.currentState.save();
+    await Firestore.instance
+        .collection('Requests')
+        .document('UnlockDoor')
+        .collection('UnlockDoor')
+        .document()
+        .setData({
+      'Email': email,
+      'Name': name,
+      'Building': building,
+      'Room': room,
+      'Comment': comment,
+      'Status': "Pending",
+      'Created': created,
+      'Housing_Emp': "",
+      'UID': uid
+    });
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Users List'),
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green,
       ),
-      body: new StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance
-              .collection('Requests')
-              .document('UnlockDoor')
-              .collection('UnlockDoor')
-              .where('UID', isEqualTo: uid)
-              .where('Status', isEqualTo: 'Pending')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData)
-              return new Center(
-                child: new CircularProgressIndicator(),
-              );
-            return new ListView(shrinkWrap: true, children: <Widget>[
-              new ListView(
-                shrinkWrap: true,
-                children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
-                  return new ListTile(
-                    title:
-                        new Text('Created: ${document['Created'].toString()}'),
-                    subtitle: new Text('Status: ${document['Status']}'),
-                    // trailing: new Row(
-                    //   mainAxisSize: MainAxisSize.min,
-                    //   children: <Widget>[
-                    //     new Container(
-                    //       width: 50.0,
-                    //       child: new FlatButton(
-                    //         child: Icon(Icons.delete_forever),
-                    //         textColor: Colors.blueAccent,
-                    //         onPressed: () {
-                    //           _handlePressed(context, document);
-                    //         },
-                    //       ),
-                    //     ),
-                    //     new Container(
-                    //       width: 50.0,
-                    //       alignment: Alignment(0.0, 0.0),
-                    //       child: new FlatButton(
-                    //         child: Icon(Icons.edit),
-                    //         textColor: Colors.blueAccent,
-                    //         onPressed: () {
-                    //           Navigator.pop(context);
-                    //         },
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    onTap: () {}, // view user detaild TODO
-                  );
-                }).toList(),
-              ),
-              new Container(
-                height: 50.0,
-                width: 130.0,
-                child: RaisedButton(
-                    child: Text(
-                      'Request Unlock Door',
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+      debugShowCheckedModeBanner: false,
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  text: 'My Requests',
+                ),
+                Tab(
+                  text: 'Create New Request',
+                ),
+              ],
+            ),
+            title: Text(
+              'Unlock Door',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+          ),
+          body: TabBarView(
+            children: [
+              //First tab
+              Container(
+                child: ListView(
+                  children: <Widget>[
+                    SizedBox(height: 30.0),
+                    Container(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text('My Requests',
+                          style: TextStyle(
+                              fontSize: 22.0,
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.bold)),
                     ),
-                    splashColor: Colors.lightGreen,
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/UnlockDoor');
-                    }),
+                    SizedBox(height: 15.0),
+                    new StreamBuilder<QuerySnapshot>(
+                        stream: Firestore.instance
+                            .collection('Requests')
+                            .document('UnlockDoor')
+                            .collection('UnlockDoor')
+                            .where('UID', isEqualTo: uid)
+                            .where('Status', isEqualTo: 'Pending')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (!snapshot.hasData)
+                            return new Center(
+                              child: new CircularProgressIndicator(),
+                            );
+                          return new ListView(
+                            shrinkWrap: true,
+                            children: <Widget>[
+                              new ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data.documents
+                                    .map((DocumentSnapshot document) {
+                                  return new ListTile(
+                                    title:
+                                      new Text('Comment: ${document['Comment'].toString()}'),
+                                    subtitle: new Text(
+                                      'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                    onTap: () {}, // view user detaild TODO
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          );
+                        }),
+                  ],
+                ),
               ),
-            ]);
-          }),
+              //Second tab
+              Container(
+                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+            child: new Form(
+              key: formKey,
+              child: new ListView(
+                children: <Widget>[
+                  Text(
+                    'Requesting Door Unlock:',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 15.0),
+                  Text(
+                    "Building: ${building} Room: ${room}",
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  TextFormField(
+                    maxLength: 200,
+                    onSaved: (value) => comment = value,
+                    decoration: InputDecoration(
+                      labelText: 'Comment (optional)',
+                      labelStyle: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54),
+                    ),
+                  ),
+                  Container(
+                    height: 50.0,
+                    width: 130.0,
+                    child: RaisedButton(
+                        child: Text(
+                          'Send Request',
+                          style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        splashColor: Colors.lightGreen,
+                        onPressed: () {
+                          _handlePressed(context);
+                        }),
+            ),
+          ],
+        ),
+    ),
+  ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  void _handlePressed(BuildContext context, DocumentSnapshot document) {
+  void _handlePressed(BuildContext context) {
     confirmDialog(context).then((bool value) async {
       if (value) {
-        Firestore.instance.runTransaction((transaction) async {
-          DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.delete(ds.reference);
-        });
+        validateAndSubmit();
       }
     });
   }
@@ -122,7 +219,7 @@ Future<bool> confirmDialog(BuildContext context) {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Delete User?"),
+          title: new Text("Send Request?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),

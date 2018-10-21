@@ -60,6 +60,7 @@ class ComplaintsState extends State<Complaints> {
       'Status': "Pending",
       'Created': created,
       'UID': uid,
+      'Attachment': '${uid}_${created}',
     });
     final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
@@ -136,9 +137,8 @@ class ComplaintsState extends State<Complaints> {
                                     title:
                                         new Text('Title: ${document['Title']}'),
                                     subtitle: new Text(
-//                                        'Status: ${document['Status']}'),
-                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-
+                                      //'Status: ${document['Status']}'),
+                                      'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
                                     onTap: () {}, // view user detaild TODO
                                   );
                                 }).toList(),
@@ -235,8 +235,6 @@ class ComplaintsState extends State<Complaints> {
 
 
 }
-
-
 
 Future<bool> confirmDialog(BuildContext context) {
   return showDialog<bool>(
