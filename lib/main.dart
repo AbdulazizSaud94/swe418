@@ -21,11 +21,7 @@ import 'Screens/Student/SingleRoomRequestPage.dart';
 import 'Screens/Student/Complaints.dart';
 import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
-import 'Map.dart';
-
-
-
-
+import 'Screens/Shared/BuildingList.dart';
 
 void main() {
     MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
@@ -39,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       debugShowCheckedModeBanner: false,
-      home: MapPage(),
+      home: LoginPage(),
       routes: <String, WidgetBuilder>{
         '/LoginPage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
@@ -61,8 +57,7 @@ class MyApp extends StatelessWidget {
         '/Complaints': (BuildContext context) => new Complaints(),
         '/HComplaintsList': (BuildContext context) => new HComplaintsList(),
         '/EditProfile': (BuildContext context) => new EditProfile(),
-
-
+        '/BuildingList': (BuildContext context) => new BuildingList()
       },
     );
   }
