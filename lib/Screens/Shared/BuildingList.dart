@@ -58,7 +58,7 @@ class BuildingListState extends State<BuildingList> {
                         new Container(
                           width: 50.0,
                           child: new FlatButton(
-                            child: Icon(FontAwesomeIcons.mapPin),
+                            child: Icon(Icons.place),
                             onPressed: () {
                               print('reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
                               print("${document['lat']}, ${document['lng']}");

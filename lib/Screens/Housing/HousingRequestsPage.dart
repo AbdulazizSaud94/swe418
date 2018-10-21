@@ -578,7 +578,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                   Navigator.of(context).pushNamed('/InspectionForm');
                 }),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(Icons.home),
                 title: new Text('Building List'),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/BuildingList');

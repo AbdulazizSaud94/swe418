@@ -53,263 +53,279 @@ class ProfilePageState extends State<ProfilePage> {
         ),
         backgroundColor: Colors.lightGreen.withOpacity(0.8),
       ),
-      body: new Stack(
-        children: <Widget>[
-          ClipPath(
-            child: Container(color: Colors.lightGreen.withOpacity(0.8)),
-            clipper: GetClipper(),
-          ),
-          Positioned(
-            top: 10.0,
-            left: 295.0,
-            child: Container(
-              height: 30.0,
-              width: 110.0,
-              child: RaisedButton(
-                  child: const Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
+      body: new FutureBuilder<DocumentSnapshot>(
+          future: Firestore.instance.collection('Users').document(uid).get(),
+          builder: (context, snapshot) {
+            return new ListView(children: <Widget>[
+              new Stack(
+                children: <Widget>[
+                  ClipPath(
+                    child: Container(color: Colors.lightGreen.withOpacity(0.8)),
+                    clipper: GetClipper(),
+                  ),
+                  Positioned(
+                    top: 10.0,
+                    left: 295.0,
+                    child: Container(
+                      height: 50.0,
+                      width: 50.0,
+                      child: RaisedButton(
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
+                          color: Colors.blueAccent.withOpacity(0.78),
+                          elevation: 1.0,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(75.0)),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfile(
+                                      name: name,
+                                      city: city,
+                                      major: major,
+                                      graduationTerm: graduationTerm,
+                                      smoking: smoking,
+                                      mobile: mobile,
+                                      intrestsHobbies: intrestsHobbies,
+                                      dislike: dislike,
+                                      uid: uid,
+                                      email: email,
+                                    ),
+                              ),
+                            );
+                          }),
                     ),
                   ),
-                  color: Colors.grey.withOpacity(0.78),
-                  elevation: 1.0,
-                  splashColor: Colors.blueGrey,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditProfile(
-                          name: name,
-                          city: city,
-                          major: major,
-                          graduationTerm: graduationTerm,
-                          smoking: smoking,
-                          mobile: mobile,
-                          intrestsHobbies: intrestsHobbies,
-                          dislike: dislike,
-                          uid: uid,
-                          email: email,
+                  Positioned(
+                    width: 350.0,
+                    left: 25.0,
+                    top: MediaQuery.of(context).size.height / 40,
+                    child: Column(
+                      children: <Widget>[
+                        new Center(
+                          child: Container(
+                            width: 150.0,
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                                color: Colors.blueGrey,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        'https://i.stack.imgur.com/l60Hf.png'),
+                                    fit: BoxFit.cover),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(75.0)),
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 20.0, color: Colors.black)
+                                ]),
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-            ),
-          ),
-          Positioned(
-            width: 350.0,
-            left: 25.0,
-            top: MediaQuery.of(context).size.height / 40,
-            child: Column(
-              children: <Widget>[
-                Container(
-                  width: 150.0,
-                  height: 150.0,
-                  decoration: BoxDecoration(
-                      color: Colors.blueGrey,
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              'https://i.stack.imgur.com/l60Hf.png'),
-                          fit: BoxFit.cover),
-                      borderRadius: BorderRadius.all(Radius.circular(75.0)),
-                      boxShadow: [
-                        BoxShadow(blurRadius: 20.0, color: Colors.black)
-                      ]),
-                ),
-                SizedBox(height: 35.0),
-                new Text(
-                  'Hello, $name!',
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                  style: new TextStyle(
-                      fontSize: 25.0, fontWeight: FontWeight.bold),
-                ),
-                FlatButton(
-                  onPressed: _launchEmail,
-                  child: Text(
-                    '$email',
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: new TextStyle(
-                      color: Colors.black54,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
+                        SizedBox(height: 35.0),
+                        new Text(
+                          'Hello, $name!',
+                          textAlign: TextAlign.center,
+                          overflow: TextOverflow.ellipsis,
+                          style: new TextStyle(
+                              fontSize: 25.0, fontWeight: FontWeight.bold),
+                        ),
+                        FlatButton(
+                          onPressed: _launchEmail,
+                          child: Text(
+                            '$email',
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                            style: new TextStyle(
+                              color: Colors.black54,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 25.0),
+                      ],
                     ),
                   ),
-                ),
-                SizedBox(height: 25.0),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 310.0,
-            child: Container(
-              color: Colors.black.withOpacity(0.58),
-              margin: const EdgeInsets.symmetric(vertical: 16.0),
-              width: 225.0,
-              height: 2.0,
-            ),
-          ),
-          Positioned(
-            top: 300.0,
-            child: Container(
-              child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 5.0),
-                    child: Text(
-                      'Information',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24.0,
-                        fontStyle: FontStyle.italic,
+                  Positioned(
+                    top: 310.0,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.58),
+                      margin: const EdgeInsets.symmetric(vertical: 16.0),
+                      width: 225.0,
+                      height: 2.0,
+                    ),
+                  ),
+                  Positioned(
+                    top: 300.0,
+                    child: Container(
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              'Information',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24.0,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 338.0,
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 5.0),
+                          child: Stack(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    'AGE:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    '  23 Years old',
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 60.0)),
+                                  Text(
+                                    'City:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    '  $city',
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 105.0)),
+                                  Text(
+                                    'Graduation Term:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    '  $graduationTerm',
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 150.0)),
+                                  Text(
+                                    'Smoking:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    '  $smoking',
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 200.0)),
+                                  Text(
+                                    'Mobile Number:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    '  $mobile',
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 240.0)),
+                                  Text(
+                                    'Major:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    '  $major',
+                                    style: TextStyle(fontSize: 16.0),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 470.0),
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: <Widget>[
+                          ExpansionTile(
+                            title: Text(
+                              'Intrests & Hobbies',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            children: <Widget>[
+                              Text('$intrestsHobbies'),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text(
+                              'Things I dislike',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            children: <Widget>[
+                              Text('$dislike'),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
-          Positioned(
-            top: 338.0,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(left: 5.0),
-                  child: Stack(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            'AGE:',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16.0),
-                          ),
-                          Text(
-                            '  23 Years old',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(padding: EdgeInsets.only(top: 60.0)),
-                          Text(
-                            'City:',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16.0),
-                          ),
-                          Text(
-                            '  $city',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(padding: EdgeInsets.only(top: 105.0)),
-                          Text(
-                            'Graduation Term:',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16.0),
-                          ),
-                          Text(
-                            '  $graduationTerm',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(padding: EdgeInsets.only(top: 150.0)),
-                          Text(
-                            'Smoking:',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16.0),
-                          ),
-                          Text(
-                            '  $smoking',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(padding: EdgeInsets.only(top: 200.0)),
-                          Text(
-                            'Mobile Number:',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16.0),
-                          ),
-                          Text(
-                            '  $mobile',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(padding: EdgeInsets.only(top: 240.0)),
-                          Text(
-                            'Major:',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16.0),
-                          ),
-                          Text(
-                            '  $major',
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            child: Container(
-              padding: EdgeInsets.only(top: 470.0),
-              child: ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  ExpansionTile(
-                    title: Text(
-                      'Intrests & Hobbies',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    children: <Widget>[
-                      Text('$intrestsHobbies'),
-                    ],
-                  ),
-                  ExpansionTile(
-                    title: Text(
-                      'Things I dislike',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    children: <Widget>[
-                      Text('$dislike'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+            ]);
+          }),
       //Drawer
       drawer: new Drawer(
         child: new ListView(
@@ -335,6 +351,12 @@ class ProfilePageState extends State<ProfilePage> {
                 title: new Text('Requests Page'),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
+                }),
+            new ListTile(
+                leading: new Icon(Icons.home),
+                title: new Text('Building List'),
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed('/BuildingList');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
