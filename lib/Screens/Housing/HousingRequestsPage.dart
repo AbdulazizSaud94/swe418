@@ -99,7 +99,6 @@ class RequestsPageState extends State<HousingRequestsPage> {
                   ],
                 ),
               ),
-              
             ],
           ),
           SizedBox(height: 40.0),
@@ -225,25 +224,25 @@ class RequestsPageState extends State<HousingRequestsPage> {
                           child: Container(
                             width: 175.0,
                             child: RaisedButton(
-                              child: const Text(
-                                'ENTER',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.bold,
+                                child: const Text(
+                                  'ENTER',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              color: Colors.green,
-                              splashColor: Colors.blueGrey,
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.only(
-                                    bottomRight: Radius.circular(10.0),
-                                    bottomLeft: Radius.circular(10.0)),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/PairingRequest');
-                              }
-                            ),
+                                color: Colors.green,
+                                splashColor: Colors.blueGrey,
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.only(
+                                      bottomRight: Radius.circular(10.0),
+                                      bottomLeft: Radius.circular(10.0)),
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushNamed('/PairingRequest');
+                                }),
                           ),
                         );
                       }),
@@ -312,7 +311,9 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/SingleRoomRequestList');                              },
+                                Navigator.of(context)
+                                    .pushNamed('/SingleRoomRequestList');
+                              },
                             ),
                           ),
                         );
@@ -382,9 +383,11 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-
                                 Navigator.push(
-                                    context, MaterialPageRoute(builder: (context) => HousingChangeRoomPage()));
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            HousingChangeRoomPage()));
                                 //TODO
                               },
                             ),
@@ -456,7 +459,8 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                Navigator.of(context).pushNamed('/HMaintenanceList');
+                                Navigator.of(context)
+                                    .pushNamed('/HMaintenanceList');
                               },
                             ),
                           ),
@@ -574,6 +578,12 @@ class RequestsPageState extends State<HousingRequestsPage> {
                   Navigator.of(context).pushNamed('/InspectionForm');
                 }),
             new ListTile(
+                leading: new Icon(Icons.home),
+                title: new Text('Building List'),
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed('/BuildingList');
+                }),
+            new ListTile(
                 leading: new Icon(Icons.exit_to_app),
                 title: new Text('Sign Out'),
                 onTap: () {
@@ -589,23 +599,24 @@ class RequestsPageState extends State<HousingRequestsPage> {
     );
   }
 }
-Future<bool> confirmDialog(BuildContext context){
+
+Future<bool> confirmDialog(BuildContext context) {
   return showDialog<bool>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return new AlertDialog(
-        title: new Text("Pairing Requests"),
-        actions: <Widget>[
-          new FlatButton(
-            child: Text("Recieved"),
-            onPressed:() => Navigator.of(context).pop(true),
-          ),
-          new FlatButton(
-            child: Text("Send new Request"),
-            onPressed:() => Navigator.of(context).pop(false),
-          ),
-        ],
-      );
-    }
-  );}
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Pairing Requests"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Recieved"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("Send new Request"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+}
