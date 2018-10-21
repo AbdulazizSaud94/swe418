@@ -57,15 +57,9 @@ class ComplaintsState extends State<Complaints> {
         .setData({
       'Title': title,
       'Details': details,
-      //'Building': building,
-      //'Floor': floor,
-      //'Room': room,
       'Status': "Pending",
       'Created': created,
-      //'Housing_Emp': "",
       'UID': uid,
-
-
     });
     final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);

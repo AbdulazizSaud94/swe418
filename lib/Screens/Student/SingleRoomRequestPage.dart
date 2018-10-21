@@ -56,8 +56,8 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
   }
 
   void validateAndSubmit() async {
-    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
-    final StorageUploadTask task = firebaseStorageRef.putFile(_image);
+    //final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
+    //final StorageUploadTask task = firebaseStorageRef.putFile(_image);
 
     created = DateTime.now();
     formKey.currentState.save();
@@ -71,8 +71,10 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
       'Status': status,
       'Created': created,
       'User_ID': uid,
-      //'Reference': firebaseStorageRef.getDownloadURL().toString(),
+      'Attachment': '${uid}_${created}',
     });
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
+    final StorageUploadTask task = firebaseStorageRef.putFile(_image);
     
    // print(firebaseStorageRef.getDownloadURL().toString());
   
