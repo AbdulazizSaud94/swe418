@@ -32,7 +32,7 @@ class BuildingListState extends State<BuildingList> {
 
   @override
   Widget build(BuildContext context) {
-
+    MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Building List'),
