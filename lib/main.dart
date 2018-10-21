@@ -21,12 +21,14 @@ import 'Screens/Student/SingleRoomRequestPage.dart';
 import 'Screens/Student/Complaints.dart';
 import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
+import 'Screens/Housing/InspectionForm.dart';
 import 'Screens/Shared/BuildingList.dart';
 
 void main() {
     MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
   runApp(new MyApp());
 } 
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,8 @@ class MyApp extends StatelessWidget {
         '/Complaints': (BuildContext context) => new Complaints(),
         '/HComplaintsList': (BuildContext context) => new HComplaintsList(),
         '/EditProfile': (BuildContext context) => new EditProfile(),
-        '/BuildingList': (BuildContext context) => new BuildingList()
+        '/BuildingList': (BuildContext context) => new BuildingList(),
+        '/InspectionForm':(BuildContext context) => new InspectionForm(),
       },
     );
   }
