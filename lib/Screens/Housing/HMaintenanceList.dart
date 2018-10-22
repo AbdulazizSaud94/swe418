@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HMaintenanceList extends StatefulWidget {
   HMaintenanceListState createState() => new HMaintenanceListState();
@@ -71,6 +73,16 @@ class HMaintenanceListState extends State<HMaintenanceList> {
                             },
                           ),
                         ),
+                        new Container(
+                          width: 50.0,
+                          child: new FlatButton(
+                            child: Icon(Icons.attachment),
+                            textColor: Colors.blueAccent,
+                            onPressed: () {
+                              _launchURL(context, document);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   );
@@ -80,6 +92,16 @@ class HMaintenanceListState extends State<HMaintenanceList> {
           }),
     );
   }
+
+  _launchURL(BuildContext context, DocumentSnapshot document) async {
+  var url = await FirebaseStorage.instance.ref().child("MaintenanceRequests/${document.data['Attachment']}").getDownloadURL();
+
+  if (await canLaunch(url)) {
+    await launch(url,forceWebView: true);
+  } else {
+    throw 'Could not launch $url';
+  }
+ }
 
   void _handlePressed(BuildContext context, DocumentSnapshot document) {
     confirmDialog(context).then((bool value) async {

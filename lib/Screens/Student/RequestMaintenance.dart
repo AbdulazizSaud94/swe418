@@ -64,8 +64,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
       'Created': created,
       'Housing_Emp': "",
       'UID': uid,
-
-
+      'Attachment': '${uid}_${created}',
     });
     final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('MaintenanceRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
