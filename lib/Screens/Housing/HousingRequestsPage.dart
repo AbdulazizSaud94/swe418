@@ -584,6 +584,12 @@ class RequestsPageState extends State<HousingRequestsPage> {
                   Navigator.of(context).pushReplacementNamed('/BuildingList');
                 }),
             new ListTile(
+              leading: new Icon(Icons.vpn_key),
+              title: new Text('Room Keys'),
+              onTap: () {
+                  Navigator.of(context).pushReplacementNamed('/HKeyList');
+                }),
+            new ListTile(
                 leading: new Icon(Icons.exit_to_app),
                 title: new Text('Sign Out'),
                 onTap: () {

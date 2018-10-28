@@ -23,6 +23,7 @@ import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
 import 'Screens/Housing/InspectionForm.dart';
 import 'Screens/Shared/BuildingList.dart';
+import 'Screens/Housing/HKeyList.dart';
 
 void main() {
     MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         '/EditProfile': (BuildContext context) => new EditProfile(),
         '/BuildingList': (BuildContext context) => new BuildingList(),
         '/InspectionForm':(BuildContext context) => new InspectionForm(),
+        '/HKeyList': (BuildContext context) => new HKeyList(),
       },
     );
   }
