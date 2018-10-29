@@ -99,6 +99,13 @@ class TabsState extends State<AdminTabs> {
             ),
           ),
           new ListTile(
+              leading: new Icon(Icons.announcement),
+              title: new Text('Announcements'),
+              onTap: () {
+                Navigator.of(context).pushNamed('/Announcements');
+              }
+          ),
+          new ListTile(
             leading: new Icon(Icons.add),
             title: new Text('Add Users'),
             onTap: () {
