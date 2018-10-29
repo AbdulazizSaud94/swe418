@@ -353,6 +353,12 @@ class ProfilePageState extends State<ProfilePage> {
                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
                 }),
             new ListTile(
+                leading: new Icon(Icons.library_books),
+                title: new Text('Your Contract'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/RoomContract');
+                }),
+            new ListTile(
                 leading: new Icon(Icons.home),
                 title: new Text('Building List'),
                 onTap: () {
