@@ -65,7 +65,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                   Positioned(
                     top: 10.0,
-                    left: 295.0,
+                    left: 340.0,
                     child: Container(
                       height: 50.0,
                       width: 50.0,
@@ -74,7 +74,7 @@ class ProfilePageState extends State<ProfilePage> {
                             Icons.edit,
                             color: Colors.white,
                           ),
-                          color: Colors.blueAccent.withOpacity(0.78),
+                          color: Colors.grey.withOpacity(0.78),
                           elevation: 1.0,
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(75.0)),
