@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:map_view/map_view.dart';
+
 //pages
 import 'Screens/Auth/LoginPage.dart';
 import 'Screens/Student/HomePage.dart';
@@ -23,13 +24,30 @@ import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
 import 'Screens/Housing/InspectionForm.dart';
 import 'Screens/Shared/BuildingList.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'Screens/Student/notifications.dart';
 void main() {
-    MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
+  MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
   runApp(new MyApp());
-} 
+}
 
 class MyApp extends StatelessWidget {
+  FirebaseMessaging fb = new FirebaseMessaging();
+
+  @override
+  void initState() {
+    fb.configure(
+      onLaunch: (Map<String, dynamic> msg) {
+
+      },
+      onMessage: (Map<String, dynamic> msg) {},
+      onResume: (Map<String, dynamic> msg) {},
+    );
+    fb.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, alert: true, badge: true));
+    fb.onIosSettingsRegistered.listen((IosNotificationSettings setting) {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -41,26 +59,30 @@ class MyApp extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         '/LoginPage': (BuildContext context) => new MyApp(),
         '/AdminTabs': (BuildContext context) => new AdminTabs(),
-        '/HomePage' : (BuildContext context) => new HomePage(),
+        '/HomePage': (BuildContext context) => new HomePage(),
         '/ProfilePage': (BuildContext context) => new ProfilePage(),
         '/AddUserPage': (BuildContext context) => new AddUserPage(),
         '/UsersList': (BuildContext context) => new UsersList(),
         '/RequestsPage': (BuildContext context) => new RequestsPage(),
-        '/UnlockDoor' : (BuildContext context) => new UnlockDoor(),
+        '/UnlockDoor': (BuildContext context) => new UnlockDoor(),
         '/RequestPairing': (BuildContext context) => new RequestPairing(),
         '/UnlockDoorList': (BuildContext context) => new SUnlockDoorList(),
         '/HousingPage': (BuildContext context) => new HousingRequestsPage(),
         '/HUnlockDoorList': (BuildContext context) => new HUnlockDoorList(),
-        '/RequestMaintenance': (BuildContext context) => new RequestMaintenance(),
-        '/SingleRoomRequestList': (BuildContext context) => new SingleRoomRequestList(),
-        '/SingleRoomRequestPage': (BuildContext context) => new SingleRoomRequestPage(),
+        '/RequestMaintenance': (BuildContext context) =>
+            new RequestMaintenance(),
+        '/SingleRoomRequestList': (BuildContext context) =>
+            new SingleRoomRequestList(),
+        '/SingleRoomRequestPage': (BuildContext context) =>
+            new SingleRoomRequestPage(),
         '/HMaintenanceList': (BuildContext context) => new HMaintenanceList(),
         '/PairingRequest': (BuildContext context) => new PairingRequest(),
         '/Complaints': (BuildContext context) => new Complaints(),
         '/HComplaintsList': (BuildContext context) => new HComplaintsList(),
         '/EditProfile': (BuildContext context) => new EditProfile(),
         '/BuildingList': (BuildContext context) => new BuildingList(),
-        '/InspectionForm':(BuildContext context) => new InspectionForm(),
+        '/InspectionForm': (BuildContext context) => new InspectionForm(),
+        '/Notifications': (BuildContext context) => new NotificationPage(),
       },
     );
   }

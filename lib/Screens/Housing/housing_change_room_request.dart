@@ -3,6 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class HousingChangeRoomPage extends StatelessWidget {
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -27,10 +38,24 @@ class HousingChangeRoomPage extends StatelessWidget {
                       child: new FlatButton(
                         child: Icon(Icons.delete_forever),
                         textColor: Colors.blueAccent,
-                        onPressed: () {
+                        onPressed: () async {
+                          var token;
+                          await Firestore.instance.collection("Users").document(document['requester'])
+                              .get().then((data){
+                            token = data.data['token'];
+                          });
+                          await Firestore.instance.collection("Notifications").add({
+                            "date": new DateTime.now(),
+                            "message":"Your request is refused!",
+                            "title": "Request to change room",
+                            "sender": "Housing department",
+                            "to_token": token,
+                            "reciever": document['requester']
+                          });
                           document.reference.updateData({
                             "request_status": "refused"
                           });
+                          _showToast(context, "The request is refused!");
                         },
                       ),
                     ),
@@ -41,10 +66,24 @@ class HousingChangeRoomPage extends StatelessWidget {
                       child: new FlatButton(
                         child: Icon(Icons.add),
                         textColor: Colors.blueAccent,
-                        onPressed: () {
+                        onPressed: () async {
+                          var token;
+                          await Firestore.instance.collection("Users").document(document['requester'])
+                          .get().then((data){
+                            token = data.data['token'];
+                          });
+                          await Firestore.instance.collection("Notifications").add({
+                            "date": new DateTime.now(),
+                            "message":"Your request is approved!",
+                            "title": "Request to change room",
+                            "sender": "Housing department",
+                            "to_token": token,
+                            "reciever": document['requester']
+                          });
                           document.reference.updateData({
                             "request_status": "approve"
                           });
+                          _showToast(context, "The request is approved!");
                         },
                       ),
                     ),

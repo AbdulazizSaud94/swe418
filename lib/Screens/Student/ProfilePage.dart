@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'EditProfile.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -20,28 +21,70 @@ class ProfilePageState extends State<ProfilePage> {
   String graduationTerm;
   String major;
   String smoking;
+  String user;
+  FirebaseMessaging fb = new FirebaseMessaging();
 
   @override
   void initState() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+//
+//    fb.configure(
+//      onLaunch: (Map<String, dynamic> msg) {},
+//      onMessage: (Map<String, dynamic> msg) {},
+//      onResume: (Map<String, dynamic> msg) {},
+//    );
+//    fb.requestNotificationPermissions(
+//        const IosNotificationSettings(sound: true, alert: true, badge: true));
+//    fb.onIosSettingsRegistered.listen((IosNotificationSettings setting) {});
+
+
+//
+//    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+//      this.uid = user.uid;
+//
+//      await Firestore.instance
+//          .collection('Users')
+//          .document(uid)
+//          .updateData({"token":"token"}).then((data){});
+
+//      fb.getToken().then((token) async {
+//        await Firestore.instance.collection('Users').document(uid).updateData({"token":token});
+//      });
+//      fb.onTokenRefresh.listen((token) {
+//
+//      });
+
+//      await Firestore.instance
+//          .collection('Users')
+//          .document(uid)
+//          .get()
+//          .then((data) {
+//        this.name = data['Name'];
+//        this.email = data['Email'];
+//        this.major = data['Major'];
+//        this.city = data['City'];
+//        this.graduationTerm = data['GraduationTerm'];
+//        this.smoking = data['Smoking'];
+//        this.mobile = data['Mobile'];
+//        this.intrestsHobbies = data['IntrestsHobbies'];
+//        this.dislike = data['Dislikes'];
+//      });
+//    });
+
+    super.initState();
+  }
+
+  Future<DocumentSnapshot> getUser() async {
+    await FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
       this.uid = user.uid;
-      await Firestore.instance
-          .collection('Users')
-          .document(uid)
-          .get()
-          .then((data) {
-        this.name = data['Name'];
-        this.email = data['Email'];
-        this.major = data['Major'];
-        this.city = data['City'];
-        this.graduationTerm = data['GraduationTerm'];
-        this.smoking = data['Smoking'];
-        this.mobile = data['Mobile'];
-        this.intrestsHobbies = data['IntrestsHobbies'];
-        this.dislike = data['Dislikes'];
+//      fb.onTokenRefresh.listen((token) {
+        fb.getToken().then((token){
+          Firestore.instance.collection('Users').document(uid).updateData({"token":token});
+
+//        });
       });
     });
-    super.initState();
+
+    return Firestore.instance.collection('Users').document(uid).get();
   }
 
   @override
@@ -54,7 +97,7 @@ class ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.lightGreen.withOpacity(0.8),
       ),
       body: new FutureBuilder<DocumentSnapshot>(
-          future: Firestore.instance.collection('Users').document(uid).get(),
+          future: getUser(),
           builder: (context, snapshot) {
             return new ListView(children: <Widget>[
               new Stack(
@@ -359,6 +402,15 @@ class ProfilePageState extends State<ProfilePage> {
                   Navigator.of(context).pushReplacementNamed('/BuildingList');
                 }),
             new ListTile(
+                leading: new Icon(Icons.notifications),
+                title: new Text('notifications'),
+                onTap: () {
+                  FirebaseAuth.instance.signOut().then((value) {
+                    Navigator.of(context).pushReplacementNamed('/Notifications');
+                  }).catchError((e) {
+                    print(e);
+                  });
+                }),new ListTile(
                 leading: new Icon(Icons.exit_to_app),
                 title: new Text('Sign Out'),
                 onTap: () {

@@ -52,7 +52,7 @@ class PairingRequestState extends State<PairingRequest> {
                           child: new FlatButton(
                             child: Icon(Icons.done),
                             textColor: Colors.blueAccent,
-                            onPressed: () {
+                            onPressed: () async {
                              _handlePressed(context, document, "Approve");
                             },
                           ),
@@ -63,7 +63,8 @@ class PairingRequestState extends State<PairingRequest> {
                           child: new FlatButton(
                             child: Icon(Icons.remove),
                             textColor: Colors.blueAccent,
-                            onPressed: () {
+                            onPressed: () async {
+
                               _handlePressed(context, document, "Decline");
                             },
                           ),

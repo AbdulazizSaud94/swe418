@@ -102,7 +102,7 @@ class HComplaintsListState extends State<HComplaintsList> {
   }
  }
 
-  void _handlePressed(BuildContext context, DocumentSnapshot document) {
+  void _handlePressed(BuildContext context, DocumentSnapshot document)  {
     confirmDialog(context).then((bool value) async {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
