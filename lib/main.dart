@@ -24,6 +24,8 @@ import 'Screens/Student/EditProfile.dart';
 import 'Screens/Housing/InspectionForm.dart';
 import 'Screens/Shared/BuildingList.dart';
 import 'Screens/Student/RoomContract.dart';
+import 'Screens/Admin/Announcements.dart';
+import 'Screens/Student/AnnouncementsList.dart';
 
 void main() {
     MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
