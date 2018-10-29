@@ -23,6 +23,7 @@ import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
 import 'Screens/Housing/InspectionForm.dart';
 import 'Screens/Shared/BuildingList.dart';
+import 'Screens/Housing/HKeyList.dart';
 import 'Screens/Student/RoomContract.dart';
 import 'Screens/Admin/Announcements.dart';
 import 'Screens/Student/AnnouncementsList.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
         '/EditProfile': (BuildContext context) => new EditProfile(),
         '/BuildingList': (BuildContext context) => new BuildingList(),
         '/InspectionForm':(BuildContext context) => new InspectionForm(),
+        '/HKeyList': (BuildContext context) => new HKeyList(),
         '/RoomContract':(BuildContext context) => new RoomContract(),
         '/Announcements': (BuildContext context) => new Announcements(),
         '/AnnouncementsList': (BuildContext context) => new AnnouncementsList(),
