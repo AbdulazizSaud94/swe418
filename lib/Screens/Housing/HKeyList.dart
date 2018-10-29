@@ -13,7 +13,7 @@ class HKeyList extends StatefulWidget {
 
 class HKeyListState extends State<HKeyList> {
   final formKey = GlobalKey<FormState>();
-  String title;
+  String secuirtyName;
   String details;
   String building;
   String floor;
@@ -21,7 +21,7 @@ class HKeyListState extends State<HKeyList> {
   DateTime created;
   String uid;
   QuerySnapshot doc;
-
+  String role;
   File _image;
 
   Future getImage() async {
@@ -41,6 +41,16 @@ class HKeyListState extends State<HKeyList> {
           .where("Type", isEqualTo: "Room")
           .getDocuments();
     });
+    
+    // FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+    //   this.uid = user.uid;
+    //   await Firestore.instance
+    //       .collection('Users')
+    //       .where("Role", isEqualTo: 'Security')
+    //       .then((data) {
+    //     this.secuirtyName = data['Name'];
+    //     });
+    // });
     super.initState();
   }
 
@@ -187,43 +197,127 @@ class HKeyListState extends State<HKeyList> {
                                     title: new Text('Building/Room: ${document['Name']}'),
                                     children: <Widget>[
                                       new Text('Holder: ${document['Holder']}', textAlign: TextAlign.left),
-                                      new Text('Hold Time: ${document['Created'].toString()}'),
+                                      new Text('Hold Time: ${document['Date'].toString()}'),
                                       // new Text('Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
                                     ],
+                                    trailing: new Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        new Container(
+                                          width: 50.0,
+                                          child: new FlatButton(
+                                            child: Icon(Icons.assignment),
+                                            onPressed: () {
+                                              handlePressed(context, document);
+                                            },
+                                          ),
+                                        ),
+                                        new Container(
+                                          width: 50.0,
+                                          child: new FlatButton(
+                                            child: Icon(Icons.person),
+                                            onPressed: () {
+                                              _handlePressed(context, document);
+                                            },
+                                          ),
+                                        ),
+                                        // new DropdownButton<String>(
+                                        //   hint: Text(role,
+                                        //       style: TextStyle(
+                                        //           fontSize: 18.0,
+                                        //           fontWeight: FontWeight.bold,
+                                        //           color: Colors.black54)),
+                                        //   items: <String>['Student', 'Housing', 'Security']
+                                        //       .map((String value) {
+                                        //     return new DropdownMenuItem<String>(
+                                        //       value: value,
+                                        //       child: new Text(value),
+                                        //     );
+                                        //   }).toList(),
+                                        //   onChanged: (value) {
+                                        //     this.setState(() {
+                                        //       Text(value,
+                                        //           style: TextStyle(
+                                        //               fontSize: 18.0,
+                                        //               fontWeight: FontWeight.bold,
+                                        //               color: Colors.black54));
+                                        //       role = value;
+                                        //     });
+                                        //   },
+                                        // ),
+                                        // SizedBox(height: 20.0),
+                                      ],
+                                    ),
                                   );
                                 }).toList(),
                               ),
                             ],
                           );
                         }),
-                  ],
-                ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
-  }
+        );
+      }
 
-  void _handlePressed(BuildContext context) {
-    confirmDialog(context).then((bool value) async {
+  void handlePressed(BuildContext context, DocumentSnapshot document) {
+    confirmDialog(context, document).then((bool value) async {
       if (value) {
-        validateAndSubmit();
+        Firestore.instance.runTransaction((transaction) async {
+          created = DateTime.now();
+          DocumentSnapshot ds = await transaction.get(document.reference);
+          await transaction.update(ds.reference, {'Date' : created,'Holder' : "Security"});
+        });
       }
     });
   }
 
+void _handlePressed(BuildContext context, DocumentSnapshot document) {
+    _confirmDialog(context, document).then((bool value) async {
+      if (value) {
+        Firestore.instance.runTransaction((transaction) async {
+          created = DateTime.now();
+          DocumentSnapshot ds = await transaction.get(document.reference);
+          await transaction.update(ds.reference, {'Date' : created,'Holder' : "Housing"});
+        });
+      }
+    });
+  }
 
 }
 
-Future<bool> confirmDialog(BuildContext context) {
+Future<bool> confirmDialog(BuildContext context, DocumentSnapshot document) {
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Submit Request?"),
+          title: new Text("Assign Master Key of Building ${document['Name']} to Security Employee?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+}
+
+Future<bool> _confirmDialog(BuildContext context, DocumentSnapshot document) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Assign Master Key of Building ${document['Name']} to Housing Employee?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
