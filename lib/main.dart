@@ -65,6 +65,8 @@ class MyApp extends StatelessWidget {
         '/BuildingList': (BuildContext context) => new BuildingList(),
         '/InspectionForm':(BuildContext context) => new InspectionForm(),
         '/RoomContract':(BuildContext context) => new RoomContract(),
+        '/Announcements': (BuildContext context) => new Announcements(),
+        '/AnnouncementsList': (BuildContext context) => new AnnouncementsList(),
       },
     );
   }
