@@ -89,7 +89,10 @@ class AnnouncementsState extends State<Announcements> {
                                   ),
                                 ),
                                 children: <Widget>[
-                                  Text('${document['Details']}\n'),
+                                  Text('${document['Details']}\n',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),),
                                 ],
                               ),
                               trailing: new Row(
