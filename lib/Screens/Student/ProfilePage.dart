@@ -347,6 +347,13 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             new Divider(),
             new ListTile(
+                leading: new Icon(Icons.speaker_notes),
+                title: new Text('Announcements List'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/AnnouncementsList');
+                }),
+            new ListTile(
                 leading: new Icon(Icons.exit_to_app),
                 title: new Text('Requests Page'),
                 onTap: () {
