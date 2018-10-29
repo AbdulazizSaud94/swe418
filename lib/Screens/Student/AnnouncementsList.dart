@@ -18,15 +18,18 @@ class AnnouncementsList extends StatelessWidget {
               return new ListTile(
                 title: ExpansionTile(
                   title: Text(
-                    '${document['Title']}',
+                    '${document['Title']}\n${document['Created']}',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
                   children: <Widget>[
-                    Text('${document['Details']}\n\n${document['Created']}'),
+                    Text('${document['Details']}\n',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),              ),
                   ],
                 ),
                 trailing: new Row(

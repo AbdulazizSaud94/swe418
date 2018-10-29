@@ -62,7 +62,6 @@ class AnnouncementsState extends State<Announcements> {
             ),
             title: Text(
               'Announcements',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           body: TabBarView(
@@ -73,7 +72,7 @@ class AnnouncementsState extends State<Announcements> {
                   children: <Widget>[
                     SizedBox(height: 30.0),
                     new StreamBuilder<QuerySnapshot>(
-                      stream: Firestore.instance.collection('Announcements').snapshots(),
+                      stream: Firestore.instance.collection('Announcements').orderBy('Created', descending: true).snapshots(),
                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) return new Text('Loading...');
                         return new ListView(
@@ -82,15 +81,15 @@ class AnnouncementsState extends State<Announcements> {
                             return new ListTile(
                               title:  ExpansionTile(
                                 title: Text(
-                                  '${document['Title']}',
+                                  '${document['Title']}\n${document['Created']}',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16.0,
-                                    fontWeight: FontWeight.bold,
+                                    fontStyle: FontStyle.italic,
                                   ),
                                 ),
                                 children: <Widget>[
-                                  Text('${document['Details']}\n\n${document['Created']}'),
+                                  Text('${document['Details']}\n'),
                                 ],
                               ),
                               trailing: new Row(
