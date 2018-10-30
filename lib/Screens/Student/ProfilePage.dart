@@ -65,7 +65,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                   Positioned(
                     top: 10.0,
-                    left: 295.0,
+                    left: 340.0,
                     child: Container(
                       height: 50.0,
                       width: 50.0,
@@ -74,7 +74,7 @@ class ProfilePageState extends State<ProfilePage> {
                             Icons.edit,
                             color: Colors.white,
                           ),
-                          color: Colors.blueAccent.withOpacity(0.78),
+                          color: Colors.grey.withOpacity(0.78),
                           elevation: 1.0,
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(75.0)),
@@ -347,16 +347,43 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             new Divider(),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
-                title: new Text('Requests Page'),
+<<<<<<< HEAD
+                leading: new Icon(Icons.receipt),
+               title: new Text('Requests Page'),
+=======
+                leading: new Icon(Icons.speaker_notes),
+                title: new Text('Announcements List'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/RequestsPage');
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/AnnouncementsList');
                 }),
             new ListTile(
+                leading: new Icon(Icons.exit_to_app),
+                title: new Text('Requests Page'),
+>>>>>>> master
+                onTap: () {
+                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
+                }),
+            new ListTile(
+<<<<<<< HEAD
+                leading: new Icon(Icons.radio),
+                title: new Text('Complaints'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/Complaints');
+                }),
+                 new ListTile(
+=======
+                leading: new Icon(Icons.library_books),
+                title: new Text('Your Contract'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/RoomContract');
+                }),
+            new ListTile(
+>>>>>>> master
                 leading: new Icon(Icons.home),
                 title: new Text('Building List'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/BuildingList');
+                  Navigator.of(context).pushNamed('/BuildingList');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),

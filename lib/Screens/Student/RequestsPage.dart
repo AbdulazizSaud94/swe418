@@ -574,6 +574,12 @@ class RequestsPageState extends State<RequestsPage> {
                 onTap: () {
                   Navigator.of(context).pushNamed('/Complaints');
                 }),
+                 new ListTile(
+                leading: new Icon(Icons.home),
+                title: new Text('Building List'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/BuildingList');
+                }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
                 title: new Text('Sign Out'),
