@@ -56,8 +56,8 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
   }
 
   void validateAndSubmit() async {
-    //final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
-    //final StorageUploadTask task = firebaseStorageRef.putFile(_image);
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
+    final StorageUploadTask task = firebaseStorageRef.putFile(_image);
 
     created = DateTime.now();
     formKey.currentState.save();
@@ -71,10 +71,8 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
       'Status': status,
       'Created': created,
       'User_ID': uid,
-      'Attachment': '${uid}_${created}',
+      //'Reference': firebaseStorageRef.getDownloadURL().toString(),
     });
-    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
-    final StorageUploadTask task = firebaseStorageRef.putFile(_image);
     
    // print(firebaseStorageRef.getDownloadURL().toString());
   
@@ -133,140 +131,63 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
+    return new Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: new AppBar(
+        title: new Text('Create Request'),
+        centerTitle: true,
       ),
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  text: 'My Requests',
+      body: Container(
+        padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+        child: Form(
+          key: formKey,
+          child: ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              TextFormField(
+                keyboardType: TextInputType.multiline,
+                maxLength: 512,
+                onSaved: (value) => request = value,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    // The form is empty
+                    return "Field can't be empty";
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Request Description:',
+                  labelStyle: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
                 ),
-                Tab(
-                  text: 'Create New Request',
-                ),
-              ],
-            ),
-            title: Text(
-              'Request',
-              
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            centerTitle: true,
-          ),
-      body: TabBarView(
-              children: [
-                //first tab
-                Container(
-                child: ListView(
-                  children: <Widget>[
-                    SizedBox(height: 30.0),
-                    Container(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text('My Requests',
-                          style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                maxLines: 5,
+              ),
+              FlatButton(
+                child: Icon(Icons.attach_file),
+                textColor: Colors.blueAccent,
+                onPressed: () {
+                  getImage();
+                },
+              ),
+              SizedBox(height: 20.0),
+              Container(
+                height: 50.0,
+                width: 130.0,
+                child: RaisedButton(
+                    child: Text(
+                      'Submit',
+                      style: TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SizedBox(height: 15.0),
-                    new StreamBuilder<QuerySnapshot>(
-                        stream: Firestore.instance
-                            .collection('Requests')
-                            .document('SingleRoom')
-                            .collection('SingleRoom')
-                            .where('UID', isEqualTo: uid)
-                            .where('Status', isEqualTo: 'Pending')
-                            .snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData)
-                            return new Center(
-                              child: new CircularProgressIndicator(),
-                            );
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return new ListTile(
-                                     title:
-                                       new Text('Title: ${document['Request_Body']}'),
-                                    subtitle: new Text(
-                                      //'Status: ${document['Status']}'),
-                                      'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-                                    onTap: () {}, // view user detaild TODO
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
-                        }),
-                  ],
-                ),
+                    splashColor: Colors.lightGreen,
+                    onPressed: () {
+                      _handlePressed(context);
+                    }),
               ),
-                //second tab
-                Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
-                child: Form(
-                  key: formKey,
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: <Widget>[
-                      TextFormField(
-                        keyboardType: TextInputType.multiline,
-                        maxLength: 512,
-                        onSaved: (value) => request = value,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            // The form is empty
-                            return "Field can't be empty";
-                          }
-                        },
-                        decoration: InputDecoration(
-                          labelText: 'Request Description:',
-                          labelStyle: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54),
-                        ),
-                        maxLines: 5,
-                      ),
-                      FlatButton(
-                        child: Icon(Icons.attach_file),
-                        textColor: Colors.blueAccent,
-                        onPressed: () {
-                          getImage();
-                        },
-                      ),
-                      SizedBox(height: 20.0),
-                      Container(
-                        height: 50.0,
-                        width: 130.0,
-                        child: RaisedButton(
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            splashColor: Colors.lightGreen,
-                            onPressed: () {
-                              _handlePressed(context);
-                            }),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
             ],
           ),
         ),
