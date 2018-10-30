@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
 
 class SingleRoomRequestList extends StatefulWidget {
   SingleRoomRequestListState createState() => new SingleRoomRequestListState();
@@ -9,7 +13,9 @@ class SingleRoomRequestList extends StatefulWidget {
 
 class SingleRoomRequestListState extends State<SingleRoomRequestList> {
   String uid;
+  DateTime created;
   QuerySnapshot doc;
+
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -23,7 +29,7 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
     });
     super.initState();
   }
-
+   
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -78,6 +84,16 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                             },
                           ),
                         ),
+                        new Container(
+                          width: 50.0,
+                          child: new FlatButton(
+                            child: Icon(Icons.attachment),
+                            textColor: Colors.blueAccent,
+                            onPressed: () {
+                              _launchURL(context, document);
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   );
@@ -109,7 +125,6 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
       }
     });
   }
-}
 
 Future<bool> confirmDialog1(BuildContext context) {
   return showDialog<bool>(
@@ -132,6 +147,7 @@ Future<bool> confirmDialog1(BuildContext context) {
       });
 }
 
+
 Future<bool> confirmDialog2(BuildContext context) {
   return showDialog<bool>(
       context: context,
@@ -152,3 +168,16 @@ Future<bool> confirmDialog2(BuildContext context) {
         );
       });
 }
+
+_launchURL(BuildContext context, DocumentSnapshot document) async {
+  var url = await FirebaseStorage.instance.ref().child("SingleRoomRequests/${document.data['Attachment']}").getDownloadURL();
+
+  if (await canLaunch(url)) {
+    await launch(url,forceWebView: true);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+}
+
