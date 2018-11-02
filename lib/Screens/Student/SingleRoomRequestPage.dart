@@ -17,8 +17,8 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
   String status = 'Pending';
   DateTime created;
   String uid;
-  QuerySnapshot doc;
-
+  bool bol = false;
+  var stream;
 
   File _image;
 
@@ -30,20 +30,25 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
     });
   }
 
-    @override
+  @override
   void initState() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      this.uid = user.uid;
-      doc = await Firestore.instance
-          .collection('Requests')
-          .document('SingleRoom')
-          .collection('SingleRoom')
-          .where("UID", isEqualTo: uid)
-          .getDocuments();
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
+      if (user.uid.isNotEmpty) {
+        setState(() {
+          bol = true;
+          this.uid = user.uid;
+        });
+        stream = Firestore.instance
+            .collection('Requests')
+            .document('SingleRoom')
+            .collection('SingleRoom')
+            .where('User_ID', isEqualTo: uid)
+            .where('Status', isEqualTo: 'Pending')
+            .snapshots();
+      }
     });
     super.initState();
   }
-
 
   //method to check for empty fields
   bool validateAndSave() {
@@ -73,16 +78,18 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
       'User_ID': uid,
       'Attachment': '${uid}_${created}',
     });
-    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('SingleRoomRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
-    
-   // print(firebaseStorageRef.getDownloadURL().toString());
-  
+
+    // print(firebaseStorageRef.getDownloadURL().toString());
+
     sucessDialog(context).then((bool value) async {
-        if (value) {
-          Navigator.of(context).pushReplacementNamed('/RequestsPage');
-        }
-      });
+      if (value) {
+        Navigator.of(context).pushReplacementNamed('/RequestsPage');
+      }
+    });
   }
 
   Future<bool> confirmDialog(BuildContext context) {
@@ -105,6 +112,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
           );
         });
   }
+
   Future<bool> sucessDialog(BuildContext context) {
     return showDialog<bool>(
         context: context,
@@ -130,7 +138,6 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -154,15 +161,14 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
             ),
             title: Text(
               'Request',
-              
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
-      body: TabBarView(
-              children: [
-                //first tab
-                Container(
+          body: TabBarView(
+            children: [
+              //first tab
+              Container(
                 child: ListView(
                   children: <Widget>[
                     SizedBox(height: 30.0),
@@ -176,16 +182,10 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
-                        stream: Firestore.instance
-                            .collection('Requests')
-                            .document('SingleRoom')
-                            .collection('SingleRoom')
-                            .where('UID', isEqualTo: uid)
-                            .where('Status', isEqualTo: 'Pending')
-                            .snapshots(),
+                        stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData)
+                          if (!snapshot.hasData && !bol)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
@@ -197,11 +197,11 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                                 children: snapshot.data.documents
                                     .map((DocumentSnapshot document) {
                                   return new ListTile(
-                                     title:
-                                       new Text('Title: ${document['Request_Body']}'),
+                                    title: new Text(
+                                        'Title: ${document['Request_Body']}'),
                                     subtitle: new Text(
-                                      //'Status: ${document['Status']}'),
-                                      'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                        //'Status: ${document['Status']}'),
+                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
                                     onTap: () {}, // view user detaild TODO
                                   );
                                 }).toList(),
@@ -212,8 +212,8 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                   ],
                 ),
               ),
-                //second tab
-                Container(
+              //second tab
+              Container(
                 padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
                 child: Form(
                   key: formKey,
@@ -251,14 +251,18 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                         height: 50.0,
                         width: 130.0,
                         child: RaisedButton(
+                            color: Colors.green,
+                            splashColor: Colors.blueGrey,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10.0)),
                             child: Text(
                               'Submit',
                               style: TextStyle(
-                                fontSize: 15.0,
+                                color: Colors.white,
+                                fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            splashColor: Colors.lightGreen,
                             onPressed: () {
                               _handlePressed(context);
                             }),

@@ -581,7 +581,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                 leading: new Icon(Icons.home),
                 title: new Text('Building List'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/BuildingList');
+                  Navigator.of(context).pushNamed('/BuildingList');
                 }),
             new ListTile(
               leading: new Icon(Icons.vpn_key),

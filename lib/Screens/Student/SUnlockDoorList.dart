@@ -9,7 +9,6 @@ class SUnlockDoorList extends StatefulWidget {
 
 class UnlockDoorListState extends State<SUnlockDoorList> {
   String uid;
-  QuerySnapshot doc;
   final formKey = GlobalKey<FormState>();
   String building;
   String room;
@@ -17,6 +16,8 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
   String email;
   DateTime created;
   String comment;
+  bool bol = false;
+  var stream;
 
   @override
   void initState() {
@@ -27,19 +28,24 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
           .document(uid)
           .get()
           .then((data) {
-        this.name = data['Name'];
-        this.email = data['Email'];
-        this.building = data['Building'];
-        this.room = data['Room'];
+        if (data.exists) {
+          setState(() {
+            this.name = data['Name'];
+            this.email = data['Email'];
+            this.building = data['Building'];
+            this.room = data['Room'];
+            this.bol = true;
+          });
+        }
       });
-
-      doc = await Firestore.instance
-          .collection('Requests')
-          .document('UnlockDoor')
-          .collection('UnlockDoor')
-          .where("UID", isEqualTo: uid)
-          .getDocuments();
     });
+    stream = Firestore.instance
+        .collection('Requests')
+        .document('UnlockDoor')
+        .collection('UnlockDoor')
+        .where('UID', isEqualTo: uid)
+        .where('Status', isEqualTo: 'Pending')
+        .snapshots();
     super.initState();
   }
 
@@ -109,19 +115,14 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
-                        stream: Firestore.instance
-                            .collection('Requests')
-                            .document('UnlockDoor')
-                            .collection('UnlockDoor')
-                            .where('UID', isEqualTo: uid)
-                            .where('Status', isEqualTo: 'Pending')
-                            .snapshots(),
+                        stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData)
+                          if (!bol && !snapshot.hasData) {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
+                          }
                           return new ListView(
                             shrinkWrap: true,
                             children: <Widget>[
@@ -130,10 +131,10 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
                                 children: snapshot.data.documents
                                     .map((DocumentSnapshot document) {
                                   return new ListTile(
-                                    title:
-                                      new Text('Comment: ${document['Comment'].toString()}'),
+                                    title: new Text(
+                                        'Comment: ${document['Comment'].toString()}'),
                                     subtitle: new Text(
-                                      'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
                                     onTap: () {}, // view user detaild TODO
                                   );
                                 }).toList(),
@@ -147,56 +148,60 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
               //Second tab
               Container(
                 padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
-            child: new Form(
-              key: formKey,
-              child: new ListView(
-                children: <Widget>[
-                  Text(
-                    'Requesting Door Unlock:',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 15.0),
-                  Text(
-                    "Building: ${building} Room: ${room}",
-                    style: TextStyle(
-                      fontSize: 15.0,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  TextFormField(
-                    maxLength: 200,
-                    onSaved: (value) => comment = value,
-                    decoration: InputDecoration(
-                      labelText: 'Comment (optional)',
-                      labelStyle: TextStyle(
-                          fontSize: 18.0,
+                child: new Form(
+                  key: formKey,
+                  child: new ListView(
+                    children: <Widget>[
+                      Text(
+                        'Requesting Door Unlock:',
+                        style: TextStyle(
+                          fontSize: 20.0,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black54),
-                    ),
-                  ),
-                  Container(
-                    height: 50.0,
-                    width: 130.0,
-                    child: RaisedButton(
-                        child: Text(
-                          'Send Request',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.bold,
-                          ),
                         ),
-                        splashColor: Colors.lightGreen,
-                        onPressed: () {
-                          _handlePressed(context);
-                        }),
-            ),
-          ],
-        ),
-    ),
-  ),
+                      ),
+                      SizedBox(height: 15.0),
+                      Text(
+                        "Building: ${building} Room: ${room}",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      TextFormField(
+                        maxLength: 200,
+                        onSaved: (value) => comment = value,
+                        decoration: InputDecoration(
+                          labelText: 'Comment (optional)',
+                          labelStyle: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54),
+                        ),
+                      ),
+                      Container(
+                        height: 50.0,
+                        width: 130.0,
+                        child: RaisedButton(
+                            color: Colors.green,
+                            splashColor: Colors.blueGrey,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10.0)),
+                            child: Text(
+                              'Send Request',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onPressed: () {
+                              _handlePressed(context);
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),

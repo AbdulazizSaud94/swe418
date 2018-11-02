@@ -103,7 +103,9 @@ class RequestsPageState extends State<RequestsPage> {
             ],
           ),
           SizedBox(height: 40.0),
+
           GridView.count(
+            physics: ScrollPhysics(),
             crossAxisCount: 2,
             crossAxisSpacing: 3.0,
             mainAxisSpacing: 5.0,
@@ -383,8 +385,7 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                Navigator.push(
-                                    context, MaterialPageRoute(builder: (context) => ChangeRoomPage()));
+                               Navigator.of(context).pushNamed('/ChangeRoomPage');
                                 //TODO
                               },
                             ),
@@ -563,10 +564,10 @@ class RequestsPageState extends State<RequestsPage> {
             ),
             new Divider(),
              new ListTile(
-                leading: new Icon(Icons.receipt),
-               title: new Text('Requests Page'),
+                leading: new Icon(Icons.person),
+               title: new Text('Profile'),
                 onTap: () {
-                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
+                   Navigator.of(context).pushReplacementNamed('/ProfilePage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.radio),

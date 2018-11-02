@@ -213,11 +213,23 @@ class _Button extends StatelessWidget {
   _Button({@required this.b});
   Widget build(BuildContext context) {
     if (b)
-      return RaisedButton(
-        child: Icon(Icons.replay),
-        onPressed: () {
-          _handlePressed(context);
-        },
+      return Container(
+        padding: EdgeInsetsDirectional.only(start: 125.0),
+        height: 50.0,
+        child: RaisedButton(
+          child: Icon(
+            Icons.replay,
+            color: Colors.white,
+            size: 40.0,
+          ),
+          color: Colors.green,
+          splashColor: Colors.blueGrey,
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(10.0)),
+          onPressed: () {
+            _handlePressed(context);
+          },
+        ),
       );
     return Text("");
   }
