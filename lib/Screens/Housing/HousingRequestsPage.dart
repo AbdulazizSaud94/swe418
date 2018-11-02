@@ -103,6 +103,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
           ),
           SizedBox(height: 40.0),
           GridView.count(
+            physics: ScrollPhysics(),
             crossAxisCount: 2,
             crossAxisSpacing: 3.0,
             mainAxisSpacing: 5.0,

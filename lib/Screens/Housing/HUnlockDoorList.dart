@@ -9,17 +9,10 @@ class HUnlockDoorList extends StatefulWidget {
 
 class UnlockDoorListState extends State<HUnlockDoorList> {
   String uid;
-  QuerySnapshot doc;
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       this.uid = user.uid;
-      doc = await Firestore.instance
-          .collection('Requests')
-          .document('UnlockDoor')
-          .collection('UnlockDoor')
-          .where("Status", isEqualTo: 'Pending')
-          .getDocuments();
     });
     super.initState();
   }
