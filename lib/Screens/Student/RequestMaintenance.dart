@@ -20,9 +20,9 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
   String room;
   DateTime created;
   String uid;
-  QuerySnapshot doc;
-
+  bool bol = false;
   File _image;
+  var stream;
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -36,12 +36,19 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       this.uid = user.uid;
-      doc = await Firestore.instance
-          .collection('Requests')
-          .document('Maintenance')
-          .collection('Maintenance')
-          .where("UID", isEqualTo: uid)
-          .getDocuments();
+      if (user.uid.isNotEmpty) {
+        setState(() {
+          bol = true;
+          this.uid = user.uid;
+        });
+        stream = stream = Firestore.instance
+            .collection('Requests')
+            .document('SingleRoom')
+            .collection('SingleRoom')
+            .where('UID', isEqualTo: uid)
+            .where('Status', isEqualTo: 'Pending')
+            .snapshots();
+      }
     });
     super.initState();
   }
@@ -66,7 +73,9 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
       'UID': uid,
       'Attachment': '${uid}_${created}',
     });
-    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('MaintenanceRequests/${uid}_${created}');
+    final StorageReference firebaseStorageRef = FirebaseStorage.instance
+        .ref()
+        .child('MaintenanceRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
 
     Navigator.of(context).pop();
@@ -115,39 +124,37 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
-                        stream: Firestore.instance
-                            .collection('Requests')
-                            .document('Maintenance')
-                            .collection('Maintenance')
-                            .where('UID', isEqualTo: uid)
-                            .where('Status', isEqualTo: 'Pending')
-                            .snapshots(),
+                        stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData)
+                          if (!snapshot.hasData && !bol)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return new ListTile(
-                                    title:
-                                        new Text('Title: ${document['Title']}'),
-                                    subtitle: new Text(
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ListTile(
+                                      title: new Text(
+                                          'Title: ${document['Title']}'),
+                                      subtitle: new Text(
 //                                        'Status: ${document['Status']}'),
-                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
 
-                                    onTap: () {}, // view user detaild TODO
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                                      onTap: () {}, // view user detaild TODO
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('You Have No Request');
+                          }
                         }),
                   ],
                 ),
@@ -168,7 +175,11 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black54),
                           ),
-                          onSaved: (value) => title = value,
+                          onSaved: (value) {
+                            setState(() {
+                              title = value;
+                            });
+                          },
                           validator: (value) {
                             if (value.isEmpty) {
                               // The form is empty
@@ -185,7 +196,11 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black54),
                           ),
-                          onSaved: (value) => details = value,
+                          onSaved: (value) {
+                            setState(() {
+                              details = value;
+                            });
+                          },
                           validator: (value) {
                             if (value.isEmpty) {
                               // The form is empty
@@ -263,14 +278,18 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                         height: 45.0,
                         padding: EdgeInsets.only(left: 70.0, right: 70.0),
                         child: RaisedButton(
+                            color: Colors.green,
+                            splashColor: Colors.blueGrey,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10.0)),
                             child: Text(
-                              'Submit Request',
+                              'Send Request',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            splashColor: Colors.lightGreen,
                             onPressed: () {
                               _handlePressed(context);
                             }),
@@ -329,17 +348,13 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
   }
 
   void _handlePressed(BuildContext context) {
-    confirmDialog(context).then((bool value) async {
+    confirmDialog(context).then((bool value) {
       if (value) {
         validateAndSubmit();
       }
     });
   }
-
-
 }
-
-
 
 Future<bool> confirmDialog(BuildContext context) {
   return showDialog<bool>(

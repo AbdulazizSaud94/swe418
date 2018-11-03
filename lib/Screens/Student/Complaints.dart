@@ -20,8 +20,8 @@ class ComplaintsState extends State<Complaints> {
   String room;
   DateTime created;
   String uid;
-  QuerySnapshot doc;
-
+  var stream;
+  bool bol = false;
   File _image;
 
   Future getImage() async {
@@ -35,13 +35,18 @@ class ComplaintsState extends State<Complaints> {
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      this.uid = user.uid;
-      doc = await Firestore.instance
-          .collection('Requests')
-          .document('Complaints')
-          .collection('Complaints')
-          .where("UID", isEqualTo: uid)
-          .getDocuments();
+      if (user.uid.isNotEmpty) {
+        setState(() {
+          bol = true;
+          this.uid = user.uid;
+        });
+        stream = Firestore.instance
+            .collection('Requests')
+            .document('Complaints')
+            .collection('Complaints')
+            .where("UID", isEqualTo: uid)
+            .snapshots();
+      }
     });
     super.initState();
   }
@@ -62,7 +67,8 @@ class ComplaintsState extends State<Complaints> {
       'UID': uid,
       'Attachment': '${uid}_${created}',
     });
-    final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
+    final StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
 
     Navigator.of(context).pop();
@@ -91,7 +97,6 @@ class ComplaintsState extends State<Complaints> {
             ),
             title: Text(
               'Complaint',
-              
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
@@ -113,16 +118,10 @@ class ComplaintsState extends State<Complaints> {
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
-                        stream: Firestore.instance
-                            .collection('Requests')
-                            .document('Complaints')
-                            .collection('Complaints')
-                            .where('UID', isEqualTo: uid)
-                            .where('Status', isEqualTo: 'Pending')
-                            .snapshots(),
+                        stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData)
+                          if (!snapshot.hasData && !bol)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
@@ -137,8 +136,8 @@ class ComplaintsState extends State<Complaints> {
                                     title:
                                         new Text('Title: ${document['Title']}'),
                                     subtitle: new Text(
-                                      //'Status: ${document['Status']}'),
-                                      'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                        //'Status: ${document['Status']}'),
+                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
                                     onTap: () {}, // view user detaild TODO
                                   );
                                 }).toList(),
@@ -198,17 +197,21 @@ class ComplaintsState extends State<Complaints> {
                       ),
                       SizedBox(height: 35.0),
                       Container(
-                        height: 45.0,
-                        padding: EdgeInsets.only(left: 70.0, right: 70.0),
+                        height: 50.0,
+                        width: 130.0,
                         child: RaisedButton(
+                            color: Colors.green,
+                            splashColor: Colors.blueGrey,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(10.0)),
                             child: Text(
                               'Submit Complaint',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            splashColor: Colors.lightGreen,
                             onPressed: () {
                               _handlePressed(context);
                             }),
@@ -232,8 +235,6 @@ class ComplaintsState extends State<Complaints> {
       }
     });
   }
-
-
 }
 
 Future<bool> confirmDialog(BuildContext context) {

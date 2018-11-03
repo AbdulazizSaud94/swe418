@@ -20,7 +20,7 @@ class ProfilePageState extends State<ProfilePage> {
   String graduationTerm;
   String major;
   String smoking;
-
+  bool bol = false;
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -30,15 +30,20 @@ class ProfilePageState extends State<ProfilePage> {
           .document(uid)
           .get()
           .then((data) {
-        this.name = data['Name'];
-        this.email = data['Email'];
-        this.major = data['Major'];
-        this.city = data['City'];
-        this.graduationTerm = data['GraduationTerm'];
-        this.smoking = data['Smoking'];
-        this.mobile = data['Mobile'];
-        this.intrestsHobbies = data['IntrestsHobbies'];
-        this.dislike = data['Dislikes'];
+        if (data.exists) {
+          setState(() {
+            this.name = data['Name'];
+            this.email = data['Email'];
+            this.major = data['Major'];
+            this.city = data['City'];
+            this.graduationTerm = data['GraduationTerm'];
+            this.smoking = data['Smoking'];
+            this.mobile = data['Mobile'];
+            this.intrestsHobbies = data['IntrestsHobbies'];
+            this.dislike = data['Dislikes'];
+            this.bol = true;
+          });
+        }
       });
     });
     super.initState();
@@ -51,11 +56,16 @@ class ProfilePageState extends State<ProfilePage> {
         title: new Text(
           'Profile',
         ),
-        backgroundColor: Colors.lightGreen.withOpacity(0.8),
+        backgroundColor: Colors.green,
       ),
       body: new FutureBuilder<DocumentSnapshot>(
           future: Firestore.instance.collection('Users').document(uid).get(),
           builder: (context, snapshot) {
+            if (!bol) {
+              return new Center(
+                child: new CircularProgressIndicator(),
+              );
+            }
             return new ListView(children: <Widget>[
               new Stack(
                 children: <Widget>[
@@ -65,7 +75,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                   Positioned(
                     top: 10.0,
-                    left: 340.0,
+                    left: 300.0,
                     child: Container(
                       height: 50.0,
                       width: 50.0,
@@ -369,7 +379,7 @@ class ProfilePageState extends State<ProfilePage> {
                 leading: new Icon(Icons.home),
                 title: new Text('Building List'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/BuildingList');
+                  Navigator.of(context).pushNamed('/BuildingList');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
