@@ -16,6 +16,7 @@ class UnlockDoorState extends State<UnlockDoor> {
   DateTime created;
   String comment;
   String uid;
+  bool bol = false;
 
   @override
   void initState() {
@@ -26,10 +27,15 @@ class UnlockDoorState extends State<UnlockDoor> {
           .document(uid)
           .get()
           .then((data) {
-        this.name = data['Name'];
-        this.email = data['Email'];
-        this.building = data['Building'];
-        this.room = data['Room'];
+        if (data.exists) {
+          setState(() {
+            this.name = data['Name'];
+            this.email = data['Email'];
+            this.building = data['Building'];
+            this.room = data['Room'];
+            this.bol = true;
+          });
+        }
       });
     });
     super.initState();
@@ -66,6 +72,11 @@ class UnlockDoorState extends State<UnlockDoor> {
       body: new FutureBuilder<DocumentSnapshot>(
         future: Firestore.instance.collection('Users').document(uid).get(),
         builder: (context, snapshot) {
+          if (!bol) {
+            return new Center(
+              child: new CircularProgressIndicator(),
+            );
+          }
           return new Container(
             padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
             child: new Form(
@@ -102,14 +113,18 @@ class UnlockDoorState extends State<UnlockDoor> {
                     height: 50.0,
                     width: 130.0,
                     child: RaisedButton(
+                        color: Colors.black,
+                        splashColor: Colors.blueGrey,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(10.0)),
                         child: Text(
                           'Send Request',
                           style: TextStyle(
-                            fontSize: 15.0,
+                            color: Colors.white,
+                            fontSize: 20.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        splashColor: Colors.lightGreen,
                         onPressed: () {
                           _handlePressed(context);
                         }),
@@ -138,7 +153,7 @@ Future<bool> confirmDialog(BuildContext context) {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Send Request"),
+          title: new Text("Send The Request?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),

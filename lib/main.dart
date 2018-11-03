@@ -27,6 +27,7 @@ import 'Screens/Housing/HKeyList.dart';
 import 'Screens/Student/RoomContract.dart';
 import 'Screens/Admin/Announcements.dart';
 import 'Screens/Student/AnnouncementsList.dart';
+import 'Screens/Student/change_room_request.dart';
 
 void main() {
     MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
         '/RoomContract':(BuildContext context) => new RoomContract(),
         '/Announcements': (BuildContext context) => new Announcements(),
         '/AnnouncementsList': (BuildContext context) => new AnnouncementsList(),
+        '/ChangeRoomPage': (BuildContext context) => new ChangeRoomPage(),
       },
     );
   }
