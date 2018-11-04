@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'EditProfile.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -376,7 +378,7 @@ class ProfilePageState extends State<ProfilePage> {
                   Navigator.of(context).pushNamed('/RoomContract');
                 }),
             new ListTile(
-                leading: new Icon(Icons.home),
+                leading: new Icon(FontAwesomeIcons.building),
                 title: new Text('Building List'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/BuildingList');
