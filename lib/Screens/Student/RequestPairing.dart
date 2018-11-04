@@ -235,8 +235,8 @@ return MaterialApp(
         confirmDialog(context).then((bool value) async {
           if(value){
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
-      Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').document().setData({'From': user.email,'To': document['Email'], 'Status':'Pending'});
-      
+      Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').document()
+          .setData({'from_user_id': user.uid, 'From': user.email,'to_user_id': document.documentID, 'To': document['Email'], 'Status':'Pending'});
             }
           });
     }

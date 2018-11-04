@@ -27,7 +27,32 @@ class HousingChangeRoomPage extends StatelessWidget {
                       child: new FlatButton(
                         child: Icon(Icons.delete_forever),
                         textColor: Colors.blueAccent,
-                        onPressed: () {
+                        onPressed: () async {
+                          var token, token2 ;
+                          await Firestore.instance.collection("Users").document(document['requester_id'])
+                              .get().then((data){
+                            token = data.data['token'];
+                          });
+                          await Firestore.instance.collection("Users").document(document['partner_id'])
+                              .get().then((data){
+                            token = data.data['token'];
+                          });
+                          await Firestore.instance.collection("Notifications").add({
+                            "date": new DateTime.now(),
+                            "message":"Your request is refused!",
+                            "title": "Request to change room",
+                            "sender": "Housing department",
+                            "to_token": token,
+                            "reciever": document['requester_id']
+                          });
+                          await Firestore.instance.collection("Notifications").add({
+                            "date": new DateTime.now(),
+                            "message":"Your request is refused!",
+                            "title": "Request to change room",
+                            "sender": "Housing department",
+                            "to_token": token2,
+                            "reciever": document['partner_id']
+                          });
                           document.reference.updateData({
                             "request_status": "refused"
                           });
@@ -41,7 +66,32 @@ class HousingChangeRoomPage extends StatelessWidget {
                       child: new FlatButton(
                         child: Icon(Icons.add),
                         textColor: Colors.blueAccent,
-                        onPressed: () {
+                        onPressed: () async {
+                          var token, token2 ;
+                          await Firestore.instance.collection("Users").document(document['requester_id'])
+                              .get().then((data){
+                            token = data.data['token'];
+                          });
+                          await Firestore.instance.collection("Users").document(document['partner_id'])
+                              .get().then((data){
+                            token2 = data.data['token'];
+                          });
+                          await Firestore.instance.collection("Notifications").add({
+                            "date": new DateTime.now(),
+                            "message":"Your request is approved!",
+                            "title": "Request to change room",
+                            "sender": "Housing department",
+                            "to_token": token,
+                            "reciever": document['requester_id']
+                          });
+                          await Firestore.instance.collection("Notifications").add({
+                            "date": new DateTime.now(),
+                            "message":"Your request is approved!",
+                            "title": "Request to change room",
+                            "sender": "Housing department",
+                            "to_token": token2,
+                            "reciever": document['partner_id']
+                          });
                           document.reference.updateData({
                             "request_status": "approve"
                           });

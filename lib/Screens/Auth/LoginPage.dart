@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -175,6 +176,15 @@ class LoginPageSate extends State<LoginPage> {
                                       .document(user.uid)
                                       .get()
                                       .then((userRole) {
+                                    FirebaseMessaging fb =
+                                        new FirebaseMessaging();
+
+                                    fb.getToken().then((token) {
+                                      Firestore.instance
+                                          .collection('Users')
+                                          .document(user.uid)
+                                          .updateData({"token": token});
+                                    });
                                     if (userRole["Role"]
                                         .toString()
                                         .contains("Admin"))
@@ -195,7 +205,7 @@ class LoginPageSate extends State<LoginPage> {
                                   print('Error: $e');
                                   final snackBar = SnackBar(
                                     content: Text(
-                                        'Incorrect user email or password!',
+                                      'Incorrect user email or password!',
                                       style: TextStyle(
                                         fontSize: 17.0,
                                         fontWeight: FontWeight.bold,
