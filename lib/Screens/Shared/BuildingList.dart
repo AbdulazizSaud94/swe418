@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:map_view/map_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'ViewBuilding.dart';
+
 
 var googleMapsApiKey = 'AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ';
 
@@ -48,13 +51,34 @@ class BuildingListState extends State<BuildingList> {
               new ListView(
                 shrinkWrap: true,
                 children:
-                    snapshot.data.documents.map((DocumentSnapshot document) {
+                snapshot.data.documents.map((DocumentSnapshot document) {
                   return new ListTile(
                     title: new Text('Building: ${document['building_number']}'),
                     trailing: new Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        new Container(
+
+                        Container(
+                          width: 50.0,
+                          child: new FlatButton(
+                            child: Icon(FontAwesomeIcons.building),
+                            onPressed: () {
+                              print('Building: ');
+                              print("${document['building_number']}");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ViewBuilding(
+                                    buildingNumber: document['building_number'],
+                                  ),
+                                ),
+                              );
+
+                            },
+                          ),
+                        ),
+
+                        Container(
                           width: 50.0,
                           child: new FlatButton(
                             child: Icon(Icons.place),
@@ -86,7 +110,7 @@ class BuildingListState extends State<BuildingList> {
       new MapOptions(
           mapViewType: MapViewType.normal,
           initialCameraPosition:
-              CameraPosition(Location(document['lat'], document['lng']), 16.0),
+          CameraPosition(Location(document['lat'], document['lng']), 16.0),
           showMyLocationButton: true,
           showUserLocation: true,
           title: "Building ${document['building_number']}"),
@@ -95,9 +119,9 @@ class BuildingListState extends State<BuildingList> {
     mapView.centerLocation;
     mapView.onMapReady.listen((_) {
       mapView.addMarker(markers);
-            
+
     });
-    mapView.dismiss();  
+    mapView.dismiss();
 
   }
 }

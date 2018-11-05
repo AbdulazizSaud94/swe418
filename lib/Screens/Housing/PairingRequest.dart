@@ -8,8 +8,18 @@ class PairingRequest extends StatefulWidget {
 
 class PairingRequestState extends State<PairingRequest> {
   String uid;
-  
-  
+
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
    
@@ -68,15 +78,16 @@ class PairingRequestState extends State<PairingRequest> {
                                 "title": "Request to change room",
                                 "sender": "Housing department",
                                 "to_token": token,
-                                "reciever": document['requester_id']
+                                "reciever": document['from_user_id']
                               });
+                              _showToast(context, "Request is approved successfully!");
                               await Firestore.instance.collection("Notifications").add({
                                 "date": new DateTime.now(),
                                 "message":"Your request is approved!",
                                 "title": "Pairing request",
                                 "sender": "Housing department",
                                 "to_token": token2,
-                                "reciever": document['requester_id']
+                                "reciever": document['to_user_id']
                               });
 
                              _handlePressed(context, document, "Approve");
@@ -108,7 +119,7 @@ class PairingRequestState extends State<PairingRequest> {
                                 "title": "Request to change room",
                                 "sender": "Housing department",
                                 "to_token": token,
-                                "reciever": document['requester_id']
+                                "reciever": document['from_user_id']
                               });
                               await Firestore.instance.collection("Notifications").add({
                                 "date": new DateTime.now(),
@@ -116,8 +127,9 @@ class PairingRequestState extends State<PairingRequest> {
                                 "title": "Pairing request",
                                 "sender": "Housing department",
                                 "to_token": token2,
-                                "reciever": document['requester_id']
+                                "reciever": document['to_user_id']
                               });
+                              _showToast(context, "Request is declined successfully!");
                               _handlePressed(context, document, "Decline");
                             },
                           ),

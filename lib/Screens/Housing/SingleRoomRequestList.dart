@@ -16,6 +16,17 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
   DateTime created;
   QuerySnapshot doc;
 
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -127,6 +138,7 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
             "reciever": document['requester_id']
           });
 
+          _showToast(context, "Request is approved successfully!");
           DocumentSnapshot ds = await transaction.get(document.reference);
           await transaction.update(ds.reference, {'Status' : 'Approved'});
 

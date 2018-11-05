@@ -29,11 +29,12 @@ import 'Screens/Admin/Announcements.dart';
 import 'Screens/Student/AnnouncementsList.dart';
 import 'Screens/Student/change_room_request.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'Screens/Shared/ViewBuilding.dart';
 
 void main() {
-    MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
+  MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
   runApp(new MyApp());
-} 
+}
 
 class MyApp extends StatelessWidget {
   FirebaseMessaging fb = new FirebaseMessaging();
@@ -87,6 +88,7 @@ class MyApp extends StatelessWidget {
         '/Announcements': (BuildContext context) => new Announcements(),
         '/AnnouncementsList': (BuildContext context) => new AnnouncementsList(),
         '/ChangeRoomPage': (BuildContext context) => new ChangeRoomPage(),
+        '/ViewBuilding':  (BuildContext context) => new ViewBuilding(),
       },
     );
   }
