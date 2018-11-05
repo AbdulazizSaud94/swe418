@@ -43,8 +43,8 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         });
         stream = stream = Firestore.instance
             .collection('Requests')
-            .document('SingleRoom')
-            .collection('SingleRoom')
+            .document('Maintenance')
+            .collection('Maintenance')
             .where('UID', isEqualTo: uid)
             .where('Status', isEqualTo: 'Pending')
             .snapshots();

@@ -3,6 +3,7 @@ import 'change_room_request.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'UnlockDoor.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -544,8 +545,8 @@ class RequestsPageState extends State<RequestsPage> {
         ],
       ),
       //Drawer
-             drawer: new Drawer(
-            child: new ListView(
+      drawer: new Drawer(
+        child: new ListView(
           children: <Widget>[
             new Container(
               height: 120.0,
@@ -563,17 +564,30 @@ class RequestsPageState extends State<RequestsPage> {
               ),
             ),
             new Divider(),
-             new ListTile(
-                leading: new Icon(Icons.person),
-               title: new Text('Profile'),
+            new ListTile(
+                leading: new Icon(Icons.speaker_notes),
+                title: new Text('Announcements List'),
                 onTap: () {
-                   Navigator.of(context).pushReplacementNamed('/ProfilePage');
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/AnnouncementsList');
                 }),
             new ListTile(
-                leading: new Icon(Icons.radio),
-                title: new Text('Complaints'),
+                leading: new Icon(FontAwesomeIcons.user),
+                title: new Text('Profile'),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/Complaints');
+                  Navigator.of(context).pushReplacementNamed('/ProfilePage');
+                }),
+            new ListTile(
+                leading: new Icon(Icons.library_books),
+                title: new Text('Your Contract'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/RoomContract');
+                }),
+            new ListTile(
+                leading: new Icon(FontAwesomeIcons.building),
+                title: new Text('Building List'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/BuildingList');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
@@ -586,7 +600,8 @@ class RequestsPageState extends State<RequestsPage> {
                   });
                 }),
           ],
-        ))
+        ),
+      ),
     );
   }
 }
