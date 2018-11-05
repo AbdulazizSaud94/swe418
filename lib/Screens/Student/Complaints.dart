@@ -67,6 +67,8 @@ class ComplaintsState extends State<Complaints> {
       'UID': uid,
       'Attachment': '${uid}_${created}',
     });
+
+    _showToast(context, "Request is generated successfully!");
     final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
@@ -74,6 +76,16 @@ class ComplaintsState extends State<Complaints> {
     Navigator.of(context).pop();
   }
 
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

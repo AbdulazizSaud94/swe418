@@ -279,11 +279,21 @@ Future<bool> confirmDialog(BuildContext context){
         });
       Firestore.instance.collection('Requests').document('Pairing').collection('HousingPairing').document().setData({'Student1': uemail,'Student2': document['From'], 'Status':'Pending'});
 
+        _showToast(context, "Request is generated successfully!");
 
     }
    
   }
 
-
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
 
 }

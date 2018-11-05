@@ -48,7 +48,16 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
         .snapshots();
     super.initState();
   }
-
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   void validateAndSubmit() async {
     created = DateTime.now();
     formKey.currentState.save();
@@ -68,6 +77,8 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
       'Housing_Emp': "",
       'UID': uid
     });
+
+    _showToast(context, "Request is generated successfully!");
     Navigator.of(context).pop();
   }
 
