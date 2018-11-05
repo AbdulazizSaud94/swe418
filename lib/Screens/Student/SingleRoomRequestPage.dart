@@ -59,7 +59,16 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
     }
     return false;
   }
-
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   void validateAndSubmit() async {
     //final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
     //final StorageUploadTask task = firebaseStorageRef.putFile(_image);
@@ -78,6 +87,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
       'User_ID': uid,
       'Attachment': '${uid}_${created}',
     });
+    _showToast(context, "Request is generated successfully!");
     final StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
         .child('SingleRoomRequests/${uid}_${created}');

@@ -28,6 +28,7 @@ import 'Screens/Student/RoomContract.dart';
 import 'Screens/Admin/Announcements.dart';
 import 'Screens/Student/AnnouncementsList.dart';
 import 'Screens/Student/change_room_request.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'Screens/Shared/ViewBuilding.dart';
 
 void main() {
@@ -36,6 +37,21 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  FirebaseMessaging fb = new FirebaseMessaging();
+
+  void initState() {
+    fb.configure(
+      onLaunch: (Map<String, dynamic> msg) {
+
+      },
+      onMessage: (Map<String, dynamic> msg) {},
+      onResume: (Map<String, dynamic> msg) {},
+    );
+    fb.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, alert: true, badge: true));
+    fb.onIosSettingsRegistered.listen((IosNotificationSettings setting) {});
+
+  }
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(

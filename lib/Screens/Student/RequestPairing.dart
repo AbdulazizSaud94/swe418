@@ -235,8 +235,8 @@ return MaterialApp(
         confirmDialog(context).then((bool value) async {
           if(value){
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
-      Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').document().setData({'From': user.email,'To': document['Email'], 'Status':'Pending'});
-      
+      Firestore.instance.collection('Requests').document('Pairing').collection('PairingRequests').document()
+          .setData({'from_user_id': user.uid, 'From': user.email,'to_user_id': document.documentID, 'To': document['Email'], 'Status':'Pending'});
             }
           });
     }
@@ -279,11 +279,21 @@ Future<bool> confirmDialog(BuildContext context){
         });
       Firestore.instance.collection('Requests').document('Pairing').collection('HousingPairing').document().setData({'Student1': uemail,'Student2': document['From'], 'Status':'Pending'});
 
+        _showToast(context, "Request is generated successfully!");
 
     }
    
   }
 
-
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
 
 }

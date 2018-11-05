@@ -16,7 +16,16 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
     });
     super.initState();
   }
-
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -77,7 +86,24 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
+
           await transaction.update(ds.reference, {'Status' : 'Done'});
+
+          var token ;
+          await Firestore.instance.collection("Users").document(document['UID'])
+              .get().then((data){
+            token = data.data['token'];
+          });
+          await Firestore.instance.collection("Notifications").add({
+            "date": new DateTime.now(),
+            "message":"Your Unlock door request is done!",
+            "title": "Room is unlocked.",
+            "sender": "Housing department",
+            "to_token": token,
+            "reciever": document['UID']
+          });
+          _showToast(context, "Request is processed to done successfully!");
+
         });
       }
     });

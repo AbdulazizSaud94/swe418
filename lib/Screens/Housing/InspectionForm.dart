@@ -15,7 +15,16 @@ class InspectionFormSate extends State<InspectionForm> {
   String date;
   String details;
   String uName;
-
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -310,11 +319,15 @@ class InspectionFormSate extends State<InspectionForm> {
       Firestore.instance.runTransaction((transaction) async {
         DocumentSnapshot ds = await transaction.get(document.reference);
         await transaction.update(ds.reference, {'Status': 'Done'});
+
+        _showToast(context, "Request is processed to done successfully!");
+
       });
     } else if (s.contains('Decline')) {
       Firestore.instance.runTransaction((transaction) async {
         DocumentSnapshot ds = await transaction.get(document.reference);
         await transaction.update(ds.reference, {'Status': 'Declined'});
+        _showToast(context, "Request is declined successfully!");
       });
     }
   }

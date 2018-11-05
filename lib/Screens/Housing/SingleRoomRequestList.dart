@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +16,17 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
   DateTime created;
   QuerySnapshot doc;
 
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -108,8 +119,29 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
     confirmDialog1(context).then((bool value) async {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
+
+          var token ;
+          await Firestore.instance.collection("Users").document(document['User_ID'])
+              .get().then((data){
+            token = data.data['token'];
+          });
+          await Firestore.instance.collection("Users").document(document['partner_id'])
+              .get().then((data){
+            token = data.data['token'];
+          });
+          await Firestore.instance.collection("Notifications").add({
+            "date": new DateTime.now(),
+            "message":"Your request is Approved!",
+            "title": "Request for single room",
+            "sender": "Housing department",
+            "to_token": token,
+            "reciever": document['requester_id']
+          });
+
+          _showToast(context, "Request is approved successfully!");
           DocumentSnapshot ds = await transaction.get(document.reference);
           await transaction.update(ds.reference, {'Status' : 'Approved'});
+
         });
       }
     });
@@ -121,6 +153,24 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
           await transaction.update(ds.reference, {'Status' : 'Declined'});
+          var token ;
+          await Firestore.instance.collection("Users").document(document['User_ID'])
+              .get().then((data){
+            token = data.data['token'];
+          });
+          await Firestore.instance.collection("Users").document(document['partner_id'])
+              .get().then((data){
+            token = data.data['token'];
+          });
+          await Firestore.instance.collection("Notifications").add({
+            "date": new DateTime.now(),
+            "message":"Your request is declined!",
+            "title": "Request for single room",
+            "sender": "Housing department",
+            "to_token": token,
+            "reciever": document['requester_id']
+          });
+
         });
       }
     });

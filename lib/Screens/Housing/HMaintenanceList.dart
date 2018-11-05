@@ -13,6 +13,16 @@ class HMaintenanceList extends StatefulWidget {
 class HMaintenanceListState extends State<HMaintenanceList> {
   String uid;
   QuerySnapshot doc;
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: const Text('Added to favorite'),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -108,7 +118,22 @@ class HMaintenanceListState extends State<HMaintenanceList> {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
+          var token ;
+          await Firestore.instance.collection("Users").document(document['UID'])
+              .get().then((data){
+            token = data.data['token'];
+          });
+          await Firestore.instance.collection("Notifications").add({
+            "date": new DateTime.now(),
+            "message":"Your maintenace request is done!",
+            "title": "Maintenace request.",
+            "sender": "Housing department",
+            "to_token": token,
+            "reciever": document['UID']
+          });
+
           await transaction.update(ds.reference, {'Status' : 'Done'});
+          _showToast(context, "Request is approved successfully!");
         });
       }
     });
