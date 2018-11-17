@@ -51,7 +51,7 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
                     SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending Requests',
+                      child: Text('Pending',
                           style: TextStyle(
                               fontSize: 22.0,
                               fontStyle: FontStyle.italic,
@@ -118,7 +118,7 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Done Requsts:',
+                        'Done:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
