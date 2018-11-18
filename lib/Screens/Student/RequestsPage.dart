@@ -173,7 +173,7 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                //TODO
+                                Navigator.of(context).pushNamed('/SwapRequest');
                               },
                             ),
                           ),
