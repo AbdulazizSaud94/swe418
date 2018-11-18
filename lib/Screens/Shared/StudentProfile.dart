@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class StudentProfile extends StatefulWidget {
   @override
   StudentProfileState createState() => new StudentProfileState();
 
   final String stuId;
+
   //constructor
   StudentProfile({
     this.stuId,
@@ -27,9 +27,13 @@ class StudentProfileState extends State<StudentProfile> {
   String smoking;
   bool bol = false;
 
+  DateTime swapCreated;
+  String uid;
+
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+      this.uid = user.uid;
       await Firestore.instance
           .collection('Users')
           .document(widget.stuId)
@@ -64,7 +68,10 @@ class StudentProfileState extends State<StudentProfile> {
         backgroundColor: Colors.green,
       ),
       body: new FutureBuilder<DocumentSnapshot>(
-          future: Firestore.instance.collection('Users').document(widget.stuId).get(),
+          future: Firestore.instance
+              .collection('Users')
+              .document(widget.stuId)
+              .get(),
           builder: (context, snapshot) {
             if (!bol) {
               return new Center(
@@ -91,7 +98,7 @@ class StudentProfileState extends State<StudentProfile> {
                                         'https://i.stack.imgur.com/l60Hf.png'),
                                     fit: BoxFit.cover),
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(75.0)),
+                                    BorderRadius.all(Radius.circular(75.0)),
                                 boxShadow: [
                                   BoxShadow(
                                       blurRadius: 20.0, color: Colors.black)
@@ -161,7 +168,6 @@ class StudentProfileState extends State<StudentProfile> {
                           padding: EdgeInsets.only(left: 5.0),
                           child: Stack(
                             children: <Widget>[
-
                               Row(
                                 children: <Widget>[
                                   Container(
@@ -280,26 +286,67 @@ class StudentProfileState extends State<StudentProfile> {
                               Text('$dislike'),
                             ],
                           ),
-                          ExpansionTile(
-                            title: Text(
-                              'Options',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            children: <Widget>[
-                              Container(
-                                height: 30.0,
-                                width: 98.0,
-                                child: RaisedButton.icon(
-                                    onPressed: null, icon: Icon(Icons.swap_horiz, color: Colors.white,
-                                ), label: Text('Swap', style: TextStyle(color: Colors.white),),
+                          Builder(builder: (BuildContext context) {
+                            return ExpansionTile(
+                              title: Text(
+                                'Options',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ],
-                          ),
+                              children: <Widget>[
+                                Container(
+                                  height: 30.0,
+                                  width: 98.0,
+                                  child: RaisedButton.icon(
+                                    onPressed: () {
+                                      confirmDialog(context)
+                                          .then((bool value) async {
+                                        if (value) {
+                                          swapCreated = DateTime.now();
+                                          await Firestore.instance
+                                              .collection('Requests')
+                                              .document('SwapRoom')
+                                              .collection('SwapRoom')
+                                              .document()
+                                              .setData({
+                                            'Sender': uid,
+                                            'Receiver': widget.stuId,
+                                            'Sent': swapCreated,
+                                            'ReceiverApproval': 'Pending',
+                                            'HousingApproval': 'Pending',
+                                          });
+
+                                          final snackBar = SnackBar(
+                                            content: Text(
+                                              'Swap Request Created',
+                                              style: TextStyle(
+                                                fontSize: 17.0,
+                                              ),
+                                            ),
+                                          );
+
+                                          // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                          Scaffold.of(context)
+                                              .showSnackBar(snackBar);
+                                        }
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.swap_horiz,
+                                      color: Colors.black54,
+                                    ),
+                                    label: Text(
+                                      'Swap',
+                                      style: TextStyle(color: Colors.black54),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          }),
                         ],
                       ),
                     ),
@@ -321,4 +368,23 @@ class StudentProfileState extends State<StudentProfile> {
   }
 }
 
-
+Future<bool> confirmDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Send Request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+}
