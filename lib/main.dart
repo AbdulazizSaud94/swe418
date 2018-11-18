@@ -31,6 +31,7 @@ import 'Screens/Student/change_room_request.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'Screens/Shared/ViewBuilding.dart';
 import 'Screens/Shared/ViewRoom.dart';
+import 'Screens/Shared/StudentProfile.dart';
 
 void main() {
   MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
@@ -91,6 +92,7 @@ class MyApp extends StatelessWidget {
         '/ChangeRoomPage': (BuildContext context) => new ChangeRoomPage(),
         '/ViewBuilding':  (BuildContext context) => new ViewBuilding(),
         '/ViewRoom': (BuildContext context) => new ViewRoom(),
+        '/StudentProfile': (BuildContext context) => new StudentProfile(),
       },
     );
   }
