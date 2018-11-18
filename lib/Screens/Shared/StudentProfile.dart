@@ -9,11 +9,10 @@ class StudentProfile extends StatefulWidget {
   @override
   StudentProfileState createState() => new StudentProfileState();
 
-  final String uid;
-
+  final String stuId;
   //constructor
   StudentProfile({
-    this.uid,
+    this.stuId,
   });
 }
 
@@ -34,7 +33,7 @@ class StudentProfileState extends State<StudentProfile> {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       await Firestore.instance
           .collection('Users')
-          .document(widget.uid)
+          .document(widget.stuId)
           .get()
           .then((data) {
         if (data.exists) {
@@ -66,7 +65,7 @@ class StudentProfileState extends State<StudentProfile> {
         backgroundColor: Colors.green,
       ),
       body: new FutureBuilder<DocumentSnapshot>(
-          future: Firestore.instance.collection('Users').document(widget.uid).get(),
+          future: Firestore.instance.collection('Users').document(widget.stuId).get(),
           builder: (context, snapshot) {
             if (!bol) {
               return new Center(
@@ -280,6 +279,26 @@ class StudentProfileState extends State<StudentProfile> {
                             ),
                             children: <Widget>[
                               Text('$dislike'),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text(
+                              'Options',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            children: <Widget>[
+                              Container(
+                                height: 30.0,
+                                width: 98.0,
+                                child: RaisedButton.icon(
+                                    onPressed: null, icon: Icon(Icons.swap_horiz, color: Colors.white,
+                                ), label: Text('Swap', style: TextStyle(color: Colors.white),),
+                                ),
+                              ),
                             ],
                           ),
                         ],

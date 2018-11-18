@@ -119,7 +119,7 @@ class ViewRoomState extends State<ViewRoom> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => StudentProfile(
-                              uid: uid1,
+                              stuId: uid1,
                             ),
                           ),
                         );                      },
@@ -145,7 +145,7 @@ class ViewRoomState extends State<ViewRoom> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => StudentProfile(
-                              uid: uid2,
+                              stuId: uid2,
                             ),
                           ),
                         );
