@@ -112,6 +112,12 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                 ),
               ],
             ),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               'Maintenance Requests',
               style: TextStyle(fontWeight: FontWeight.bold),
