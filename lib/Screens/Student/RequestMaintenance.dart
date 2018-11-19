@@ -73,24 +73,26 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
       'UID': uid,
       'Attachment': '${uid}_${created}',
     });
-    _showToast(context, "Request is generated successfully!");
     final StorageReference firebaseStorageRef = FirebaseStorage.instance
         .ref()
         .child('MaintenanceRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
+    _showToast(context, "Request is generated successfully!");
 
     Navigator.of(context).pop();
   }
+
   void _showToast(BuildContext context, String message) {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content:  Text(message),
+        content: Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
