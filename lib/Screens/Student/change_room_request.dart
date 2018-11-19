@@ -19,8 +19,6 @@ class _RequestChangeRoomList extends State<RequestChangeRoomList> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Available Room List'),
-        backgroundColor: Colors.green,
-
       ),
       body: new StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
@@ -516,8 +514,7 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
       },
     );
 
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text("Change Room Requests"),
           backgroundColor: Colors.green,
@@ -539,7 +536,6 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
             )
           ],
         ),
-      ),
     );
   }
 

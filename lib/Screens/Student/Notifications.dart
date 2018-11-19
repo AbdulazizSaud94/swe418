@@ -5,18 +5,21 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class NotificationPage extends StatelessWidget {
-
-
   Stream<QuerySnapshot> notifyList() {
     var user, token;
-    FirebaseAuth.instance.currentUser().then((_user){
+    FirebaseAuth.instance.currentUser().then((_user) {
       user = _user.uid;
     });
-    Firestore.instance.collection("Users").document(user).get().then((data){
+    Firestore.instance.collection("Users").document(user).get().then((data) {
       token = data.data['token'];
     });
-    return Firestore.instance.collection('Notifications').where('to_token', isEqualTo: token).snapshots();
+    return Firestore.instance
+        .collection('Notifications')
+        .orderBy('date', descending: true)
+        .where('to_token', isEqualTo: token)
+        .snapshots();
   }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -31,10 +34,14 @@ class NotificationPage extends StatelessWidget {
             shrinkWrap: true,
             children: snapshot.data.documents.map((DocumentSnapshot document) {
               return new ListTile(
-                title: new Text("From:" + document['sender'] + ": " + document['title'].toString()),
-                subtitle: new Text(document['message'] + " Date: " + document['date'].toString()),
+                title: new Text("From:" +
+                    document['sender'] +
+                    ": " +
+                    document['title'].toString()),
+                subtitle: new Text(document['message'] +
+                    " Date: " +
+                    document['date'].toString()),
                 trailing: new Row(
-
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     new Container(
@@ -47,73 +54,17 @@ class NotificationPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                onTap: (){},// view user detaild TODO
+                onTap: () {}, // view user detaild TODO
               );
             }).toList(),
           );
         },
       ),
-      drawer: new Drawer(
-        child: new ListView(
-          children: <Widget>[
-            new Container(
-              height: 120.0,
-              child: new DrawerHeader(
-                padding: new EdgeInsets.all(0.0),
-                decoration: new BoxDecoration(
-                  color: new Color(0xFFECEFF1),
-                ),
-                child: new Center(
-                  child: new FlutterLogo(
-                    colors: Colors.lightGreen,
-                    size: 54.0,
-                  ),
-                ),
-              ),
-            ),
-            new Divider(),
-            new ListTile(
-                leading: new Icon(Icons.exit_to_app),
-                title: new Text('Requests Page'),
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/RequestsPage');
-                }),
-            new ListTile(
-                leading: new Icon(Icons.home),
-                title: new Text('Building List'),
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/BuildingList');
-                }),
-            new ListTile(
-                leading: new Icon(Icons.exit_to_app),
-                title: new Text('Profile'),
-                onTap: () {
-                  FirebaseAuth.instance.signOut().then((value) {
-                    Navigator.of(context).pushReplacementNamed('/ProfilePage');
-                  }).catchError((e) {
-                    print(e);
-                  });
-                }),
-            new ListTile(
-                leading: new Icon(Icons.exit_to_app),
-                title: new Text('Sign Out'),
-                onTap: () {
-                  FirebaseAuth.instance.signOut().then((value) {
-                    Navigator.of(context).pushReplacementNamed('/LoginPage');
-                  }).catchError((e) {
-                    print(e);
-                  });
-                }),
-          ],
-        ),
-      ),
     );
-
   }
-
 }
 
-Future<bool> confirmDialog(BuildContext context){
+Future<bool> confirmDialog(BuildContext context) {
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -123,16 +74,13 @@ Future<bool> confirmDialog(BuildContext context){
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
-              onPressed:() => Navigator.of(context).pop(true),
+              onPressed: () => Navigator.of(context).pop(true),
             ),
             new FlatButton(
               child: Text("No"),
-              onPressed:() => Navigator.of(context).pop(false),
+              onPressed: () => Navigator.of(context).pop(false),
             ),
           ],
         );
-      }
-
-  );
-
+      });
 }
