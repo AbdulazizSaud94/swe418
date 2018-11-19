@@ -19,7 +19,7 @@ class HComplaintsListState extends State<HComplaintsList> {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content: const Text('Added to favorite'),
+        content:  Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),

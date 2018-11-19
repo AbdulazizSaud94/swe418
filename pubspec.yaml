@@ -25,7 +25,7 @@ dependencies:
   firebase_storage: ^1.0.3
   map_view: ^0.0.14
   firebase_messaging:
-
+  flutter_local_notifications:
 
 
 

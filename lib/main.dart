@@ -31,9 +31,12 @@ import 'Screens/Student/change_room_request.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'Screens/Shared/ViewBuilding.dart';
 import 'Screens/Shared/ViewRoom.dart';
+
 import 'Screens/Shared/StudentProfile.dart';
 import 'Screens/Student/RequestSwap.dart';
 
+
+import 'screens/Student/posts.dart';
 
 void main() {
   MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
@@ -44,11 +47,13 @@ class MyApp extends StatelessWidget {
   FirebaseMessaging fb = new FirebaseMessaging();
 
   void initState() {
+
     fb.configure(
       onLaunch: (Map<String, dynamic> msg) {
 
       },
-      onMessage: (Map<String, dynamic> msg) {},
+      onMessage: (Map<String, dynamic> msg) {
+      },
       onResume: (Map<String, dynamic> msg) {},
     );
     fb.requestNotificationPermissions(
@@ -96,6 +101,9 @@ class MyApp extends StatelessWidget {
         '/ViewRoom': (BuildContext context) => new ViewRoom(),
         '/StudentProfile': (BuildContext context) => new StudentProfile(),
         '/SwapRequest': (BuildContext context) => new RequestSwap(),
+
+
+        '/PostPage': (BuildContext context) => new PostPage(),
 
       },
     );

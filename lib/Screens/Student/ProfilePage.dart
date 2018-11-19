@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'EditProfile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class ProfilePage extends StatefulWidget {
   @override
   ProfilePageState createState() => new ProfilePageState();
@@ -382,6 +381,12 @@ class ProfilePageState extends State<ProfilePage> {
                 title: new Text('Building List'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/BuildingList');
+                }),
+            new ListTile(
+                leading: new Icon(FontAwesomeIcons.mailchimp),
+                title: new Text('Posts'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/PostPage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),

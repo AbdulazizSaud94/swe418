@@ -31,8 +31,8 @@ class NotificationPage extends StatelessWidget {
             shrinkWrap: true,
             children: snapshot.data.documents.map((DocumentSnapshot document) {
               return new ListTile(
-                title: new Text("From:" + document['sender' + ": " + document['title']]),
-                subtitle: new Text(document['message'] + " Date: " + document['date']),
+                title: new Text("From:" + document['sender'] + ": " + document['title'].toString()),
+                subtitle: new Text(document['message'] + " Date: " + document['date'].toString()),
                 trailing: new Row(
 
                   mainAxisSize: MainAxisSize.min,
