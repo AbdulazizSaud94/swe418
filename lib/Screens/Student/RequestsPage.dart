@@ -65,7 +65,7 @@ class RequestsPageState extends State<RequestsPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 25.0),
+                          padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 10.0),
                           child: Text(
                             'Notifications',
                             style: TextStyle(
@@ -77,7 +77,7 @@ class RequestsPageState extends State<RequestsPage> {
                         ),
                       ],
                     ),
-                    SizedBox(width: 70.0),
+                    SizedBox(width: 10.0),
                     Container(
                       height: 50.0,
                       width: 135.0,

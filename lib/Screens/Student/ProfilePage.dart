@@ -57,7 +57,6 @@ class ProfilePageState extends State<ProfilePage> {
         title: new Text(
           'Profile',
         ),
-        backgroundColor: Colors.green,
       ),
       body: new FutureBuilder<DocumentSnapshot>(
           future: Firestore.instance.collection('Users').document(uid).get(),

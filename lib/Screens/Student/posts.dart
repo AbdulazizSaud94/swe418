@@ -46,7 +46,6 @@ class _NewCommentPage extends State<NewCommentPage> {
           title: new Text(
             'New Post',
           ),
-          backgroundColor: Colors.lightGreen.withOpacity(0.8),
         ),
         body: ListView(
           children: <Widget>[
@@ -189,7 +188,6 @@ class _Comments extends State<Comments> {
         title: new Text(
           'Comments',
         ),
-        backgroundColor: Colors.lightGreen.withOpacity(0.8),
       ),
 
       body: getAllPosts(),
@@ -308,7 +306,6 @@ class _MyPost extends State<MyPost> {
         title: new Text(
           'My Posts',
         ),
-        backgroundColor: Colors.lightGreen.withOpacity(0.8),
       ),
       body: getAllPosts()
     );
@@ -355,7 +352,6 @@ class _NewPost extends State<NewPost> {
           title: new Text(
             'New Post',
           ),
-          backgroundColor: Colors.lightGreen.withOpacity(0.8),
         ),
         body: ListView(
           children: <Widget>[
@@ -486,7 +482,6 @@ class _PostPage extends State<PostPage> {
         title: new Text(
           'Posts',
         ),
-        backgroundColor: Colors.lightGreen.withOpacity(0.8),
       ),
       body: getAllPosts(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
