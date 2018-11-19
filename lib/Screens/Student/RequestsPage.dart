@@ -3,6 +3,7 @@ import 'change_room_request.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'UnlockDoor.dart';
+import 'Notifications.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RequestsPage extends StatefulWidget {
@@ -55,7 +56,7 @@ class RequestsPageState extends State<RequestsPage> {
                         Container(
                           padding: EdgeInsets.fromLTRB(25.0, 25.0, 5.0, 5.0),
                           child: Text(
-                            'YOU HAVE',
+                            'YOUR',
                             style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
@@ -66,11 +67,11 @@ class RequestsPageState extends State<RequestsPage> {
                         Container(
                           padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 25.0),
                           child: Text(
-                            '25',
+                            'Notifications',
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 44.0,
+                              fontSize: 20.0,
                             ),
                           ),
                         ),
@@ -94,7 +95,10 @@ class RequestsPageState extends State<RequestsPage> {
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(10.0)),
                         onPressed: () {
-                          //TODO
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationPage()));
                         },
                       ),
                     ),

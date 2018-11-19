@@ -19,6 +19,8 @@ class _RequestChangeRoomList extends State<RequestChangeRoomList> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Available Room List'),
+        backgroundColor: Colors.green,
+
       ),
       body: new StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
@@ -134,7 +136,7 @@ class _RequestChangeRoomList extends State<RequestChangeRoomList> {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content: const Text('Added to favorite'),
+        content:  Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
@@ -158,7 +160,7 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content: const Text('Added to favorite'),
+        content:  Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
@@ -395,8 +397,8 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
               "New Request",
               style: new TextStyle(
                   fontSize: 17.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w200,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                   fontFamily: "Merriweather"),
             ))
       ],
@@ -517,7 +519,9 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("good"),
+          title: Text("Change Room Requests"),
+          backgroundColor: Colors.green,
+
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
