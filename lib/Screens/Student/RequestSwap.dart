@@ -85,49 +85,53 @@ class RequestSwapState extends State<RequestSwap> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                              shrinkWrap: true,
-                              children: <Widget>[
-                                new ListView(
-                                  shrinkWrap: true,
-                                  children: snapshot.data.documents
-                                      .map((DocumentSnapshot document) {
-                                    return new ExpansionTile(
-                                      title: new Text(
-                                          'From: ${document['Sender']}'),
-                                      children: <Widget>[
-                                        new Text(
-                                            'Status: ${document['ReceiverApproval'].toString()}'),
-                                        new Text(
-                                            'Sent: ${document['Sent'].toString()}'),
-                                      ],
-                                      trailing: new Row(
-                                        mainAxisSize: MainAxisSize.min,
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  new ListView(
+                                    shrinkWrap: true,
+                                    children: snapshot.data.documents
+                                        .map((DocumentSnapshot document) {
+                                      return new ExpansionTile(
+                                        title: new Text(
+                                            'From: ${document['Sender']}'),
                                         children: <Widget>[
-                                          new Container(
-                                            width: 50.0,
-                                            child: new FlatButton(
-                                              child: Icon(FontAwesomeIcons
-                                                  .solidCheckSquare),
-                                              textColor: Colors.grey,
-                                              onPressed: () {},
-                                            ),
-                                          ),
-                                          new Container(
-                                            width: 50.0,
-                                            child: new FlatButton(
-                                              child: Icon(FontAwesomeIcons
-                                                  .solidWindowClose),
-                                              textColor: Colors.grey,
-                                              onPressed: () {},
-                                            ),
-                                          ),
+                                          new Text(
+                                              'Status: ${document['ReceiverApproval'].toString()}'),
+                                          new Text(
+                                              'Sent: ${document['Sent'].toString()}'),
                                         ],
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ]);
+                                        trailing: new Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(FontAwesomeIcons
+                                                    .solidCheckSquare),
+                                                textColor: Colors.grey,
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(FontAwesomeIcons
+                                                    .solidWindowClose),
+                                                textColor: Colors.grey,
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ]);
+                          } else {
+                            return new Text('You Have No Requests');
+                          }
                         }),
                   ],
                 ),
@@ -160,40 +164,44 @@ class RequestSwapState extends State<RequestSwap> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                              shrinkWrap: true,
-                              children: <Widget>[
-                                new ListView(
-                                  shrinkWrap: true,
-                                  children: snapshot.data.documents
-                                      .map((DocumentSnapshot document) {
-                                    return new ExpansionTile(
-                                      title: new Text(
-                                          'To: ${document['Receiver']}'),
-                                      children: <Widget>[
-                                        new Text(
-                                            'Status: ${document['ReceiverApproval'].toString()}'),
-                                        new Text(
-                                            'Sent: ${document['Sent'].toString()}'),
-                                      ],
-                                      trailing: new Row(
-                                        mainAxisSize: MainAxisSize.min,
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  new ListView(
+                                    shrinkWrap: true,
+                                    children: snapshot.data.documents
+                                        .map((DocumentSnapshot document) {
+                                      return new ExpansionTile(
+                                        title: new Text(
+                                            'To: ${document['Receiver']}'),
                                         children: <Widget>[
-                                          new Container(
-                                            width: 50.0,
-                                            child: new FlatButton(
-                                              child: Icon(FontAwesomeIcons
-                                                  .solidWindowClose),
-                                              textColor: Colors.grey,
-                                              onPressed: () {},
-                                            ),
-                                          ),
+                                          new Text(
+                                              'Status: ${document['ReceiverApproval'].toString()}'),
+                                          new Text(
+                                              'Sent: ${document['Sent'].toString()}'),
                                         ],
-                                      ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ]);
+                                        trailing: new Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(FontAwesomeIcons
+                                                    .solidWindowClose),
+                                                textColor: Colors.grey,
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ]);
+                          } else {
+                            return new Text('You Have No Requests');
+                          }
                         }),
                   ],
                 ),
