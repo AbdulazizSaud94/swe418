@@ -43,6 +43,7 @@ class StudentProfileState extends State<StudentProfile> {
           setState(() {
             this.name = data['Name'];
             this.email = data['Email'];
+            this.mobile = data['Mobile'];
             this.major = data['Major'];
             this.city = data['City'];
             this.graduationTerm = data['GraduationTerm'];
@@ -221,13 +222,13 @@ class StudentProfileState extends State<StudentProfile> {
                                   Container(
                                       padding: EdgeInsets.only(top: 200.0)),
                                   Text(
-                                    'Mobile Number:',
+                                    'Major:',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0),
                                   ),
                                   Text(
-                                    '  $mobile',
+                                    '  $major',
                                     style: TextStyle(fontSize: 16.0),
                                   ),
                                 ],
@@ -237,14 +238,23 @@ class StudentProfileState extends State<StudentProfile> {
                                   Container(
                                       padding: EdgeInsets.only(top: 240.0)),
                                   Text(
-                                    'Major:',
+                                    'Mobile:',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0),
                                   ),
-                                  Text(
-                                    '  $major',
-                                    style: TextStyle(fontSize: 16.0),
+                                  FlatButton(
+                                    onPressed: _LaunchMobile,
+                                    child: Text(
+                                      '$mobile',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: new TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16.0,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -360,6 +370,15 @@ class StudentProfileState extends State<StudentProfile> {
 
   _launchEmail() async {
     String url = 'mailto:' + email + '?subject=News&body=New%20plugin';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _LaunchMobile() async {
+    String url = 'tel:' + mobile;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
