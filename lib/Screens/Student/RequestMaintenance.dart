@@ -235,7 +235,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       ),
                       SizedBox(height: 5.0),
                       Container(
-                        padding: EdgeInsets.only(right: 300.0),
+                        padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Building:',
@@ -252,7 +252,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                             }),
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 300.0),
+                        padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Floor:',
@@ -269,7 +269,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                             }),
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 300.0),
+                        padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Room:',

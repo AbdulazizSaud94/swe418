@@ -110,7 +110,7 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Positioned(
-                    width: 350.0,
+                    width: 320.0,
                     left: 25.0,
                     top: MediaQuery.of(context).size.height / 40,
                     child: Column(
@@ -357,7 +357,7 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             new Divider(),
             new ListTile(
-                leading: new Icon(Icons.speaker_notes),
+                leading: new Icon(FontAwesomeIcons.bullhorn),
                 title: new Text('Announcements List'),
                 onTap: () {
                   Navigator.pop(context);
@@ -386,6 +386,12 @@ class ProfilePageState extends State<ProfilePage> {
                 title: new Text('Posts'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/PostPage');
+                }),
+            new ListTile(
+                leading: new Icon(Icons.pan_tool),
+                title: new Text('Complaints'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/Complaints');
                 }),
             new ListTile(
                 leading: new Icon(Icons.exit_to_app),
