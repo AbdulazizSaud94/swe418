@@ -579,7 +579,7 @@ class RequestsPageState extends State<RequestsPage> {
                 leading: new Icon(FontAwesomeIcons.user),
                 title: new Text('Profile'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/RequestsPage');
+                  Navigator.of(context).pushReplacementNamed('/ProfilePage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.library_books),
