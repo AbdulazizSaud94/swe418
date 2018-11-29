@@ -43,7 +43,7 @@ class HComplaintsListState extends State<HComplaintsList> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Complaint Requests'),
+        title: new Text('Complaints'),
       ),
       body: new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance
