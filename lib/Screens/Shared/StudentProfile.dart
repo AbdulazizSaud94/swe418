@@ -369,7 +369,7 @@ class StudentProfileState extends State<StudentProfile> {
   }
 
   _launchEmail() async {
-    String url = 'mailto:' + email + '?subject=News&body=New%20plugin';
+    String url = 'mailto:' + email + '?subject=From STUHousing_&body=From%20STUHousing';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

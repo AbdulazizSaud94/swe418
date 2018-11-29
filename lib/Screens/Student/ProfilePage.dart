@@ -69,10 +69,6 @@ class ProfilePageState extends State<ProfilePage> {
             return new ListView(children: <Widget>[
               new Stack(
                 children: <Widget>[
-                  ClipPath(
-                    child: Container(color: Colors.lightGreen.withOpacity(0.8)),
-                    clipper: GetClipper(),
-                  ),
                   Positioned(
                     top: 10.0,
                     left: 300.0,
@@ -263,13 +259,13 @@ class ProfilePageState extends State<ProfilePage> {
                                   Container(
                                       padding: EdgeInsets.only(top: 200.0)),
                                   Text(
-                                    'Mobile Number:',
+                                    'Major:',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0),
                                   ),
                                   Text(
-                                    '  $mobile',
+                                    '  $major',
                                     style: TextStyle(fontSize: 16.0),
                                   ),
                                 ],
@@ -279,14 +275,23 @@ class ProfilePageState extends State<ProfilePage> {
                                   Container(
                                       padding: EdgeInsets.only(top: 240.0)),
                                   Text(
-                                    'Major:',
+                                    'Mobile:',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0),
                                   ),
-                                  Text(
-                                    '  $major',
-                                    style: TextStyle(fontSize: 16.0),
+                                  FlatButton(
+                                    onPressed: _LaunchMobile,
+                                    child: Text(
+                                      '$mobile',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: new TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16.0,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -364,7 +369,7 @@ class ProfilePageState extends State<ProfilePage> {
                   Navigator.of(context).pushNamed('/AnnouncementsList');
                 }),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(FontAwesomeIcons.externalLinkAlt),
                 title: new Text('Requests Page'),
                 onTap: () {
                   Navigator.of(context).pushReplacementNamed('/RequestsPage');
@@ -394,7 +399,7 @@ class ProfilePageState extends State<ProfilePage> {
                   Navigator.of(context).pushNamed('/Complaints');
                 }),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(FontAwesomeIcons.signOutAlt),
                 title: new Text('Sign Out'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
@@ -410,23 +415,21 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   _launchEmail() async {
-    String url = 'mailto:' + email + '?subject=News&body=New%20plugin';
+    String url = 'mailto:' + email + '?subject=From STUHousing_&body=From%20STUHousing';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch $url';
     }
   }
-}
 
-class GetClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = new Path();
-    path.lineTo(0.0, size.height / 1.9);
-    path.lineTo(size.width + 125, 0.0);
-    path.close();
-    return path;
+  _LaunchMobile() async {
+    String url = 'tel:' + mobile;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override

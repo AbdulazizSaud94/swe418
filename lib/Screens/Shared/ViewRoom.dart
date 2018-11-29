@@ -69,16 +69,19 @@ class ViewRoomState extends State<ViewRoom> {
             }
             return ListView(
               children: <Widget>[
-                SizedBox(height: 15.0,),
+                SizedBox(height: 25.0,),
                 Row(
                   children: <Widget>[
                     Text('Room number: ',
                       style: new TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('${widget.roomNumber}'),
+                    Text('${widget.roomNumber}',
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                      ),),
                   ],
                 ),
                 SizedBox(height: 15.0,),
@@ -86,11 +89,15 @@ class ViewRoomState extends State<ViewRoom> {
                   children: <Widget>[
                     Text('Building number: ',
                       style: new TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('${widget.buildingNumber}'),
+                    Text('${widget.buildingNumber}',
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 15.0,),
@@ -98,21 +105,28 @@ class ViewRoomState extends State<ViewRoom> {
                   children: <Widget>[
                     Text('Room status: ',
                       style: new TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('$roomStatus'),
+                    Text('$roomStatus',
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                      ),),
                   ],
                 ),
-                SizedBox(height: 15.0,),
+                SizedBox(height: 35.0,),
                 Text(
                   'Room occupiers',
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student1: '),
+                    Text('Student1: ',
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
                     FlatButton(
                       onPressed:(){
                         Navigator.push(
@@ -128,7 +142,7 @@ class ViewRoomState extends State<ViewRoom> {
                         overflow: TextOverflow.ellipsis,
                         style: new TextStyle(
                           color: Colors.black54,
-                          fontSize: 14.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
                         ),
@@ -138,7 +152,10 @@ class ViewRoomState extends State<ViewRoom> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student2: '),
+                    Text('Student2: ',
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                      ),),
                     FlatButton(
                       onPressed:(){
                         Navigator.push(
@@ -155,7 +172,7 @@ class ViewRoomState extends State<ViewRoom> {
                         overflow: TextOverflow.ellipsis,
                         style: new TextStyle(
                           color: Colors.black54,
-                          fontSize: 14.0,
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline,
                         ),

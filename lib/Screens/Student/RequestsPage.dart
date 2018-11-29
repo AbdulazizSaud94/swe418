@@ -606,7 +606,7 @@ class RequestsPageState extends State<RequestsPage> {
                   Navigator.of(context).pushNamed('/Complaints');
                 }),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(FontAwesomeIcons.signOutAlt),
                 title: new Text('Sign Out'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
