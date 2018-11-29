@@ -248,7 +248,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                       ),
                       FlatButton(
                         child: Icon(Icons.attach_file),
-                        textColor: Colors.blueAccent,
+                        textColor: Colors.grey,
                         onPressed: () {
                           getImage();
                         },

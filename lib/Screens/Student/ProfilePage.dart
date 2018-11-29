@@ -415,7 +415,7 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   _launchEmail() async {
-    String url = 'mailto:' + email + '?subject=From STUHousing_&body=From%20STUHousing';
+    String url = 'mailto:' + email + '?subject=From%20STUHousing_&body=From%20STUHousing';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
