@@ -2,6 +2,8 @@ import 'dart:async';
 import 'housing_change_room_request.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 
 class HousingRequestsPage extends StatefulWidget {
   @override
@@ -140,7 +142,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                       ),
                       SizedBox(height: 5.0),
                       Text(
-                        'View and create \nSwap requests',
+                        'View and Process \nSwap requests',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -211,7 +213,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                       ),
                       SizedBox(height: 5.0),
                       Text(
-                        'View and create \nPairing requests',
+                        'View and Process \nPairing requests',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -282,7 +284,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                       ),
                       SizedBox(height: 5.0),
                       Text(
-                        'View and create \nSingle Room requests',
+                        'View and Process \nSingle Room requests',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -354,7 +356,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                       ),
                       SizedBox(height: 5.0),
                       Text(
-                        'View and create \nChange Room requests',
+                        'View and Process \nChange Room requests',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -430,7 +432,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                       ),
                       SizedBox(height: 5.0),
                       Text(
-                        'View and create \nMaintenance requests',
+                        'View and Process \nMaintenance requests',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -502,7 +504,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                       ),
                       SizedBox(height: 5.0),
                       Text(
-                        'View and create \nDoor Unlock requests',
+                        'View and Process \nDoor Unlock requests',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -567,19 +569,19 @@ class RequestsPageState extends State<HousingRequestsPage> {
             ),
             new Divider(),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(Icons.pan_tool),
                 title: new Text('Complaints'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/HComplaintsList');
                 }),
                 new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(FontAwesomeIcons.fileSignature),
                 title: new Text('Inspections'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/InspectionForm');
                 }),
             new ListTile(
-                leading: new Icon(Icons.home),
+                leading: new Icon(FontAwesomeIcons.building),
                 title: new Text('Building List'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/BuildingList');
@@ -588,10 +590,10 @@ class RequestsPageState extends State<HousingRequestsPage> {
               leading: new Icon(Icons.vpn_key),
               title: new Text('Room Keys'),
               onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/HKeyList');
+                  Navigator.of(context).pushNamed('/HKeyList');
                 }),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(FontAwesomeIcons.signOutAlt),
                 title: new Text('Sign Out'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {

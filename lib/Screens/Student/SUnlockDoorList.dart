@@ -101,7 +101,6 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
             ),
             title: Text(
               'Unlock Door',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),

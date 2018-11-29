@@ -107,9 +107,14 @@ class ComplaintsState extends State<Complaints> {
                 ),
               ],
             ),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               'Complaint',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
@@ -201,13 +206,18 @@ class ComplaintsState extends State<Complaints> {
                             }
                           }),
                       SizedBox(height: 60.0),
-                      SizedBox(height: 35.0),
-                      new FloatingActionButton(
-                        onPressed: getImage,
-                        tooltip: 'Pick Image',
-                        child: new Icon(Icons.add_a_photo),
+                      SizedBox(height: 25.0),
+                      Container(
+                        width: 70,
+                        child: FlatButton(
+                          child: Icon(Icons.add_a_photo, size: 35,),
+                          textColor: Colors.grey,
+                          onPressed: () {
+                            getImage();
+                          },
+                        ),
                       ),
-                      SizedBox(height: 35.0),
+                      SizedBox(height: 30.0),
                       Container(
                         height: 50.0,
                         width: 130.0,

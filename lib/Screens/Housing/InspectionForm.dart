@@ -56,6 +56,12 @@ class InspectionFormSate extends State<InspectionForm> {
                     ),
                   ],
                 ),
+                leading: new IconButton(
+                  icon: new Icon(
+                    Icons.arrow_back,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
                 title: Text(
                   'Incpection Requests',
                   style: TextStyle(fontWeight: FontWeight.bold),

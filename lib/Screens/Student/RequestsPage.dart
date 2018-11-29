@@ -569,7 +569,7 @@ class RequestsPageState extends State<RequestsPage> {
             ),
             new Divider(),
             new ListTile(
-                leading: new Icon(Icons.speaker_notes),
+                leading: new Icon(FontAwesomeIcons.bullhorn),
                 title: new Text('Announcements List'),
                 onTap: () {
                   Navigator.pop(context);
@@ -579,7 +579,7 @@ class RequestsPageState extends State<RequestsPage> {
                 leading: new Icon(FontAwesomeIcons.user),
                 title: new Text('Profile'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/ProfilePage');
+                  Navigator.of(context).pushReplacementNamed('/RequestsPage');
                 }),
             new ListTile(
                 leading: new Icon(Icons.library_books),
@@ -594,7 +594,19 @@ class RequestsPageState extends State<RequestsPage> {
                   Navigator.of(context).pushNamed('/BuildingList');
                 }),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(FontAwesomeIcons.mailchimp),
+                title: new Text('Posts'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/PostPage');
+                }),
+            new ListTile(
+                leading: new Icon(Icons.pan_tool),
+                title: new Text('Complaints'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/Complaints');
+                }),
+            new ListTile(
+                leading: new Icon(FontAwesomeIcons.signOutAlt),
                 title: new Text('Sign Out'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {

@@ -87,6 +87,12 @@ class HKeyListState extends State<HKeyList> {
                 ),
               ],
             ),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               'Room Keys',
               style: TextStyle(fontWeight: FontWeight.bold),
