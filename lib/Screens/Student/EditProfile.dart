@@ -180,7 +180,7 @@ class EditProfileState extends State<EditProfile> {
                   }),
               SizedBox(height: 30.0),
               TextFormField(
-                  initialValue: widget.intrestsHobbies,
+                  initialValue: widget.dislike,
                   maxLines: 3,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(

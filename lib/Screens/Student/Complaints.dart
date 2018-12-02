@@ -80,12 +80,13 @@ class ComplaintsState extends State<Complaints> {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content:  Text(message),
+        content: Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -138,29 +139,33 @@ class ComplaintsState extends State<Complaints> {
                         stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData && !bol)
+                          if (!snapshot.hasData)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return new ListTile(
-                                    title:
-                                        new Text('Title: ${document['Title']}'),
-                                    subtitle: new Text(
-                                        //'Status: ${document['Status']}'),
-                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-                                    onTap: () {}, // view user detaild TODO
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ListTile(
+                                      title: new Text(
+                                          'Title: ${document['Title']}'),
+                                      subtitle: new Text(
+                                          //'Status: ${document['Status']}'),
+                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                      onTap: () {}, // view user detaild TODO
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('You Have No Complaints');
+                          }
                         }),
                   ],
                 ),
@@ -210,7 +215,10 @@ class ComplaintsState extends State<Complaints> {
                       Container(
                         width: 70,
                         child: FlatButton(
-                          child: Icon(Icons.add_a_photo, size: 35,),
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 35,
+                          ),
                           textColor: Colors.grey,
                           onPressed: () {
                             getImage();

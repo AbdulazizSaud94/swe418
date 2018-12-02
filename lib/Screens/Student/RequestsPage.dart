@@ -79,14 +79,14 @@ class RequestsPageState extends State<RequestsPage> {
                     ),
                     SizedBox(width: 10.0),
                     Container(
-                      height: 50.0,
-                      width: 135.0,
+                      height: 40.0,
+                      width: 128.0,
                       child: RaisedButton(
                         child: const Text(
                           'SHOW ALL',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

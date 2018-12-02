@@ -11,15 +11,41 @@ class RequestSwap extends StatefulWidget {
 }
 
 class RequestSwapState extends State<RequestSwap> {
+  @override
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
   String userEmail;
   var receivedStream;
   var createdStream;
+  String uid;
   bool bol = false;
+  var stream1;
 
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      this.userEmail = user.email;
+      if (user.uid.isNotEmpty) {
+        setState(() {
+          bol = true;
+          this.uid = user.uid;
+          this.userEmail = user.email;
+        });
+        stream1 = stream1 = Firestore.instance
+            .collection('Requests')
+            .document('SwapRoom')
+            .collection('SwapRoom')
+            .where('Sender', isEqualTo: userEmail)
+            .snapshots();
+      }
     });
     super.initState();
   }
@@ -111,7 +137,7 @@ class RequestSwapState extends State<RequestSwap> {
                                                 child: Icon(FontAwesomeIcons
                                                     .solidCheckSquare),
                                                 textColor: Colors.grey,
-                                                onPressed: () {},
+                                                onPressed: () {_handlePressedApprove(context, document);},
                                               ),
                                             ),
                                             new Container(
@@ -120,7 +146,7 @@ class RequestSwapState extends State<RequestSwap> {
                                                 child: Icon(FontAwesomeIcons
                                                     .solidWindowClose),
                                                 textColor: Colors.grey,
-                                                onPressed: () {},
+                                                onPressed: () {_handlePressedReject(context, document);},
                                               ),
                                             ),
                                           ],
@@ -151,13 +177,7 @@ class RequestSwapState extends State<RequestSwap> {
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
-                        stream: Firestore.instance
-                            .collection('Requests')
-                            .document('SwapRoom')
-                            .collection('SwapRoom')
-                            .where('Sender', isEqualTo: userEmail)
-                            .where('ReceiverApproval', isEqualTo: 'Pending')
-                            .snapshots(),
+                        stream: stream1,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData)
@@ -166,39 +186,39 @@ class RequestSwapState extends State<RequestSwap> {
                             );
                           if (snapshot.data.documents.isNotEmpty) {
                             return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'To: ${document['Receiver']}'),
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ExpansionTile(
+                                      title: new Text(
+                                          'To: ${document['Receiver']}'),
+                                      children: <Widget>[
+                                        new Text(
+                                            'Status: ${document['ReceiverApproval'].toString()}'),
+                                        new Text(
+                                            'Sent: ${document['Sent'].toString()}'),
+                                      ],
+                                      trailing: new Row(
+                                        mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
-                                          new Text(
-                                              'Status: ${document['ReceiverApproval'].toString()}'),
-                                          new Text(
-                                              'Sent: ${document['Sent'].toString()}'),
-                                        ],
-                                        trailing: new Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            new Container(
-                                              width: 50.0,
-                                              child: new FlatButton(
-                                                child: Icon(FontAwesomeIcons
-                                                    .solidWindowClose),
-                                                textColor: Colors.grey,
-                                                onPressed: () {},
-                                              ),
+                                          new Container(
+                                            width: 50.0,
+                                            child: new FlatButton(
+                                              child: Icon(Icons.delete_forever),
+                                              textColor: Colors.grey,
+                                              onPressed: () {_handlePressedDelete(context, document);},
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
                           } else {
                             return new Text('You Have No Requests');
                           }
@@ -212,4 +232,106 @@ class RequestSwapState extends State<RequestSwap> {
       ),
     );
   }
+
+  void _handlePressedDelete(BuildContext context, DocumentSnapshot document) {
+    confirmDialogDelete(context).then((bool value) async {
+      if (value) {
+        Firestore.instance.runTransaction((transaction) async {
+          DocumentSnapshot ds = await transaction.get(document.reference);
+          await transaction.delete(ds.reference);
+
+          _showToast(context, "Request is deleted!");
+        });
+      }
+    });
+  }
+
+  void _handlePressedReject(BuildContext context, DocumentSnapshot document) {
+    confirmDialogReject(context).then((bool value) async {
+      if (value) {
+        Firestore.instance.runTransaction((transaction) async {
+          DocumentSnapshot ds = await transaction.get(document.reference);
+          await transaction.update(ds.reference, {'ReceiverApproval': 'Rejected'});
+          _showToast(context, "Request is rejected!");
+        });
+      }
+    });
+  }
+
+  void _handlePressedApprove(BuildContext context, DocumentSnapshot document) {
+    confirmDialogApprove(context).then((bool value) async {
+      if (value) {
+        Firestore.instance.runTransaction((transaction) async {
+          DocumentSnapshot ds = await transaction.get(document.reference);
+          await transaction.update(ds.reference, {'ReceiverApproval': 'Approved'});
+          _showToast(context, "Request is Approved!");
+        });
+      }
+    });
+  }
+}
+
+Future<bool> confirmDialogDelete(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Delete request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+
+}
+
+Future<bool> confirmDialogReject(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Reject request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+}
+
+Future<bool> confirmDialogApprove(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Approve request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+
 }
