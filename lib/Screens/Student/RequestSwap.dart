@@ -156,7 +156,7 @@ class RequestSwapState extends State<RequestSwap> {
                                   ),
                                 ]);
                           } else {
-                            return new Text('You Have No Requests');
+                            return new Text('  You Have No Requests');
                           }
                         }),
                   ],
@@ -220,7 +220,7 @@ class RequestSwapState extends State<RequestSwap> {
                               ],
                             );
                           } else {
-                            return new Text('You Have No Requests');
+                            return new Text('  You Have No Requests');
                           }
                         }),
                   ],
