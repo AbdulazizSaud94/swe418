@@ -31,10 +31,12 @@ class StudentProfileState extends State<StudentProfile> {
   String smoking;
   String stuBuilding;
   String stuRoom;
+  String stuPosition;
   bool bol = false;
   String userEmail;
   String userRoom;
   String userBuilding;
+  String userPosition;
 
   DateTime swapCreated;
   String uid;
@@ -54,6 +56,7 @@ class StudentProfileState extends State<StudentProfile> {
           setState(() {
             this.userBuilding = data['Building'];
             this.userRoom = data['Room'];
+            this.userPosition = data['Position'];
           });
         }
       });
@@ -77,6 +80,7 @@ class StudentProfileState extends State<StudentProfile> {
             this.dislike = data['Dislikes'];
             this.stuBuilding = data['Building'];
             this.stuRoom = data['Room'];
+            this.stuPosition = data['Position'];
             this.bol = true;
           });
         }
@@ -352,11 +356,15 @@ class StudentProfileState extends State<StudentProfile> {
                                             'Receiver': email,
                                             'SenderUID': uid,
                                             'ReceiverUID': widget.stuId,
+                                            'SenderPosition': userPosition,
+                                            'ReceiverPosition': stuPosition,
                                             'Sent': swapCreated,
                                             'ReceiverApproval': 'Pending',
                                             'HousingApproval': 'Pending',
-                                            'FromRoom': '${userBuilding}-${userRoom}',
-                                            'ToRoom': '${stuBuilding}-${stuRoom}',
+                                            'SenderBuilding': userBuilding,
+                                            'SenderRoom': userRoom,
+                                            'ReceiverBuilding': stuBuilding,
+                                            'ReceiverRoom': stuRoom,
                                           });
 
                                           final snackBar = SnackBar(

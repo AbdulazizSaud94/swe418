@@ -164,7 +164,7 @@ class ComplaintsState extends State<Complaints> {
                               ],
                             );
                           } else {
-                            return new Text('You Have No Complaints');
+                            return new Text('  You Have No Complaints');
                           }
                         }),
                   ],

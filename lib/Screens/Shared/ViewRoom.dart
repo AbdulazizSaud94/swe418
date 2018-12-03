@@ -122,7 +122,7 @@ class ViewRoomState extends State<ViewRoom> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student1: ',
+                    Text('Student A: ',
                       style: new TextStyle(
                         fontSize: 16.0,
                       ),
@@ -153,7 +153,7 @@ class ViewRoomState extends State<ViewRoom> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student2: ',
+                    Text('Student B: ',
                       style: new TextStyle(
                         fontSize: 16.0,
                       ),),

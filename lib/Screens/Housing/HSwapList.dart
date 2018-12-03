@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'HSwapRequest.dart';
 
 class HSwapList extends StatefulWidget {
   HSwapListState createState() => new HSwapListState();
@@ -93,10 +94,37 @@ class HSwapListState extends State<HSwapList> {
                                             FontAwesomeIcons.solidCheckSquare),
                                         textColor: Colors.grey,
                                         onPressed: () {
-                                          confirmDialogApprove(context)
-                                              .then((bool value) async {
-                                            if (value) {}
-                                          });
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HSwapRequest(
+                                                    senderID:
+                                                        '${document['SenderUID']}',
+                                                    receiverID:
+                                                        '${document['ReceiverUID']}',
+                                                    senderBuilding:
+                                                        '${document['SenderBuilding']}',
+                                                    senderRoom:
+                                                        '${document['SenderRoom']}',
+                                                    receiverBuilding:
+                                                        '${document['ReceiverBuilding']}',
+                                                    receiverRoom:
+                                                        '${document['ReceiverRoom']}',
+                                                    senderEmail:
+                                                        '${document['Sender']}',
+                                                    receiverEmail:
+                                                        '${document['Receiver']}',
+                                                    sent: '${document['Sent']}',
+                                                    senderPosition:
+                                                        '${document['SenderPosition']}',
+                                                    receiverPosition:
+                                                        '${document['ReceiverPosition']}',
+                                                    requestID:
+                                                        document.documentID,
+                                                  ),
+                                            ),
+                                          );
                                         },
                                       ),
                                     ),
@@ -163,10 +191,6 @@ class HSwapListState extends State<HSwapList> {
                                         'Status: ${document['HousingApproval'].toString()}'),
                                     new Text(
                                         'Sent: ${document['Sent'].toString()}'),
-                                    new Text(
-                                        'Sender Room: ${document['FromRoom'].toString()}'),
-                                    new Text(
-                                        'Receiver Room: ${document['ToRoom'].toString()}'),
                                   ],
                                   trailing: new Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -221,10 +245,6 @@ class HSwapListState extends State<HSwapList> {
                                         'Status: ${document['HousingApproval'].toString()}'),
                                     new Text(
                                         'Sent: ${document['Sent'].toString()}'),
-                                    new Text(
-                                        'Sender Room: ${document['FromRoom'].toString()}'),
-                                    new Text(
-                                        'Receiver Room: ${document['ToRoom'].toString()}'),
                                   ],
                                   trailing: new Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -280,27 +300,6 @@ Future<bool> confirmDialogReject(BuildContext context) {
       builder: (BuildContext context) {
         return new AlertDialog(
           title: new Text("Reject request?"),
-          actions: <Widget>[
-            new FlatButton(
-              child: Text("Yes"),
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-            new FlatButton(
-              child: Text("No"),
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-          ],
-        );
-      });
-}
-
-Future<bool> confirmDialogApprove(BuildContext context) {
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text("Approve request?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),

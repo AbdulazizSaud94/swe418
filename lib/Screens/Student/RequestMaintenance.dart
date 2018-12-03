@@ -122,7 +122,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
             ),
             title: Text(
               'Maintenance Requests',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           body: TabBarView(
@@ -171,7 +170,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                               ],
                             );
                           } else {
-                            return new Text('You Have No Requests');
+                            return new Text('  You Have No Requests');
                           }
                         }),
                   ],

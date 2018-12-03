@@ -151,7 +151,7 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
                               ],
                             );
                           } else {
-                            return new Text('You Have No Requests');
+                            return new Text('  You Have No Requests');
                           }
                         }),
                   ],
