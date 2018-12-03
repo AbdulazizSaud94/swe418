@@ -24,6 +24,7 @@ class HKeyListState extends State<HKeyList> {
   String role;
   File _image;
 
+
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -41,7 +42,7 @@ class HKeyListState extends State<HKeyList> {
           .where("Type", isEqualTo: "Room")
           .getDocuments();
     });
-    
+
     // FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
     //   this.uid = user.uid;
     //   await Firestore.instance
@@ -57,10 +58,7 @@ class HKeyListState extends State<HKeyList> {
   void validateAndSubmit() async {
     created = DateTime.now();
     formKey.currentState.save();
-    await Firestore.instance
-        .collection('Keys')
-        .document()
-        .setData({
+    await Firestore.instance.collection('Keys').document().setData({
       'Created': created,
       'Holder': uid,
     });
@@ -89,9 +87,14 @@ class HKeyListState extends State<HKeyList> {
                 ),
               ],
             ),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               'Room Keys',
-              
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
@@ -138,10 +141,13 @@ class HKeyListState extends State<HKeyList> {
                                   //   onTap: () {}, // view user detaild TODO
                                   // );
                                   return new ExpansionTile(
-                                    title: new Text('Building/Room: ${document['Name']}'),
+                                    title: new Text(
+                                        'Building/Room: ${document['Name']}'),
                                     children: <Widget>[
-                                      new Text('Owner1: ${document['Owner1']}', textAlign: TextAlign.left),
-                                      new Text('Owner2: ${document['Owner2']}', textAlign: TextAlign.left),
+                                      new Text('Owner1: ${document['Owner1']}',
+                                          textAlign: TextAlign.left),
+                                      new Text('Owner2: ${document['Owner2']}',
+                                          textAlign: TextAlign.left),
                                       // new Text('Created: ${document['Created'].toString()}'),
                                       // new Text('Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
                                     ],
@@ -194,10 +200,13 @@ class HKeyListState extends State<HKeyList> {
                                   //   onTap: () {}, // view user detaild TODO
                                   // );
                                   return new ExpansionTile(
-                                    title: new Text('Building/Room: ${document['Name']}'),
+                                    title: new Text(
+                                        'Building/Room: ${document['Name']}'),
                                     children: <Widget>[
-                                      new Text('Holder: ${document['Holder']}', textAlign: TextAlign.left),
-                                      new Text('Hold Time: ${document['Date'].toString()}'),
+                                      new Text('Holder: ${document['Holder']}',
+                                          textAlign: TextAlign.left),
+                                      new Text(
+                                          'Hold Time: ${document['Date'].toString()}'),
                                       // new Text('Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
                                     ],
                                     trailing: new Row(
@@ -254,15 +263,15 @@ class HKeyListState extends State<HKeyList> {
                             ],
                           );
                         }),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
-        );
-      }
+        ),
+      ),
+    );
+  }
 
   void handlePressed(BuildContext context, DocumentSnapshot document) {
     confirmDialog(context, document).then((bool value) async {
@@ -270,41 +279,60 @@ class HKeyListState extends State<HKeyList> {
         Firestore.instance.runTransaction((transaction) async {
           created = DateTime.now();
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'Date' : created,'Holder' : "Security"});
+          await transaction
+              .update(ds.reference, {'Date': created, 'Holder': "Security"});
         });
       }
     });
   }
 
-void _handlePressed(BuildContext context, DocumentSnapshot document) {
+  void _handlePressed(BuildContext context, DocumentSnapshot document) {
     _confirmDialog(context, document).then((bool value) async {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
           created = DateTime.now();
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'Date' : created,'Holder' : "Housing"});
+          await transaction
+              .update(ds.reference, {'Date': created, 'Holder': "Housing"});
         });
       }
     });
   }
-
 }
 
 Future<bool> confirmDialog(BuildContext context, DocumentSnapshot document) {
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content:  Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Assign Master Key of Building ${document['Name']} to Security Employee?"),
+          title: new Text(
+              "Assign Master Key of Building ${document['Name']} to Security Employee?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () {Navigator.of(context).pop(true);
+              _showToast(context, "It is assigned!");
+              },
             ),
             new FlatButton(
               child: Text("No"),
-              onPressed: () => Navigator.of(context).pop(false),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+
+                _showToast(context, "No assignment!");
+              },
             ),
           ],
         );
@@ -312,22 +340,42 @@ Future<bool> confirmDialog(BuildContext context, DocumentSnapshot document) {
 }
 
 Future<bool> _confirmDialog(BuildContext context, DocumentSnapshot document) {
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content:  Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Assign Master Key of Building ${document['Name']} to Housing Employee?"),
+          title: new Text(
+              "Assign Master Key of Building ${document['Name']} to Housing Employee?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () { Navigator.of(context).pop(true);
+              _showToast(context, "It is assigned!");
+              },
             ),
             new FlatButton(
               child: Text("No"),
-              onPressed: () => Navigator.of(context).pop(false),
+              onPressed: () {Navigator.of(context).pop(false);
+              _showToast(context, "No assignment!");
+
+              },
             ),
           ],
         );
       });
+
+
 }

@@ -13,6 +13,18 @@ class HComplaintsList extends StatefulWidget {
 class HComplaintsListState extends State<HComplaintsList> {
   String uid;
   QuerySnapshot doc;
+
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content:  Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -31,7 +43,7 @@ class HComplaintsListState extends State<HComplaintsList> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Complaint Requests'),
+        title: new Text('Complaints'),
       ),
       body: new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance
@@ -107,7 +119,22 @@ class HComplaintsListState extends State<HComplaintsList> {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
+          var token ;
+          await Firestore.instance.collection("Users").document(document['UID'])
+              .get().then((data){
+            token = data.data['token'];
+          });
+          await Firestore.instance.collection("Notifications").add({
+            "date": new DateTime.now(),
+            "message":"Your complaint is processed!",
+            "title": "Complaint .",
+            "sender": "Housing department",
+            "to_token": token,
+            "reciever": document['UID']
+          });
+
           await transaction.update(ds.reference, {'Status' : 'Done'});
+          _showToast(context, "Data is change to done successfully!");
         });
       }
     });

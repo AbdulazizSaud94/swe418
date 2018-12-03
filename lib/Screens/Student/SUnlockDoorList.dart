@@ -49,6 +49,17 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
     super.initState();
   }
 
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
   void validateAndSubmit() async {
     created = DateTime.now();
     formKey.currentState.save();
@@ -68,17 +79,15 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
       'Housing_Emp': "",
       'UID': uid
     });
+
+    _showToast(context, "Request is generated successfully!");
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
@@ -94,7 +103,6 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
             ),
             title: Text(
               'Unlock Door',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
@@ -123,24 +131,28 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
                               child: new CircularProgressIndicator(),
                             );
                           }
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return new ListTile(
-                                    title: new Text(
-                                        'Comment: ${document['Comment'].toString()}'),
-                                    subtitle: new Text(
-                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-                                    onTap: () {}, // view user detaild TODO
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ListTile(
+                                      title: new Text(
+                                          'Comment: ${document['Comment'].toString()}'),
+                                      subtitle: new Text(
+                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                      onTap: () {}, // view user detaild TODO
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('You Have No Requests');
+                          }
                         }),
                   ],
                 ),

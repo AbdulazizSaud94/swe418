@@ -3,6 +3,8 @@ import 'change_room_request.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'UnlockDoor.dart';
+import 'Notifications.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -54,7 +56,7 @@ class RequestsPageState extends State<RequestsPage> {
                         Container(
                           padding: EdgeInsets.fromLTRB(25.0, 25.0, 5.0, 5.0),
                           child: Text(
-                            'YOU HAVE',
+                            'YOUR',
                             style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
@@ -63,28 +65,28 @@ class RequestsPageState extends State<RequestsPage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 25.0),
+                          padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 10.0),
                           child: Text(
-                            '25',
+                            'Notifications',
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 44.0,
+                              fontSize: 20.0,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(width: 70.0),
+                    SizedBox(width: 10.0),
                     Container(
-                      height: 50.0,
-                      width: 135.0,
+                      height: 40.0,
+                      width: 128.0,
                       child: RaisedButton(
                         child: const Text(
                           'SHOW ALL',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18.0,
+                            fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -93,7 +95,10 @@ class RequestsPageState extends State<RequestsPage> {
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(10.0)),
                         onPressed: () {
-                          //TODO
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotificationPage()));
                         },
                       ),
                     ),
@@ -172,7 +177,7 @@ class RequestsPageState extends State<RequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                //TODO
+                                Navigator.of(context).pushNamed('/SwapRequest');
                               },
                             ),
                           ),
@@ -544,8 +549,8 @@ class RequestsPageState extends State<RequestsPage> {
         ],
       ),
       //Drawer
-             drawer: new Drawer(
-            child: new ListView(
+      drawer: new Drawer(
+        child: new ListView(
           children: <Widget>[
             new Container(
               height: 120.0,
@@ -563,20 +568,45 @@ class RequestsPageState extends State<RequestsPage> {
               ),
             ),
             new Divider(),
-             new ListTile(
-                leading: new Icon(Icons.person),
-               title: new Text('Profile'),
+            new ListTile(
+                leading: new Icon(FontAwesomeIcons.bullhorn),
+                title: new Text('Announcements List'),
                 onTap: () {
-                   Navigator.of(context).pushReplacementNamed('/ProfilePage');
+                  Navigator.pop(context);
+                  Navigator.of(context).pushNamed('/AnnouncementsList');
                 }),
             new ListTile(
-                leading: new Icon(Icons.radio),
+                leading: new Icon(FontAwesomeIcons.user),
+                title: new Text('Profile'),
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed('/ProfilePage');
+                }),
+            new ListTile(
+                leading: new Icon(Icons.library_books),
+                title: new Text('Your Contract'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/RoomContract');
+                }),
+            new ListTile(
+                leading: new Icon(FontAwesomeIcons.building),
+                title: new Text('Building List'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/BuildingList');
+                }),
+            new ListTile(
+                leading: new Icon(FontAwesomeIcons.mailchimp),
+                title: new Text('Posts'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/PostPage');
+                }),
+            new ListTile(
+                leading: new Icon(Icons.pan_tool),
                 title: new Text('Complaints'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/Complaints');
                 }),
             new ListTile(
-                leading: new Icon(Icons.exit_to_app),
+                leading: new Icon(FontAwesomeIcons.signOutAlt),
                 title: new Text('Sign Out'),
                 onTap: () {
                   FirebaseAuth.instance.signOut().then((value) {
@@ -586,7 +616,8 @@ class RequestsPageState extends State<RequestsPage> {
                   });
                 }),
           ],
-        ))
+        ),
+      ),
     );
   }
 }

@@ -76,7 +76,6 @@ class RoomContractState extends State<RoomContract> {
         title: new Text(
           'My Room Contract',
         ),
-        backgroundColor: Colors.lightGreen.withOpacity(0.8),
       ),
       body: new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance

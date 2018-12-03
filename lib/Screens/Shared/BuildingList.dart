@@ -26,7 +26,7 @@ class BuildingListState extends State<BuildingList> {
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       this.uid = user.uid;
-      doc = await Firestore.instance.collection('Building').getDocuments();
+      doc = await Firestore.instance.collection('Building').orderBy('building_number', descending: true).getDocuments();
     });
 
     super.initState();
@@ -40,7 +40,7 @@ class BuildingListState extends State<BuildingList> {
         title: new Text('Building List'),
       ),
       body: new StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance.collection('Building').snapshots(),
+          stream: Firestore.instance.collection('Building').orderBy('building_number', descending: false).snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData)

@@ -67,11 +67,24 @@ class ComplaintsState extends State<Complaints> {
       'UID': uid,
       'Attachment': '${uid}_${created}',
     });
+
+    _showToast(context, "Request is generated successfully!");
     final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
 
     Navigator.of(context).pop();
+  }
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 
   @override
@@ -95,9 +108,14 @@ class ComplaintsState extends State<Complaints> {
                 ),
               ],
             ),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
             title: Text(
               'Complaint',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
@@ -121,29 +139,33 @@ class ComplaintsState extends State<Complaints> {
                         stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData && !bol)
+                          if (!snapshot.hasData)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return new ListTile(
-                                    title:
-                                        new Text('Title: ${document['Title']}'),
-                                    subtitle: new Text(
-                                        //'Status: ${document['Status']}'),
-                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-                                    onTap: () {}, // view user detaild TODO
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ListTile(
+                                      title: new Text(
+                                          'Title: ${document['Title']}'),
+                                      subtitle: new Text(
+                                          //'Status: ${document['Status']}'),
+                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                      onTap: () {}, // view user detaild TODO
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('You Have No Complaints');
+                          }
                         }),
                   ],
                 ),
@@ -189,13 +211,21 @@ class ComplaintsState extends State<Complaints> {
                             }
                           }),
                       SizedBox(height: 60.0),
-                      SizedBox(height: 35.0),
-                      new FloatingActionButton(
-                        onPressed: getImage,
-                        tooltip: 'Pick Image',
-                        child: new Icon(Icons.add_a_photo),
+                      SizedBox(height: 25.0),
+                      Container(
+                        width: 70,
+                        child: FlatButton(
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 35,
+                          ),
+                          textColor: Colors.grey,
+                          onPressed: () {
+                            getImage();
+                          },
+                        ),
                       ),
-                      SizedBox(height: 35.0),
+                      SizedBox(height: 30.0),
                       Container(
                         height: 50.0,
                         width: 130.0,

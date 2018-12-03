@@ -60,6 +60,17 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
     return false;
   }
 
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
+
   void validateAndSubmit() async {
     //final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('SingleRoomRequests/${uid}_${created}');
     //final StorageUploadTask task = firebaseStorageRef.putFile(_image);
@@ -82,7 +93,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
         .ref()
         .child('SingleRoomRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
-
+    _showToast(context, "Request is generated successfully!");
     // print(firebaseStorageRef.getDownloadURL().toString());
 
     sucessDialog(context).then((bool value) async {
@@ -140,12 +151,8 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: DefaultTabController(
+    return new Scaffold(
+      body: DefaultTabController(
         length: 3,
         child: Scaffold(
           appBar: AppBar(
@@ -241,7 +248,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                       ),
                       FlatButton(
                         child: Icon(Icons.attach_file),
-                        textColor: Colors.blueAccent,
+                        textColor: Colors.grey,
                         onPressed: () {
                           getImage();
                         },

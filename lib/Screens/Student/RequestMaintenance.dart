@@ -25,7 +25,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
   var stream;
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       _image = image;
@@ -43,8 +43,8 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         });
         stream = stream = Firestore.instance
             .collection('Requests')
-            .document('SingleRoom')
-            .collection('SingleRoom')
+            .document('Maintenance')
+            .collection('Maintenance')
             .where('UID', isEqualTo: uid)
             .where('Status', isEqualTo: 'Pending')
             .snapshots();
@@ -77,8 +77,20 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         .ref()
         .child('MaintenanceRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
+    _showToast(context, "Request is generated successfully!");
 
     Navigator.of(context).pop();
+  }
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 
   @override
@@ -101,6 +113,12 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                   text: 'Create New Request',
                 ),
               ],
+            ),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
               'Maintenance Requests',
@@ -127,7 +145,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                         stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData && !bol)
+                          if (!bol)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
@@ -153,7 +171,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                               ],
                             );
                           } else {
-                            return new Text('You Have No Request');
+                            return new Text('You Have No Requests');
                           }
                         }),
                   ],
@@ -217,7 +235,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       ),
                       SizedBox(height: 5.0),
                       Container(
-                        padding: EdgeInsets.only(right: 300.0),
+                        padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Building:',
@@ -234,7 +252,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                             }),
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 300.0),
+                        padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Floor:',
@@ -251,7 +269,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                             }),
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 300.0),
+                        padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Room:',
@@ -267,13 +285,18 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                               }
                             }),
                       ),
-                      SizedBox(height: 35.0),
-                      new FloatingActionButton(
-                        onPressed: getImage,
-                        tooltip: 'Pick Image',
-                        child: new Icon(Icons.add_a_photo),
+                      SizedBox(height: 25.0),
+                      Container(
+                        width: 70,
+                        child: FlatButton(
+                          child: Icon(Icons.add_a_photo, size: 35,),
+                          textColor: Colors.grey,
+                          onPressed: () {
+                            getImage();
+                          },
+                        ),
                       ),
-                      SizedBox(height: 35.0),
+                      SizedBox(height: 30.0),
                       Container(
                         height: 45.0,
                         padding: EdgeInsets.only(left: 70.0, right: 70.0),
@@ -300,47 +323,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                 ),
               ),
             ],
-          ),
-          //Drawer
-          drawer: new Drawer(
-            child: new ListView(
-              children: <Widget>[
-                new Container(
-                  height: 120.0,
-                  child: new DrawerHeader(
-                    padding: new EdgeInsets.all(0.0),
-                    decoration: new BoxDecoration(
-                      color: new Color(0xFFECEFF1),
-                    ),
-                    child: new Center(
-                      child: new FlutterLogo(
-                        colors: Colors.lightGreen,
-                        size: 54.0,
-                      ),
-                    ),
-                  ),
-                ),
-                new Divider(),
-                new ListTile(
-                    leading: new Icon(Icons.exit_to_app),
-                    title: new Text('Profile Page'),
-                    onTap: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed('/ProfilePage');
-                    }),
-                new ListTile(
-                    leading: new Icon(Icons.exit_to_app),
-                    title: new Text('Sign Out'),
-                    onTap: () {
-                      FirebaseAuth.instance.signOut().then((value) {
-                        Navigator.of(context)
-                            .pushReplacementNamed('/LoginPage');
-                      }).catchError((e) {
-                        print(e);
-                      });
-                    }),
-              ],
-            ),
           ),
         ),
       ),

@@ -121,9 +121,24 @@ class _RequestChangeRoomList extends State<RequestChangeRoomList> {
       "requested_building": building,
       "requested_room": room
     }).then((a) {
+
+
+      _showToast(context, "Request is generated successfully!");
       Navigator.pop(
           context, MaterialPageRoute(builder: (context) => ChangeRoomPage()));
     });
+  }
+
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content:  Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
   }
 }
 
@@ -138,6 +153,17 @@ class ChangeRoomPage extends StatefulWidget {
 
 class _ChangeRoomPage extends State<ChangeRoomPage> {
   requestPage() {}
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content:  Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
 
   partnerApprove(String _building, String _room) {
     String room = _room;
@@ -169,6 +195,8 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
                   .then((data) {
                 if (!data.documents.isEmpty)
                   data.documents[0].reference.delete().then((a) {
+
+                    _showToast(context, "Request is deleted successfully!");
                     Navigator.pop(
                         context,
                         MaterialPageRoute(
@@ -198,6 +226,8 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
                 if (!data.documents.isEmpty)
                   data.documents[0].reference
                       .updateData({"partner_approve": "approve"}).then((a) {
+
+                    _showToast(context, "Request is approved successfully!");
                     Navigator.pop(
                         context,
                         MaterialPageRoute(
@@ -247,7 +277,9 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
                   .getDocuments()
                   .then((data) {
                 if (!data.documents.isEmpty)
-                  data.documents[0].reference.delete().then((a) {
+
+                  _showToast(context, "Request is deleted successfully!");
+                data.documents[0].reference.delete().then((a) {
                     Navigator.pop(
                         context,
                         MaterialPageRoute(
@@ -314,6 +346,8 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
                   .then((data) {
                 if (!data.documents.isEmpty)
                   data.documents[0].reference.delete().then((a) {
+
+                    _showToast(context, "Request is deleted successfully!");
                     Navigator.pop(
                         context,
                         MaterialPageRoute(
@@ -361,8 +395,8 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
               "New Request",
               style: new TextStyle(
                   fontSize: 17.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w200,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                   fontFamily: "Merriweather"),
             ))
       ],
@@ -480,10 +514,11 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
       },
     );
 
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text("good"),
+          title: Text("Change Room Requests"),
+          backgroundColor: Colors.green,
+
         ),
         body: Column(
           mainAxisSize: MainAxisSize.min,
@@ -501,7 +536,6 @@ class _ChangeRoomPage extends State<ChangeRoomPage> {
             )
           ],
         ),
-      ),
     );
   }
 

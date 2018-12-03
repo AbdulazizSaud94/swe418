@@ -180,7 +180,7 @@ class EditProfileState extends State<EditProfile> {
                   }),
               SizedBox(height: 30.0),
               TextFormField(
-                  initialValue: widget.intrestsHobbies,
+                  initialValue: widget.dislike,
                   maxLines: 3,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
@@ -337,6 +337,7 @@ class EditProfileState extends State<EditProfile> {
                             .document(widget.uid)
                             .updateData({'Name': newName, 'Email': widget.email, 'Role': 'Student', 'Mobile': newMobile, 'Major': newMajor,
                         'City': newCity, 'GraduationTerm': newGraduationTerm, 'Smoking': newSmoking, 'IntrestsHobbies': newIntrestsHobbies, 'Dislikes': newDislike});
+                        _showToast(context, "Request is generated successfully!");
                         Navigator.of(context)
                             .pushReplacementNamed('/ProfilePage');
                       }
@@ -346,6 +347,18 @@ class EditProfileState extends State<EditProfile> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+
+  void _showToast(BuildContext context, String message) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content:  Text(message),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
   }
