@@ -12,6 +12,8 @@ class HSwapRequest extends StatefulWidget {
 
   final String senderID;
   final String receiverID;
+  final String senderPosition;
+  final String receiverPosition;
   final String senderBuilding;
   final String senderRoom;
   final String receiverBuilding;
@@ -25,6 +27,8 @@ class HSwapRequest extends StatefulWidget {
   HSwapRequest({
     this.senderID,
     this.receiverID,
+    this.senderPosition,
+    this.receiverPosition,
     this.senderBuilding,
     this.senderRoom,
     this.receiverBuilding,
@@ -108,23 +112,54 @@ class HSwapRequestState extends State<HSwapRequest> {
                   ),
                 ),
                 onPressed: () {
-                   Firestore.instance
-                      .collection('Users')
-                      .document(widget.senderID)
-                      .updateData({'Building': widget.receiverBuilding, 'Room': widget.receiverRoom,});
-                   Firestore.instance
-                       .collection('Users')
-                       .document(widget.receiverID)
-                       .updateData({'Building': widget.senderBuilding, 'Room': widget.senderRoom,});
-                   if(widget.senderID=='fff'){}
-                   Firestore.instance
-                       .collection('Room')
-                       .document('${widget.senderBuilding}-${widget.senderRoom}')
-                       .updateData({'Email1': widget.receiverEmail, 'UID1': widget.receiverID,});
-                   Firestore.instance
-                       .collection('Room')
-                       .document('${widget.receiverBuilding}-${widget.receiverRoom}')
-                       .updateData({'Email1': widget.senderEmail, 'UID1': widget.senderID,});
+
+                   if(widget.senderPosition=='A'){
+                     Firestore.instance
+                         .collection('Room')
+                         .document('${widget.senderBuilding}-${widget.senderRoom}')
+                         .updateData({'Email1': widget.receiverEmail, 'UID1': widget.receiverID,});
+
+                     Firestore.instance
+                         .collection('Users')
+                         .document(widget.receiverID)
+                         .updateData({'Building': widget.senderBuilding, 'Room': widget.senderRoom, 'Position': 'A'});
+                   }
+                   else{
+                     Firestore.instance
+                         .collection('Room')
+                         .document('${widget.senderBuilding}-${widget.senderRoom}')
+                         .updateData({'Email2': widget.receiverEmail, 'UID2': widget.receiverID,});
+
+                     Firestore.instance
+                         .collection('Users')
+                         .document(widget.receiverID)
+                         .updateData({'Building': widget.senderBuilding, 'Room': widget.senderRoom, 'Position': 'B'});
+                   }
+
+                   if(widget.receiverPosition=='A'){
+                     Firestore.instance
+                         .collection('Room')
+                         .document('${widget.receiverBuilding}-${widget.receiverRoom}')
+                         .updateData({'Email1': widget.senderEmail, 'UID1': widget.senderID,});
+
+                     Firestore.instance
+                         .collection('Users')
+                         .document(widget.senderID)
+                         .updateData({'Building': widget.receiverBuilding, 'Room': widget.receiverRoom, 'Position': 'A'});
+                   }
+                   else{
+                     Firestore.instance
+                         .collection('Room')
+                         .document('${widget.receiverBuilding}-${widget.receiverRoom}')
+                         .updateData({'Email2': widget.senderEmail, 'UID2': widget.senderID,});
+
+                     Firestore.instance
+                         .collection('Users')
+                         .document(widget.senderID)
+                         .updateData({'Building': widget.receiverBuilding, 'Room': widget.receiverRoom, 'Position': 'B'});
+                   }
+
+
                    Firestore.instance
                        .collection('Requests')
                        .document("SwapRoom")

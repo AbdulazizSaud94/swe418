@@ -167,8 +167,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
               ],
             ),
             title: Text(
-              'Request',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              'Single Room Request',
             ),
             centerTitle: true,
           ),
@@ -196,25 +195,29 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return new ListTile(
-                                    title: new Text(
-                                        'Title: ${document['Request_Body']}'),
-                                    subtitle: new Text(
-                                        //'Status: ${document['Status']}'),
-                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-                                    onTap: () {}, // view user detaild TODO
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ListTile(
+                                      title: new Text(
+                                          'Title: ${document['Request_Body']}'),
+                                      subtitle: new Text(
+                                          //'Status: ${document['Status']}'),
+                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                      onTap: () {}, // view user detaild TODO
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('  You Have No Requests');
+                          }
                         }),
                   ],
                 ),

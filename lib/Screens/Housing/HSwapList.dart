@@ -103,17 +103,25 @@ class HSwapListState extends State<HSwapList> {
                                                         '${document['SenderUID']}',
                                                     receiverID:
                                                         '${document['ReceiverUID']}',
-                                                    senderBuilding: '${document['SenderBuilding']}',
+                                                    senderBuilding:
+                                                        '${document['SenderBuilding']}',
                                                     senderRoom:
                                                         '${document['SenderRoom']}',
                                                     receiverBuilding:
-                                                    '${document['ReceiverBuilding']}',
+                                                        '${document['ReceiverBuilding']}',
                                                     receiverRoom:
                                                         '${document['ReceiverRoom']}',
-                                                    senderEmail: '${document['Sender']}',
-                                                    receiverEmail: '${document['Receiver']}',
+                                                    senderEmail:
+                                                        '${document['Sender']}',
+                                                    receiverEmail:
+                                                        '${document['Receiver']}',
                                                     sent: '${document['Sent']}',
-                                                    requestID: document.documentID,
+                                                    senderPosition:
+                                                        '${document['SenderPosition']}',
+                                                    receiverPosition:
+                                                        '${document['ReceiverPosition']}',
+                                                    requestID:
+                                                        document.documentID,
                                                   ),
                                             ),
                                           );

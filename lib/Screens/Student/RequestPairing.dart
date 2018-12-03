@@ -34,7 +34,6 @@ class RequestPairingState extends State<RequestPairing> {
             ),
             title: Text(
               'Pairing Requests',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           body: TabBarView(children: [
@@ -60,53 +59,57 @@ class RequestPairingState extends State<RequestPairing> {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) return new Text('Loading...');
-                      return new ListView(
-                        shrinkWrap: true,
-                        children: snapshot.data.documents
-                            .map((DocumentSnapshot document) {
-                          return new ListTile(
-                            title: new Text(document['Name']),
-                            subtitle: new Text('Major: ' +
-                                document['Major'] +
-                                '     Status: ' +
-                                document['Status']),
-                            trailing: new Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                new Container(
-                                  width: 50.0,
-                                  child: new FlatButton(
-                                    child: Icon(Icons.check),
-                                    textColor: Colors.blueAccent,
-                                    onPressed: () {
-                                      _handlePressed(context, document);
-                                    },
+                      if (snapshot.data.documents.isNotEmpty) {
+                        return new ListView(
+                          shrinkWrap: true,
+                          children: snapshot.data.documents
+                              .map((DocumentSnapshot document) {
+                            return new ListTile(
+                              title: new Text(document['Name']),
+                              subtitle: new Text('Major: ' +
+                                  document['Major'] +
+                                  '     Status: ' +
+                                  document['Status']),
+                              trailing: new Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  new Container(
+                                    width: 50.0,
+                                    child: new FlatButton(
+                                      child: Icon(Icons.check),
+                                      textColor: Colors.blueAccent,
+                                      onPressed: () {
+                                        _handlePressed(context, document);
+                                      },
+                                    ),
                                   ),
-                                ),
-                                new Container(
-                                  width: 50.0,
-                                  alignment: Alignment(0.0, 0.0),
-                                  child: new FlatButton(
-                                    child: Icon(Icons.email),
-                                    textColor: Colors.blueAccent,
-                                    onPressed: () {
-                                      String email = document['Email'];
-                                      String url = 'mailto:' +
-                                          email +
-                                          '?subject=Pairing Request';
-                                      if (canLaunch(url) != null) {
-                                        launch(url);
-                                      } else {
-                                        throw 'Could not launch $url';
-                                      }
-                                    },
+                                  new Container(
+                                    width: 50.0,
+                                    alignment: Alignment(0.0, 0.0),
+                                    child: new FlatButton(
+                                      child: Icon(Icons.email),
+                                      textColor: Colors.blueAccent,
+                                      onPressed: () {
+                                        String email = document['Email'];
+                                        String url = 'mailto:' +
+                                            email +
+                                            '?subject=Pairing Request';
+                                        if (canLaunch(url) != null) {
+                                          launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                                      },
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }).toList(),
-                      );
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      } else {
+                        return new Text('  You Have No Requests');
+                      }
                     },
                   ),
                 ],
@@ -140,44 +143,50 @@ class RequestPairingState extends State<RequestPairing> {
                           child: new CircularProgressIndicator(),
                         );
                       }
-                      return new ListView(shrinkWrap: true, children: <Widget>[
-                        new ListView(
-                          shrinkWrap: true,
-                          children: snapshot.data.documents
-                              .map((DocumentSnapshot document) {
-                            return new ListTile(
-                              title: new Text(
-                                  'From: ${document['From'].toString()}'),
-                              trailing: new Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    new Container(
-                                      width: 50.0,
-                                      child: new FlatButton(
-                                        child: Icon(Icons.email),
-                                        textColor: Colors.blueAccent,
-                                        onPressed: () {
-                                          _handleReceived(
-                                              context, document, "email");
-                                        },
-                                      ),
-                                    ),
-                                    new Container(
-                                      width: 50.0,
-                                      child: new FlatButton(
-                                        child: Icon(Icons.done),
-                                        textColor: Colors.blueAccent,
-                                        onPressed: () {
-                                          _handleReceived(
-                                              context, document, "send");
-                                        },
-                                      ),
-                                    ),
-                                  ]),
-                            );
-                          }).toList(),
-                        ),
-                      ]);
+                      if (snapshot.data.documents.isNotEmpty) {
+                        return new ListView(
+                            shrinkWrap: true,
+                            children: <Widget>[
+                              new ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data.documents
+                                    .map((DocumentSnapshot document) {
+                                  return new ListTile(
+                                    title: new Text(
+                                        'From: ${document['From'].toString()}'),
+                                    trailing: new Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Container(
+                                            width: 50.0,
+                                            child: new FlatButton(
+                                              child: Icon(Icons.email),
+                                              textColor: Colors.blueAccent,
+                                              onPressed: () {
+                                                _handleReceived(
+                                                    context, document, "email");
+                                              },
+                                            ),
+                                          ),
+                                          new Container(
+                                            width: 50.0,
+                                            child: new FlatButton(
+                                              child: Icon(Icons.done),
+                                              textColor: Colors.blueAccent,
+                                              onPressed: () {
+                                                _handleReceived(
+                                                    context, document, "send");
+                                              },
+                                            ),
+                                          ),
+                                        ]),
+                                  );
+                                }).toList(),
+                              ),
+                            ]);
+                      } else {
+                        return new Text('  You Have No Requests');
+                      }
                     }),
               ]),
             ),
