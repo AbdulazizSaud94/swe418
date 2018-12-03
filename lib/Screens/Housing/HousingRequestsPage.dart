@@ -41,12 +41,12 @@ class RequestsPageState extends State<HousingRequestsPage> {
                     Stack(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(80.0, 10.0, 0.0, 10.0),
+                          padding: EdgeInsets.fromLTRB(76.0, 10.0, 0.0, 10.0),
                           child: Text(
                             'Students Requests',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
+                              fontSize: 20.0,
                             ),
                           ),
                         ),
@@ -127,8 +127,8 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                //TODO
-                              },
+                                Navigator.of(context)
+                                    .pushNamed('/HSwapList');                              },
                             ),
                           ),
                         );

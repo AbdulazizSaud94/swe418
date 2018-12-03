@@ -350,6 +350,8 @@ class StudentProfileState extends State<StudentProfile> {
                                               .setData({
                                             'Sender': userEmail,
                                             'Receiver': email,
+                                            'SenderUID': uid,
+                                            'ReceiverUID': widget.stuId,
                                             'Sent': swapCreated,
                                             'ReceiverApproval': 'Pending',
                                             'HousingApproval': 'Pending',

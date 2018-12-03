@@ -208,7 +208,6 @@ class LoginPageSate extends State<LoginPage> {
                                       'Incorrect user email or password!',
                                       style: TextStyle(
                                         fontSize: 17.0,
-                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   );
