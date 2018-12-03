@@ -79,7 +79,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
     _showToast(context, "Request is generated successfully!");
 
-    Navigator.of(context).pop();
   }
 
   void _showToast(BuildContext context, String message) {
@@ -332,6 +331,8 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
     confirmDialog(context).then((bool value) {
       if (value) {
         validateAndSubmit();
+        Navigator.of(context).pushReplacementNamed('/RequestMaintenance');
+
       }
     });
   }
