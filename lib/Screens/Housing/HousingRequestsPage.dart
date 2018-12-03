@@ -25,19 +25,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
           Stack(
             children: <Widget>[
               Container(
-                height: 100.0,
-                color: Colors.white,
-                alignment: Alignment(0.0, -0.40),
-                child: Text(
-                  'My Requests',
-                  style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.fromLTRB(25.0, 65.0, 25.0, 0.0),
+                margin: EdgeInsets.fromLTRB(25.0, 35.0, 25.0, 0.0),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -53,51 +41,18 @@ class RequestsPageState extends State<HousingRequestsPage> {
                     Stack(
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(25.0, 25.0, 5.0, 5.0),
+                          padding: EdgeInsets.fromLTRB(76.0, 10.0, 0.0, 10.0),
                           child: Text(
-                            'YOU HAVE',
+                            'Students Requests',
                             style: TextStyle(
-                              color: Colors.grey,
                               fontWeight: FontWeight.bold,
-                              fontSize: 14.0,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(25.0, 40.0, 5.0, 25.0),
-                          child: Text(
-                            '25',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 44.0,
+                              fontSize: 20.0,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(width: 70.0),
-                    Container(
-                      height: 50.0,
-                      width: 135.0,
-                      child: RaisedButton(
-                        child: const Text(
-                          'SHOW ALL',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        color: Colors.green,
-                        splashColor: Colors.blueGrey,
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(10.0)),
-                        onPressed: () {
-                          //TODO
-                        },
-                      ),
-                    ),
+
                   ],
                 ),
               ),
@@ -172,8 +127,8 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                //TODO
-                              },
+                                Navigator.of(context)
+                                    .pushNamed('/HSwapList');                              },
                             ),
                           ),
                         );

@@ -8,10 +8,14 @@ class StudentProfile extends StatefulWidget {
   StudentProfileState createState() => new StudentProfileState();
 
   final String stuId;
+  final String building;
+  final String room;
 
   //constructor
   StudentProfile({
     this.stuId,
+    this.building,
+    this.room,
   });
 }
 
@@ -25,7 +29,12 @@ class StudentProfileState extends State<StudentProfile> {
   String graduationTerm;
   String major;
   String smoking;
+  String stuBuilding;
+  String stuRoom;
   bool bol = false;
+  String userEmail;
+  String userRoom;
+  String userBuilding;
 
   DateTime swapCreated;
   String uid;
@@ -34,6 +43,21 @@ class StudentProfileState extends State<StudentProfile> {
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       this.uid = user.uid;
+      this.userEmail = user.email;
+
+      await Firestore.instance
+          .collection('Users')
+          .document(uid)
+          .get()
+          .then((data) {
+        if (data.exists) {
+          setState(() {
+            this.userBuilding = data['Building'];
+            this.userRoom = data['Room'];
+          });
+        }
+      });
+
       await Firestore.instance
           .collection('Users')
           .document(widget.stuId)
@@ -51,6 +75,8 @@ class StudentProfileState extends State<StudentProfile> {
             this.mobile = data['Mobile'];
             this.intrestsHobbies = data['IntrestsHobbies'];
             this.dislike = data['Dislikes'];
+            this.stuBuilding = data['Building'];
+            this.stuRoom = data['Room'];
             this.bol = true;
           });
         }
@@ -322,11 +348,15 @@ class StudentProfileState extends State<StudentProfile> {
                                               .collection('SwapRoom')
                                               .document()
                                               .setData({
-                                            'Sender': uid,
-                                            'Receiver': widget.stuId,
+                                            'Sender': userEmail,
+                                            'Receiver': email,
+                                            'SenderUID': uid,
+                                            'ReceiverUID': widget.stuId,
                                             'Sent': swapCreated,
                                             'ReceiverApproval': 'Pending',
                                             'HousingApproval': 'Pending',
+                                            'FromRoom': '${userBuilding}-${userRoom}',
+                                            'ToRoom': '${stuBuilding}-${stuRoom}',
                                           });
 
                                           final snackBar = SnackBar(

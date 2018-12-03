@@ -42,21 +42,21 @@ class LoginPageSate extends State<LoginPage> {
                 Container(
                   padding: EdgeInsets.fromLTRB(15.0, 160.0, 0.0, 0.0),
                   child: Text(
-                    'STUHousing',
+                    'StuHousing',
                     style:
                         TextStyle(fontSize: 50.0, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.fromLTRB(304.0, 115.0, 0.0, 0.0),
-                  child: Text(
-                    '.',
-                    style: TextStyle(
-                        fontSize: 110.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green),
+                Positioned(
+                  top: 175,
+                  left: 295,
+                  child: Container(
+                  width: 48,
+                  height: 45,
+                  child: Image.asset('assets/images/newIcon.png',
                   ),
-                ),
+                ),),
+
               ],
             ),
           ),
@@ -136,14 +136,14 @@ class LoginPageSate extends State<LoginPage> {
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
-                                color: Colors.green,
+                                color: Colors.green.withGreen(416),
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Montserrat',
                                 decoration: TextDecoration.underline),
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.0),
+                      SizedBox(height: 50.0),
                       new Builder(
                           // Create an inner BuildContext so that the onPressed methods
                           // can refer to the Scaffold with Scaffold.of().
@@ -160,7 +160,7 @@ class LoginPageSate extends State<LoginPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            color: Colors.green,
+                            color: Colors.green.withGreen(416),
                             elevation: 1.0,
                             splashColor: Colors.blueGrey,
                             shape: new RoundedRectangleBorder(
@@ -208,7 +208,6 @@ class LoginPageSate extends State<LoginPage> {
                                       'Incorrect user email or password!',
                                       style: TextStyle(
                                         fontSize: 17.0,
-                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   );

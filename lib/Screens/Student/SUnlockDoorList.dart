@@ -48,16 +48,18 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
         .snapshots();
     super.initState();
   }
+
   void _showToast(BuildContext context, String message) {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content:  Text(message),
+        content: Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
   }
+
   void validateAndSubmit() async {
     created = DateTime.now();
     formKey.currentState.save();
@@ -129,24 +131,28 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
                               child: new CircularProgressIndicator(),
                             );
                           }
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  return new ListTile(
-                                    title: new Text(
-                                        'Comment: ${document['Comment'].toString()}'),
-                                    subtitle: new Text(
-                                        'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-                                    onTap: () {}, // view user detaild TODO
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ListTile(
+                                      title: new Text(
+                                          'Comment: ${document['Comment'].toString()}'),
+                                      subtitle: new Text(
+                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+                                      onTap: () {}, // view user detaild TODO
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('You Have No Requests');
+                          }
                         }),
                   ],
                 ),

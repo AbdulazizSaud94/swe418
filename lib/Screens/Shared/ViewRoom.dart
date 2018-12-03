@@ -134,6 +134,7 @@ class ViewRoomState extends State<ViewRoom> {
                           MaterialPageRoute(
                             builder: (context) => StudentProfile(
                               stuId: uid1,
+
                             ),
                           ),
                         );                      },
