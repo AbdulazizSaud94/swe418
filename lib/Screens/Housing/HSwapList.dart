@@ -264,7 +264,7 @@ class HSwapListState extends State<HSwapList> {
                               }).toList(),
                             );
                           } else {
-                            return new Text('No Requests Found');
+                            return new Text('  No Requests Found');
                           }
                         },
                       ),

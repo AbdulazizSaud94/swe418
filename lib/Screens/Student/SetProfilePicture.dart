@@ -60,19 +60,36 @@ class SetProfilePictureState extends State<SetProfilePicture> {
       ),
       body: ListView(
         children: <Widget>[
-          Stack(
+          SizedBox(
+            height: 20,
+          ),
+          Column(
             children: <Widget>[
-              cc
+              Center(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(300, 0, 300, 0),
+                  width: 150.0,
+                  height: 150.0,
+                  decoration: BoxDecoration(
+                      color: Colors.blueGrey,
+                      image: DecorationImage(
+                          image: NetworkImage(widget.avatar), fit: BoxFit.fill),
+                      borderRadius: BorderRadius.all(Radius.circular(75.0)),
+                      boxShadow: [
+                        BoxShadow(blurRadius: 20.0, color: Colors.black),
+                      ]),
+                ),
+              ),
             ],
           ),
           SizedBox(
-            height: 20,
+            height: 60,
           ),
           Container(
             padding: EdgeInsets.fromLTRB(120, 0, 120, 0),
             child: RaisedButton(
                 child: Text(
-                  'Set Avatar',
+                  'Set New',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -88,7 +105,7 @@ class SetProfilePictureState extends State<SetProfilePicture> {
                 }),
           ),
           SizedBox(
-            height: 20,
+            height: 15,
           ),
           Container(
             padding: EdgeInsets.fromLTRB(120, 0, 120, 0),

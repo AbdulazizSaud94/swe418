@@ -73,13 +73,20 @@ class ProfilePageState extends State<ProfilePage> {
             return new ListView(children: <Widget>[
               new Stack(
                 children: <Widget>[
+                  Positioned(child: ButtonBar(
+                    children: <Widget>[
+
+                    ],
+                  )),
                   Positioned(
-                    top: 40.0,
-                    left: 250.0,
+                    top: 70.0,
+                    left: 310.0,
                     child: Container(
+                      height: 50.0,
+                      width: 50.0,
                       child: RaisedButton(
                           child: Icon(
-                            Icons.image,
+                            FontAwesomeIcons.solidImages,
                             color: Colors.white,
                           ),
                           color: Colors.grey.withOpacity(0.78),
@@ -102,14 +109,14 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Positioned(
-                    top: 10.0,
-                    left: 300.0,
+                    top: 15.0,
+                    left: 310.0,
                     child: Container(
                       height: 50.0,
                       width: 50.0,
                       child: RaisedButton(
                           child: Icon(
-                            Icons.edit,
+                            FontAwesomeIcons.userEdit,
                             color: Colors.white,
                           ),
                           color: Colors.grey.withOpacity(0.78),
