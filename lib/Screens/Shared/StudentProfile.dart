@@ -342,45 +342,60 @@ class StudentProfileState extends State<StudentProfile> {
                                   width: 98.0,
                                   child: RaisedButton.icon(
                                     onPressed: () {
-                                      confirmDialog(context)
-                                          .then((bool value) async {
-                                        if (value) {
-                                          swapCreated = DateTime.now();
-                                          await Firestore.instance
-                                              .collection('Requests')
-                                              .document('SwapRoom')
-                                              .collection('SwapRoom')
-                                              .document()
-                                              .setData({
-                                            'Sender': userEmail,
-                                            'Receiver': email,
-                                            'SenderUID': uid,
-                                            'ReceiverUID': widget.stuId,
-                                            'SenderPosition': userPosition,
-                                            'ReceiverPosition': stuPosition,
-                                            'Sent': swapCreated,
-                                            'ReceiverApproval': 'Pending',
-                                            'HousingApproval': 'Pending',
-                                            'SenderBuilding': userBuilding,
-                                            'SenderRoom': userRoom,
-                                            'ReceiverBuilding': stuBuilding,
-                                            'ReceiverRoom': stuRoom,
-                                          });
-
-                                          final snackBar = SnackBar(
-                                            content: Text(
-                                              'Swap Request Created',
-                                              style: TextStyle(
-                                                fontSize: 17.0,
-                                              ),
+                                      if (uid == widget.stuId) {
+                                        final snackBar = SnackBar(
+                                          content: Text(
+                                            'Error, this profile belongs to your account',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
                                             ),
-                                          );
+                                          ),
+                                        );
 
-                                          // Find the Scaffold in the Widget tree and use it to show a SnackBar!
-                                          Scaffold.of(context)
-                                              .showSnackBar(snackBar);
-                                        }
-                                      });
+                                        // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                        Scaffold.of(context)
+                                            .showSnackBar(snackBar);
+                                      } else {
+                                        confirmDialog(context)
+                                            .then((bool value) async {
+                                          if (value) {
+                                            swapCreated = DateTime.now();
+                                            await Firestore.instance
+                                                .collection('Requests')
+                                                .document('SwapRoom')
+                                                .collection('SwapRoom')
+                                                .document()
+                                                .setData({
+                                              'Sender': userEmail,
+                                              'Receiver': email,
+                                              'SenderUID': uid,
+                                              'ReceiverUID': widget.stuId,
+                                              'SenderPosition': userPosition,
+                                              'ReceiverPosition': stuPosition,
+                                              'Sent': swapCreated,
+                                              'ReceiverApproval': 'Pending',
+                                              'HousingApproval': 'Pending',
+                                              'SenderBuilding': userBuilding,
+                                              'SenderRoom': userRoom,
+                                              'ReceiverBuilding': stuBuilding,
+                                              'ReceiverRoom': stuRoom,
+                                            });
+
+                                            final snackBar = SnackBar(
+                                              content: Text(
+                                                'Swap Request Created',
+                                                style: TextStyle(
+                                                  fontSize: 17.0,
+                                                ),
+                                              ),
+                                            );
+
+                                            // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                            Scaffold.of(context)
+                                                .showSnackBar(snackBar);
+                                          }
+                                        });
+                                      }
                                     },
                                     icon: Icon(
                                       Icons.swap_horiz,
@@ -392,6 +407,8 @@ class StudentProfileState extends State<StudentProfile> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 14,),
+
                               ],
                             );
                           }),
@@ -407,7 +424,9 @@ class StudentProfileState extends State<StudentProfile> {
   }
 
   _launchEmail() async {
-    String url = 'mailto:' + email + '?subject=From%20STUHousing_&body=From%20STUHousing';
+    String url = 'mailto:' +
+        email +
+        '?subject=From%20STUHousing_&body=From%20STUHousing';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

@@ -88,7 +88,8 @@ class ProfilePageState extends State<ProfilePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditProfile(
+                                builder: (context) =>
+                                    EditProfile(
                                       name: name,
                                       city: city,
                                       major: major,
