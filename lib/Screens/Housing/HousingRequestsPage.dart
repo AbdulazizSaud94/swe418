@@ -524,6 +524,13 @@ class RequestsPageState extends State<HousingRequestsPage> {
             ),
             new Divider(),
             new ListTile(
+                leading: new Icon(Icons.announcement),
+                title: new Text('Announcements'),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/HAnnouncements');
+                }
+            ),
+            new ListTile(
                 leading: new Icon(Icons.pan_tool),
                 title: new Text('Complaints'),
                 onTap: () {

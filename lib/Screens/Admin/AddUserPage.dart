@@ -195,7 +195,7 @@ class AddUserPageState extends State<AddUserPage> {
                               .collection('Users')
                               .document(user.uid)
                               .setData(
-                                  {'Email': email, 'Name': name, 'Role': role, 'Major': 'Not Specified', 'City': 'Dhahran'
+                                  {'Email': email, 'Avatar': 'https://firebasestorage.googleapis.com/v0/b/swe418-483b9.appspot.com/o/Avatars%2Fdefault.png?alt=media&token=da415113-0c8c-4fb7-b65e-23a41bb201bd','Name': name, 'Role': role, 'Major': 'Not Specified', 'City': 'Dhahran'
                                     , 'GraduationTerm': 'Not Specified', 'Smoking': 'Not Specified', 'Mobile': 'Not Specified',
                                   'IntrestsHobbies': 'Not Specified', 'Dislikes': 'Not Specified', 'Status':'Not Specified'});
                           Navigator.of(context)

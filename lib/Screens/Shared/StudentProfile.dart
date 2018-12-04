@@ -38,6 +38,7 @@ class StudentProfileState extends State<StudentProfile> {
   String userRoom;
   String userBuilding;
   String userPosition;
+  String userRole;
 
   DateTime swapCreated;
   String uid;
@@ -58,6 +59,7 @@ class StudentProfileState extends State<StudentProfile> {
             this.userBuilding = data['Building'];
             this.userRoom = data['Room'];
             this.userPosition = data['Position'];
+            this.userRole = data['Role'];
           });
         }
       });
@@ -346,17 +348,29 @@ class StudentProfileState extends State<StudentProfile> {
                                       if (uid == widget.stuId) {
                                         final snackBar = SnackBar(
                                           content: Text(
-                                            'Error, this profile belongs to your account',
+                                            'Error, this profile belongs to your account!',
                                             style: TextStyle(
                                               fontSize: 15.0,
                                             ),
                                           ),
                                         );
-
                                         // Find the Scaffold in the Widget tree and use it to show a SnackBar!
                                         Scaffold.of(context)
                                             .showSnackBar(snackBar);
-                                      } else {
+                                      }else if(userRole == 'Housing'){
+                                        final snackBar = SnackBar(
+                                          content: Text(
+                                            'Error, this feature not available for this user type!',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                        );
+                                        // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                        Scaffold.of(context)
+                                            .showSnackBar(snackBar);
+                                      }
+                                      else {
                                         confirmDialog(context)
                                             .then((bool value) async {
                                           if (value) {
