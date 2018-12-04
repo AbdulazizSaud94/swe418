@@ -94,6 +94,7 @@ class ProfilePageState extends State<ProfilePage> {
                                       name: name,
                                       uid: uid,
                                       email: email,
+                                      avatar: avatar,
                                     ),
                               ),
                             );

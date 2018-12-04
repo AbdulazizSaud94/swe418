@@ -32,6 +32,7 @@ class StudentProfileState extends State<StudentProfile> {
   String stuBuilding;
   String stuRoom;
   String stuPosition;
+  String stuAvatar;
   bool bol = false;
   String userEmail;
   String userRoom;
@@ -81,6 +82,7 @@ class StudentProfileState extends State<StudentProfile> {
             this.stuBuilding = data['Building'];
             this.stuRoom = data['Room'];
             this.stuPosition = data['Position'];
+            this.stuAvatar = data['Avatar'];
             this.bol = true;
           });
         }
@@ -125,8 +127,7 @@ class StudentProfileState extends State<StudentProfile> {
                             decoration: BoxDecoration(
                                 color: Colors.blueGrey,
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://i.stack.imgur.com/l60Hf.png'),
+                                    image: NetworkImage(stuAvatar),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(75.0)),
@@ -407,8 +408,9 @@ class StudentProfileState extends State<StudentProfile> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 14,),
-
+                                SizedBox(
+                                  height: 14,
+                                ),
                               ],
                             );
                           }),
