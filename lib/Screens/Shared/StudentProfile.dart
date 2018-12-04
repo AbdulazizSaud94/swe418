@@ -407,6 +407,8 @@ class StudentProfileState extends State<StudentProfile> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 14,),
+
                               ],
                             );
                           }),
