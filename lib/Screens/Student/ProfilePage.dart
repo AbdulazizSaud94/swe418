@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'EditProfile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'EditProfile.dart';
+import 'SetProfilePicture.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -21,7 +22,9 @@ class ProfilePageState extends State<ProfilePage> {
   String graduationTerm;
   String major;
   String smoking;
+  String avatar;
   bool bol = false;
+
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
@@ -42,6 +45,7 @@ class ProfilePageState extends State<ProfilePage> {
             this.mobile = data['Mobile'];
             this.intrestsHobbies = data['IntrestsHobbies'];
             this.dislike = data['Dislikes'];
+            this.avatar = data['Avatar'];
             this.bol = true;
           });
         }
@@ -69,15 +73,20 @@ class ProfilePageState extends State<ProfilePage> {
             return new ListView(children: <Widget>[
               new Stack(
                 children: <Widget>[
+                  Positioned(child: ButtonBar(
+                    children: <Widget>[
+
+                    ],
+                  )),
                   Positioned(
-                    top: 10.0,
-                    left: 300.0,
+                    top: 70.0,
+                    left: 310.0,
                     child: Container(
                       height: 50.0,
                       width: 50.0,
                       child: RaisedButton(
                           child: Icon(
-                            Icons.edit,
+                            FontAwesomeIcons.solidImages,
                             color: Colors.white,
                           ),
                           color: Colors.grey.withOpacity(0.78),
@@ -88,8 +97,37 @@ class ProfilePageState extends State<ProfilePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    EditProfile(
+                                builder: (context) => SetProfilePicture(
+                                      name: name,
+                                      uid: uid,
+                                      email: email,
+                                      avatar: avatar,
+                                    ),
+                              ),
+                            );
+                          }),
+                    ),
+                  ),
+                  Positioned(
+                    top: 15.0,
+                    left: 310.0,
+                    child: Container(
+                      height: 50.0,
+                      width: 50.0,
+                      child: RaisedButton(
+                          child: Icon(
+                            FontAwesomeIcons.userEdit,
+                            color: Colors.white,
+                          ),
+                          color: Colors.grey.withOpacity(0.78),
+                          elevation: 1.0,
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(75.0)),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfile(
                                       name: name,
                                       city: city,
                                       major: major,
@@ -119,8 +157,7 @@ class ProfilePageState extends State<ProfilePage> {
                             decoration: BoxDecoration(
                                 color: Colors.blueGrey,
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://i.stack.imgur.com/l60Hf.png'),
+                                    image: NetworkImage(avatar),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(75.0)),
@@ -195,22 +232,8 @@ class ProfilePageState extends State<ProfilePage> {
                             children: <Widget>[
                               Row(
                                 children: <Widget>[
-                                  Text(
-                                    'AGE:',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16.0),
-                                  ),
-                                  Text(
-                                    '  23 Years old',
-                                    style: TextStyle(fontSize: 16.0),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 60.0)),
+                                      padding: EdgeInsets.only(top: 30.0)),
                                   Text(
                                     'City:',
                                     style: TextStyle(
@@ -226,7 +249,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 105.0)),
+                                      padding: EdgeInsets.only(top: 75.0)),
                                   Text(
                                     'Graduation Term:',
                                     style: TextStyle(
@@ -242,7 +265,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 150.0)),
+                                      padding: EdgeInsets.only(top: 120.0)),
                                   Text(
                                     'Smoking:',
                                     style: TextStyle(
@@ -258,7 +281,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 200.0)),
+                                      padding: EdgeInsets.only(top: 170.0)),
                                   Text(
                                     'Major:',
                                     style: TextStyle(
@@ -274,7 +297,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 240.0)),
+                                      padding: EdgeInsets.only(top: 220.0)),
                                   Text(
                                     'Mobile:',
                                     style: TextStyle(
@@ -416,7 +439,9 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   _launchEmail() async {
-    String url = 'mailto:' + email + '?subject=From%20STUHousing_&body=From%20STUHousing';
+    String url = 'mailto:' +
+        email +
+        '?subject=From%20STUHousing_&body=From%20STUHousing';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

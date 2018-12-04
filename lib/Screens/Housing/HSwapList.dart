@@ -51,14 +51,13 @@ class HSwapListState extends State<HSwapList> {
               Container(
                 child: ListView(
                   children: <Widget>[
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending',
+                      child: Text('Pending Rquests:',
                           style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,)),
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
@@ -155,12 +154,12 @@ class HSwapListState extends State<HSwapList> {
               ),
               //Second tab
               Container(
-                padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Approved:',
+                        'Approved Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -209,12 +208,12 @@ class HSwapListState extends State<HSwapList> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 15.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Declined:',
+                        'Declined Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -264,7 +263,7 @@ class HSwapListState extends State<HSwapList> {
                               }).toList(),
                             );
                           } else {
-                            return new Text('No Requests Found');
+                            return new Text('  No Requests Found');
                           }
                         },
                       ),

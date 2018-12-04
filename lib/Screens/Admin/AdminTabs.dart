@@ -92,7 +92,7 @@ class TabsState extends State<AdminTabs> {
               ),
               child: new Center(
                 child: new FlutterLogo(
-                  colors: Colors.blueGrey,
+                  colors: Colors.lightGreen,
                   size: 54.0,
                 ),
               ),

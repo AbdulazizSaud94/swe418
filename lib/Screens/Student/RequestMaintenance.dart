@@ -78,7 +78,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         .child('MaintenanceRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
     _showToast(context, "Request is generated successfully!");
-
   }
 
   void _showToast(BuildContext context, String message) {
@@ -235,6 +234,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
+                            maxLength: 3,
                             decoration: InputDecoration(
                               labelText: 'Building:',
                               labelStyle: TextStyle(
@@ -252,6 +252,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
+                            maxLength: 1,
                             decoration: InputDecoration(
                               labelText: 'Floor:',
                               labelStyle: TextStyle(
@@ -269,6 +270,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
+                            maxLength: 3,
                             decoration: InputDecoration(
                               labelText: 'Room:',
                               labelStyle: TextStyle(
@@ -287,7 +289,10 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         width: 70,
                         child: FlatButton(
-                          child: Icon(Icons.add_a_photo, size: 35,),
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 35,
+                          ),
                           textColor: Colors.grey,
                           onPressed: () {
                             getImage();
@@ -332,7 +337,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
       if (value) {
         validateAndSubmit();
         Navigator.of(context).pushReplacementNamed('/RequestMaintenance');
-
       }
     });
   }

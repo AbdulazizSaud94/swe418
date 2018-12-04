@@ -32,11 +32,13 @@ class StudentProfileState extends State<StudentProfile> {
   String stuBuilding;
   String stuRoom;
   String stuPosition;
+  String stuAvatar;
   bool bol = false;
   String userEmail;
   String userRoom;
   String userBuilding;
   String userPosition;
+  String userRole;
 
   DateTime swapCreated;
   String uid;
@@ -57,6 +59,7 @@ class StudentProfileState extends State<StudentProfile> {
             this.userBuilding = data['Building'];
             this.userRoom = data['Room'];
             this.userPosition = data['Position'];
+            this.userRole = data['Role'];
           });
         }
       });
@@ -81,6 +84,7 @@ class StudentProfileState extends State<StudentProfile> {
             this.stuBuilding = data['Building'];
             this.stuRoom = data['Room'];
             this.stuPosition = data['Position'];
+            this.stuAvatar = data['Avatar'];
             this.bol = true;
           });
         }
@@ -125,8 +129,7 @@ class StudentProfileState extends State<StudentProfile> {
                             decoration: BoxDecoration(
                                 color: Colors.blueGrey,
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://i.stack.imgur.com/l60Hf.png'),
+                                    image: NetworkImage(stuAvatar),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(75.0)),
@@ -345,17 +348,29 @@ class StudentProfileState extends State<StudentProfile> {
                                       if (uid == widget.stuId) {
                                         final snackBar = SnackBar(
                                           content: Text(
-                                            'Error, this profile belongs to your account',
+                                            'Error, this profile belongs to your account!',
                                             style: TextStyle(
                                               fontSize: 15.0,
                                             ),
                                           ),
                                         );
-
                                         // Find the Scaffold in the Widget tree and use it to show a SnackBar!
                                         Scaffold.of(context)
                                             .showSnackBar(snackBar);
-                                      } else {
+                                      }else if(userRole == 'Housing'){
+                                        final snackBar = SnackBar(
+                                          content: Text(
+                                            'Error, this feature not available for this user type!',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                        );
+                                        // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                        Scaffold.of(context)
+                                            .showSnackBar(snackBar);
+                                      }
+                                      else {
                                         confirmDialog(context)
                                             .then((bool value) async {
                                           if (value) {
@@ -407,8 +422,9 @@ class StudentProfileState extends State<StudentProfile> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 14,),
-
+                                SizedBox(
+                                  height: 14,
+                                ),
                               ],
                             );
                           }),

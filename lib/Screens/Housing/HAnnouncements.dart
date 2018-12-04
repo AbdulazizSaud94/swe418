@@ -3,13 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Announcements extends StatefulWidget {
+class HAnnouncements extends StatefulWidget {
   @override
-  AnnouncementsState createState() => new AnnouncementsState();
+  HAnnouncementsState createState() => new HAnnouncementsState();
 }
 
-class AnnouncementsState extends State<Announcements> {
+class HAnnouncementsState extends State<HAnnouncements> {
   final formKey = GlobalKey<FormState>();
   String title;
   String details;
@@ -72,14 +73,19 @@ class AnnouncementsState extends State<Announcements> {
                   children: <Widget>[
                     SizedBox(height: 30.0),
                     new StreamBuilder<QuerySnapshot>(
-                      stream: Firestore.instance.collection('Announcements').orderBy('Created', descending: true).snapshots(),
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      stream: Firestore.instance
+                          .collection('Announcements')
+                          .orderBy('Created', descending: true)
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) return new Text('Loading...');
                         return new ListView(
                           shrinkWrap: true,
-                          children: snapshot.data.documents.map((DocumentSnapshot document) {
+                          children: snapshot.data.documents
+                              .map((DocumentSnapshot document) {
                             return new ListTile(
-                              title:  ExpansionTile(
+                              title: ExpansionTile(
                                 title: Text(
                                   '${document['Title']}\n${document['Created']}',
                                   style: TextStyle(
@@ -89,14 +95,15 @@ class AnnouncementsState extends State<Announcements> {
                                   ),
                                 ),
                                 children: <Widget>[
-                                  Text('${document['Details']}\n',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),),
+                                  Text(
+                                    '${document['Details']}\n',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ],
                               ),
                               trailing: new Row(
-
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   new Container(
@@ -105,21 +112,25 @@ class AnnouncementsState extends State<Announcements> {
                                       child: Icon(Icons.delete_forever),
                                       textColor: Colors.grey,
                                       onPressed: () {
-                                        DeleteDialog(context).then((bool value) async {
-                                          if(value){
-                                            Firestore.instance.runTransaction((transaction) async {
-                                              DocumentSnapshot ds = await transaction.get(document.reference);
-                                              await transaction.delete(ds.reference);
+                                        DeleteDialog(context)
+                                            .then((bool value) async {
+                                          if (value) {
+                                            Firestore.instance.runTransaction(
+                                                (transaction) async {
+                                              DocumentSnapshot ds =
+                                                  await transaction
+                                                      .get(document.reference);
+                                              await transaction
+                                                  .delete(ds.reference);
                                             });
                                           }
                                         });
                                       },
                                     ),
                                   ),
-
                                 ],
                               ),
-                              onTap: (){},// view user detaild TODO
+                              onTap: () {}, // view user detaild TODO
                             );
                           }).toList(),
                         );
@@ -196,72 +207,67 @@ class AnnouncementsState extends State<Announcements> {
           ),
           //Drawer
           drawer: new Drawer(
-              child: new ListView(
-                children: <Widget>[
-                  new Container(
-                    height: 120.0,
-                    child: new DrawerHeader(
-                      padding: new EdgeInsets.all(0.0),
-                      decoration: new BoxDecoration(
-                        color: new Color(0xFFECEFF1),
-                      ),
-                      child: new Center(
-                        child: new FlutterLogo(
-                          colors: Colors.lightGreen,
-                          size: 54.0,
-                        ),
+            child: new ListView(
+              children: <Widget>[
+                new Container(
+                  height: 120.0,
+                  child: new DrawerHeader(
+                    padding: new EdgeInsets.all(0.0),
+                    decoration: new BoxDecoration(
+                      color: new Color(0xFFECEFF1),
+                    ),
+                    child: new Center(
+                      child: new FlutterLogo(
+                        colors: Colors.lightGreen,
+                        size: 54.0,
                       ),
                     ),
                   ),
-                  new ListTile(
-                      leading: new Icon(Icons.account_balance),
-                      title: new Text('Main'),
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/AdminTabs');
-                      }
-                  ),
-                  new ListTile(
-                      leading: new Icon(Icons.add),
-                      title: new Text('Add Users'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.of(context).pushNamed('/AddUserPage');
-                      }
-                  ),
-                  new ListTile(
-                      leading: new Icon(Icons.list),
-                      title: new Text('Users List'),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.of(context).pushNamed('/UsersList');
-                      }
-                  ),
-                  // new ListTile(
-                  //   leading: new Icon(Icons.delete),
-                  //   title: new Text('Delete Users'),
-                  //   onTap: () {
-                  //     Navigator.pop(context);
-                  //     Navigator.of(context).pushNamed('/DeleteUsers');
-                  //   }
-                  // ),
-                  new Divider(),
-                  new ListTile(
-                      leading: new Icon(Icons.exit_to_app),
-                      title: new Text('Sign Out'),
-                      onTap: () {
-                        FirebaseAuth.instance
-                            .signOut()
-                            .then((value) {
-                          Navigator.of(context).pushReplacementNamed('/LoginPage');
-                        })
-                            .catchError((e) {
-                          print(e);
-                        });
-
-                      }
-                  ),
-                ],
-              )
+                ),
+                new Divider(),
+                new ListTile(
+                    leading: new Icon(FontAwesomeIcons.externalLinkAlt),
+                    title: new Text('Requests'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/HousingPage');
+                    }),
+                new ListTile(
+                    leading: new Icon(Icons.pan_tool),
+                    title: new Text('Complaints'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/HComplaintsList');
+                    }),
+                new ListTile(
+                    leading: new Icon(FontAwesomeIcons.fileSignature),
+                    title: new Text('Inspections'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/InspectionForm');
+                    }),
+                new ListTile(
+                    leading: new Icon(FontAwesomeIcons.building),
+                    title: new Text('Building List'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/BuildingList');
+                    }),
+                new ListTile(
+                    leading: new Icon(Icons.vpn_key),
+                    title: new Text('Room Keys'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/HKeyList');
+                    }),
+                new ListTile(
+                    leading: new Icon(FontAwesomeIcons.signOutAlt),
+                    title: new Text('Sign Out'),
+                    onTap: () {
+                      FirebaseAuth.instance.signOut().then((value) {
+                        Navigator.of(context)
+                            .pushReplacementNamed('/LoginPage');
+                      }).catchError((e) {
+                        print(e);
+                      });
+                    }),
+              ],
+            ),
           ),
         ),
       ),
@@ -298,7 +304,7 @@ Future<bool> confirmDialog(BuildContext context) {
       });
 }
 
-Future<bool> DeleteDialog(BuildContext context){
+Future<bool> DeleteDialog(BuildContext context) {
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -308,16 +314,13 @@ Future<bool> DeleteDialog(BuildContext context){
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
-              onPressed:() => Navigator.of(context).pop(true),
+              onPressed: () => Navigator.of(context).pop(true),
             ),
             new FlatButton(
               child: Text("No"),
-              onPressed:() => Navigator.of(context).pop(false),
+              onPressed: () => Navigator.of(context).pop(false),
             ),
           ],
         );
-      }
-
-  );
-
+      });
 }
