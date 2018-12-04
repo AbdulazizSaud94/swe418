@@ -37,6 +37,7 @@ import 'Screens/Shared/StudentProfile.dart';
 import 'Screens/Student/RequestSwap.dart';
 import 'screens/Student/posts.dart';
 import 'Screens/Housing/HSwapRequest.dart';
+import 'Screens/Student/SetProfilePicture.dart';
 
 
 void main() {
@@ -105,6 +106,7 @@ class MyApp extends StatelessWidget {
         '/HSwapList': (BuildContext context) => new HSwapList(),
         '/HSwapRequest': (BuildContext context) => new HSwapRequest(),
         '/PostPage': (BuildContext context) => new PostPage(),
+        '/SetProfilePicture': (BuildContext context) => new SetProfilePicture(),
 
 
       },
