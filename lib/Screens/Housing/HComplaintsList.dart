@@ -59,7 +59,8 @@ class HComplaintsListState extends State<HComplaintsList> {
               return new Center(
                 child: new CircularProgressIndicator(),
               );
-            return new ListView(shrinkWrap: true, children: <Widget>[
+            if (snapshot.data.documents.isNotEmpty) {
+              return new ListView(shrinkWrap: true, children: <Widget>[
               new ListView(
                 shrinkWrap: true,
                 children:
@@ -88,7 +89,7 @@ class HComplaintsListState extends State<HComplaintsList> {
                           width: 50.0,
                           child: new FlatButton(
                             child: Icon(Icons.attachment),
-                            textColor: Colors.blueAccent,
+                            textColor: Colors.grey,
                             onPressed: () {
                               _launchURL(context, document);
                             },
@@ -99,7 +100,9 @@ class HComplaintsListState extends State<HComplaintsList> {
                   );
                 }).toList(),
               ),
-            ]);
+            ]);}else {
+              return new Text(' No Complaints Found');
+            }
           }),
     );
   }

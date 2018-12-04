@@ -59,7 +59,7 @@ class PairingRequestState extends State<PairingRequest> {
                     SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending: ',
+                      child: Text('Pending Requests: ',
                           style: TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,)),
@@ -232,7 +232,7 @@ class PairingRequestState extends State<PairingRequest> {
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Approved:',
+                        'Approved Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -286,7 +286,7 @@ class PairingRequestState extends State<PairingRequest> {
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Declined:',
+                        'Declined Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,

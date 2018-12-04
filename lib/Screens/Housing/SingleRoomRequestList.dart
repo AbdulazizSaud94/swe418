@@ -44,7 +44,6 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
             ),
             title: Text(
               'Single Room Requests',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
@@ -57,11 +56,11 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                     SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending Requests',
+                      child: Text('Pending Requests: ',
                           style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          )),
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
@@ -78,71 +77,79 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(shrinkWrap: true, children: <
-                              Widget>[
-                            new ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data.documents
-                                  .map((DocumentSnapshot document) {
-                                return new ExpansionTile(
-                                  title: new Text(
-                                      'Request: ${document['Request_Body']}'),
-                                  children: <Widget>[
-                                    new Text('Status: ${document['Status']}'),
-                                    new Text(
-                                        'Created: ${document['Created'].toString()}'),
-                                  ],
-                                  trailing: new Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      new Container(
-                                        width: 50.0,
-                                        child: new FlatButton(
-                                          child: Icon(Icons.done),
-                                          textColor: Colors.blueAccent,
-                                          onPressed: () {
-                                            _approvePressed(context, document);
-                                          },
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                                shrinkWrap: true,
+                                children: <Widget>[
+                                  new ListView(
+                                    shrinkWrap: true,
+                                    children: snapshot.data.documents
+                                        .map((DocumentSnapshot document) {
+                                      return new ExpansionTile(
+                                        title: new Text(
+                                            'Request: ${document['Request_Body']}'),
+                                        children: <Widget>[
+                                          new Text(
+                                              'Status: ${document['Status']}'),
+                                          new Text(
+                                              'Created: ${document['Created'].toString()}'),
+                                        ],
+                                        trailing: new Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(Icons.done),
+                                                textColor: Colors.blueAccent,
+                                                onPressed: () {
+                                                  _approvePressed(
+                                                      context, document);
+                                                },
+                                              ),
+                                            ),
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(Icons.remove),
+                                                textColor: Colors.blueAccent,
+                                                onPressed: () {
+                                                  _declinePressed(
+                                                      context, document);
+                                                },
+                                              ),
+                                            ),
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(Icons.attachment),
+                                                textColor: Colors.blueAccent,
+                                                onPressed: () {
+                                                  _launchURL(context, document);
+                                                },
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      new Container(
-                                        width: 50.0,
-                                        child: new FlatButton(
-                                          child: Icon(Icons.remove),
-                                          textColor: Colors.blueAccent,
-                                          onPressed: () {
-                                            _declinePressed(context, document);
-                                          },
-                                        ),
-                                      ),
-                                      new Container(
-                                        width: 50.0,
-                                        child: new FlatButton(
-                                          child: Icon(Icons.attachment),
-                                          textColor: Colors.blueAccent,
-                                          onPressed: () {
-                                            _launchURL(context, document);
-                                          },
-                                        ),
-                                      ),
-                                    ],
+                                      );
+                                    }).toList(),
                                   ),
-                                );
-                              }).toList(),
-                            ),
-                          ]);
+                                ]);
+                          } else {
+                            return new Text('  No Requests Found');
+                          }
                         }),
                   ],
                 ),
               ),
               //Second tab
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Done Requsts:',
+                        'Approved Requsts:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -163,26 +170,30 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Request: ${document['Request_Body']}'),
-                                        children: <Widget>[
-                                          new Text(
-                                              'Status: ${document['Status']}'),
-                                          new Text(
-                                              'Created: ${document['Created'].toString()}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Request: ${document['Request_Body']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Status: ${document['Status']}'),
+                                            new Text(
+                                                'Created: ${document['Created'].toString()}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text('  No Requests Found');
+                            }
                           }),
                     ],
                   ),
@@ -190,12 +201,12 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
               ),
               //3rd Tab
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Done Requsts:',
+                        'Declined Requsts:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -216,26 +227,30 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Request: ${document['Request_Body']}'),
-                                        children: <Widget>[
-                                          new Text(
-                                              'Status: ${document['Status']}'),
-                                          new Text(
-                                              'Created: ${document['Created'].toString()}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Request: ${document['Request_Body']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Status: ${document['Status']}'),
+                                            new Text(
+                                                'Created: ${document['Created'].toString()}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text('  No Requests Found');
+                            }
                           }),
                     ],
                   ),
