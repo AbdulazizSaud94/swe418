@@ -92,6 +92,8 @@ class EditProfileState extends State<EditProfile> {
               TextFormField(
                 initialValue: widget.major,
                 onSaved: (value) => newMajor = value,
+                maxLength: 3,
+                keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value.isEmpty) {
                     // The form is empty
@@ -110,6 +112,8 @@ class EditProfileState extends State<EditProfile> {
               TextFormField(
                 initialValue: widget.graduationTerm,
                 onSaved: (value) => newGraduationTerm = value,
+                keyboardType: TextInputType.number,
+                maxLength: 3,
                 validator: (value) {
                   if (value.isEmpty) {
                     // The form is empty
@@ -129,6 +133,7 @@ class EditProfileState extends State<EditProfile> {
                 initialValue: widget.mobile,
                 onSaved: (value) => newMobile = value,
                 keyboardType: TextInputType.phone,
+                maxLength: 13,
                 validator: (value) {
                   if (value.isEmpty) {
                     // The form is empty
@@ -182,7 +187,6 @@ class EditProfileState extends State<EditProfile> {
               SizedBox(height: 30.0),
               TextFormField(
                   initialValue: widget.intrestsHobbies,
-                  maxLines: 3,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     labelText: 'Intrests & Hobbies:',
@@ -201,7 +205,6 @@ class EditProfileState extends State<EditProfile> {
               SizedBox(height: 30.0),
               TextFormField(
                   initialValue: widget.dislike,
-                  maxLines: 3,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     labelText: 'Things I dislike:',
