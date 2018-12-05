@@ -39,11 +39,15 @@ import 'screens/Student/posts.dart';
 import 'Screens/Housing/HSwapRequest.dart';
 import 'Screens/Student/SetProfilePicture.dart';
 import 'Screens/Housing/HAnnouncements.dart';
+import 'package:flutter/services.dart';
 
 
 void main() {
   MapView.setApiKey('AIzaSyCKMhiABoRdSTWZ15iwRkhqCwJtShqQZGQ');
-  runApp(new MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
