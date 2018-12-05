@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'EditProfile.dart';
 import 'SetProfilePicture.dart';
+import '../Shared/ViewRoom.dart';
+
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -23,6 +25,8 @@ class ProfilePageState extends State<ProfilePage> {
   String major;
   String smoking;
   String avatar;
+  String room;
+  String building;
   bool bol = false;
 
   @override
@@ -46,6 +50,8 @@ class ProfilePageState extends State<ProfilePage> {
             this.intrestsHobbies = data['IntrestsHobbies'];
             this.dislike = data['Dislikes'];
             this.avatar = data['Avatar'];
+            this.building = data['Building'];
+            this.room = data['Room'];
             this.bol = true;
           });
         }
@@ -319,6 +325,41 @@ class ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ],
                               ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 270.0)),
+                                  Text(
+                                    'Room:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  FlatButton(
+                                    onPressed: (){
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ViewRoom(
+                                            buildingNumber: '$building',
+                                            roomNumber: '$room',
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      '$building-$room',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: new TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16.0,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -327,7 +368,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                   Positioned(
                     child: Container(
-                      padding: EdgeInsets.only(top: 470.0),
+                      padding: EdgeInsets.only(top: 490.0),
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
