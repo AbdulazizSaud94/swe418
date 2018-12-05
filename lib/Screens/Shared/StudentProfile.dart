@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'ViewRoom.dart';
 
 class StudentProfile extends StatefulWidget {
   @override
@@ -195,7 +196,7 @@ class StudentProfileState extends State<StudentProfile> {
                     ),
                   ),
                   Positioned(
-                    top: 326.0,
+                    top: 320.0,
                     child: Stack(
                       children: <Widget>[
                         Container(
@@ -205,7 +206,7 @@ class StudentProfileState extends State<StudentProfile> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 60.0)),
+                                      padding: EdgeInsets.only(top: 59.0)),
                                   Text(
                                     'City:',
                                     style: TextStyle(
@@ -253,7 +254,7 @@ class StudentProfileState extends State<StudentProfile> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 200.0)),
+                                      padding: EdgeInsets.only(top: 195.0)),
                                   Text(
                                     'Major:',
                                     style: TextStyle(
@@ -280,6 +281,41 @@ class StudentProfileState extends State<StudentProfile> {
                                     onPressed: _LaunchMobile,
                                     child: Text(
                                       '$mobile',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: new TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16.0,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 285.0)),
+                                  Text(
+                                    'Room:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ViewRoom(
+                                                buildingNumber: '$stuBuilding',
+                                                roomNumber: '$stuRoom',
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      '$stuBuilding-$stuRoom',
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       style: new TextStyle(
@@ -357,7 +393,7 @@ class StudentProfileState extends State<StudentProfile> {
                                         // Find the Scaffold in the Widget tree and use it to show a SnackBar!
                                         Scaffold.of(context)
                                             .showSnackBar(snackBar);
-                                      }else if(userRole == 'Housing'){
+                                      } else if (userRole == 'Housing') {
                                         final snackBar = SnackBar(
                                           content: Text(
                                             'Error, this feature not available for this user type!',
@@ -369,8 +405,7 @@ class StudentProfileState extends State<StudentProfile> {
                                         // Find the Scaffold in the Widget tree and use it to show a SnackBar!
                                         Scaffold.of(context)
                                             .showSnackBar(snackBar);
-                                      }
-                                      else {
+                                      } else {
                                         confirmDialog(context)
                                             .then((bool value) async {
                                           if (value) {
