@@ -72,7 +72,7 @@ class ViewRoomState extends State<ViewRoom> {
                 SizedBox(height: 25.0,),
                 Row(
                   children: <Widget>[
-                    Text('Room number: ',
+                    Text(' Room number: ',
                       style: new TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class ViewRoomState extends State<ViewRoom> {
                 SizedBox(height: 15.0,),
                 Row(
                   children: <Widget>[
-                    Text('Building number: ',
+                    Text(' Building number: ',
                       style: new TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class ViewRoomState extends State<ViewRoom> {
                 SizedBox(height: 15.0,),
                 Row(
                   children: <Widget>[
-                    Text('Room status: ',
+                    Text(' Room status: ',
                       style: new TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
@@ -117,12 +117,12 @@ class ViewRoomState extends State<ViewRoom> {
                 ),
                 SizedBox(height: 35.0,),
                 Text(
-                  'Room occupiers',
-                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                  ' Room Occupiers:',
+                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic,),
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student A: ',
+                    Text('  Student A: ',
                       style: new TextStyle(
                         fontSize: 16.0,
                       ),
@@ -153,7 +153,7 @@ class ViewRoomState extends State<ViewRoom> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student B: ',
+                    Text('  Student B: ',
                       style: new TextStyle(
                         fontSize: 16.0,
                       ),),

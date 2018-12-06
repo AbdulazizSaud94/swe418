@@ -814,15 +814,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '201',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '201',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '201',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 201'),
                             ),
@@ -832,15 +846,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '203',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '203',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '203',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 203'),
                             ),
@@ -850,15 +878,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '205',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '205',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '205',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 205'),
                             ),
@@ -868,15 +910,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '207',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '207',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '207',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 207'),
                             ),
@@ -886,15 +942,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '209',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '209',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '209',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 209'),
                             ),
@@ -904,15 +974,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '211',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '211',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '211',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 211'),
                             ),
@@ -922,15 +1006,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '213',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '213',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '213',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 213'),
                             ),
@@ -940,15 +1038,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '215',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '215',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '215',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 215'),
                             ),
@@ -958,15 +1070,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '217',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '217',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '217',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 217'),
                             ),
@@ -976,15 +1102,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '219',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '219',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '219',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 219'),
                             ),
@@ -994,15 +1134,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '221',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '221',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '221',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 221'),
                             ),
@@ -1012,15 +1166,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '202',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '202',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '202',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 202'),
                             ),
@@ -1030,15 +1198,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '204',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '204',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '204',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 204'),
                             ),
@@ -1048,15 +1230,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '206',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '206',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '206',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 206'),
                             ),
@@ -1066,15 +1262,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '208',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '208',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '208',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 208'),
                             ),
@@ -1084,15 +1294,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '210',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '210',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '210',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 210'),
                             ),
@@ -1102,15 +1326,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '212',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '212',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '212',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 212'),
                             ),
@@ -1120,15 +1358,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '214',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '214',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '214',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 214'),
                             ),
@@ -1138,15 +1390,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '216',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '216',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '216',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 216'),
                             ),
@@ -1156,15 +1422,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '218',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '218',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '218',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 218'),
                             ),
@@ -1174,15 +1454,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '220',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '220',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '220',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 220'),
                             ),
@@ -1192,15 +1486,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '222',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '222',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '222',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 222'),
                             ),
@@ -1227,15 +1535,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '301',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '301',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '301',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 301'),
                             ),
@@ -1245,15 +1567,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '303',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '303',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '303',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 303'),
                             ),
@@ -1263,15 +1599,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '305',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '305',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '305',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 305'),
                             ),
@@ -1281,15 +1631,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '307',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '307',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '307',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 307'),
                             ),
@@ -1299,15 +1663,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '309',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '309',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '309',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 309'),
                             ),
@@ -1317,15 +1695,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '311',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '311',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '311',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 311'),
                             ),
@@ -1335,15 +1727,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '313',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '313',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '313',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 313'),
                             ),
@@ -1353,15 +1759,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '315',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '315',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '315',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 315'),
                             ),
@@ -1371,15 +1791,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '317',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '317',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '317',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 317'),
                             ),
@@ -1389,15 +1823,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '319',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '319',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '319',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 319'),
                             ),
@@ -1407,15 +1855,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 170.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '321',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '321',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '321',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 321'),
                             ),
@@ -1425,15 +1887,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '302',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '302',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '302',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 302'),
                             ),
@@ -1443,15 +1919,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '304',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '304',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '304',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 304'),
                             ),
@@ -1461,15 +1951,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '306',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '306',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '306',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 306'),
                             ),
@@ -1479,15 +1983,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '308',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '308',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '308',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 308'),
                             ),
@@ -1497,15 +2015,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '310',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '310',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '310',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 310'),
                             ),
@@ -1515,15 +2047,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '312',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '312',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '312',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 312'),
                             ),
@@ -1533,15 +2079,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '314',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '314',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '314',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 314'),
                             ),
@@ -1551,15 +2111,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '316',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '316',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '316',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 316'),
                             ),
@@ -1569,15 +2143,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '318',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '318',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '318',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 318'),
                             ),
@@ -1587,15 +2175,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '320',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '320',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '320',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 320'),
                             ),
@@ -1605,15 +2207,29 @@ class ViewBuildingState extends State<ViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: '322',
-                                        ),
-                                  ),
-                                );
+                                if (role == 'Housing') {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '322',
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewRoom(
+                                        buildingNumber:
+                                        widget.buildingNumber,
+                                        roomNumber: '322',
+                                      ),
+                                    ),
+                                  );
+                                }
                               },
                               child: Text('Room 322'),
                             ),
