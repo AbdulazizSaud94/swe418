@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../Shared/StudentProfile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import '../Shared/StudentProfile.dart';
+import 'RemoveStudent.dart';
+import 'AssignStudent.dart';
+import '../Shared/ViewBuilding.dart';
 
 class HViewRoom extends StatefulWidget {
   @override
@@ -58,7 +60,21 @@ class HViewRoomState extends State<HViewRoom> {
         title:
             new Text('Housing B${widget.buildingNumber} R${widget.roomNumber}'),
         centerTitle: true,
+        leading: new IconButton(
+          icon: new Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ViewBuilding(
+                buildingNumber: widget.buildingNumber,
+              ),
+            ),
+          ),
+        ),
       ),
+
       body: new FutureBuilder<DocumentSnapshot>(
           future: Firestore.instance
               .collection('Room')
@@ -137,7 +153,11 @@ class HViewRoomState extends State<HViewRoom> {
                 ),
                 Text(
                   ' Room Occupiers:',
-                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic,),
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
                 Row(
                   children: <Widget>[
@@ -149,6 +169,8 @@ class HViewRoomState extends State<HViewRoom> {
                     ),
                     FlatButton(
                       onPressed: () {
+                        if(stuEmail1 == 'empty'){}
+                        else{
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -156,7 +178,7 @@ class HViewRoomState extends State<HViewRoom> {
                                   stuId: uid1,
                                 ),
                           ),
-                        );
+                        );}
                       },
                       child: Text(
                         '$stuEmail1',
@@ -181,14 +203,17 @@ class HViewRoomState extends State<HViewRoom> {
                     ),
                     FlatButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => StudentProfile(
-                                  stuId: uid2,
-                                ),
-                          ),
-                        );
+                        if (stuEmail2 == 'empty') {
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudentProfile(
+                                    stuId: uid2,
+                                  ),
+                            ),
+                          );
+                        }
                       },
                       child: Text(
                         '$stuEmail2',
@@ -203,41 +228,84 @@ class HViewRoomState extends State<HViewRoom> {
                     ),
                   ],
                 ),
-                SizedBox(height: 55,),
+                SizedBox(
+                  height: 55,
+                ),
                 Container(
-                  child: Text(' Manage Room:'
-                  ,style: TextStyle(
+                  child: Text(
+                    ' Manage Room:',
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
                       fontSize: 22,
-                    ),),
+                    ),
+                  ),
                 ),
-                SizedBox(height: 9,),
+                SizedBox(
+                  height: 9,
+                ),
                 Row(
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: RaisedButton.icon(
-                          icon: Icon(FontAwesomeIcons.userCheck,color:Colors.white, size: 18,),
-                          label: Text(' Assign',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),),
-                          onPressed: null),
+                          icon: Icon(
+                            FontAwesomeIcons.userCheck,
+                            color: Colors.black87,
+                            size: 18,
+                          ),
+                          label: Text(
+                            ' Assign',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AssignStudent(
+                                      stuIDA: uid1,
+                                      stuIdB: uid2,
+                                      buildingNumber: widget.buildingNumber,
+                                      roomNumber: widget.roomNumber,
+                                    ),
+                              ),
+                            );
+                          }),
                     ),
                     Container(
                       padding: EdgeInsets.fromLTRB(25, 0, 50, 0),
                       child: RaisedButton.icon(
-                          icon: Icon(FontAwesomeIcons.userTimes,color: Colors.white,size: 18,),
-                          label: Text(' Remove',
+                          icon: Icon(
+                            FontAwesomeIcons.userTimes,
+                            color: Colors.black87,
+                            size: 18,
+                          ),
+                          label: Text(
+                            ' Remove',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.black87,
                               fontSize: 14,
-                            ),),
-                          onPressed: null),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RemoveStudent(
+                                      stuIDA: uid1,
+                                      stuIdB: uid2,
+                                      emailA: stuEmail1,
+                                      emailB: stuEmail2,
+                                      buildingNumber: widget.buildingNumber,
+                                      roomNumber: widget.roomNumber,
+                                    ),
+                              ),
+                            );
+                          }),
                     ),
-
                   ],
                 ),
               ],
