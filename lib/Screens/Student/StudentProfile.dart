@@ -304,18 +304,19 @@ class StudentProfileState extends State<StudentProfile> {
                                   ),
                                   FlatButton(
                                     onPressed: () {
-                                      if(stuRoom == '0'){
+                                      if (stuRoom == '0') {
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ViewRoom(
+                                                  buildingNumber:
+                                                      '$stuBuilding',
+                                                  roomNumber: '$stuRoom',
+                                                ),
+                                          ),
+                                        );
                                       }
-                                      else{
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ViewRoom(
-                                                buildingNumber: '$stuBuilding',
-                                                roomNumber: '$stuRoom',
-                                              ),
-                                        ),
-                                      );}
                                     },
                                     child: Text(
                                       (stuRoom == '0'
@@ -390,18 +391,6 @@ class StudentProfileState extends State<StudentProfile> {
                                         final snackBar = SnackBar(
                                           content: Text(
                                             'Error, this profile belongs to your account!',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                            ),
-                                          ),
-                                        );
-                                        // Find the Scaffold in the Widget tree and use it to show a SnackBar!
-                                        Scaffold.of(context)
-                                            .showSnackBar(snackBar);
-                                      } else if (userRole == 'Housing') {
-                                        final snackBar = SnackBar(
-                                          content: Text(
-                                            'Error, this feature not available for this user type!',
                                             style: TextStyle(
                                               fontSize: 15.0,
                                             ),
