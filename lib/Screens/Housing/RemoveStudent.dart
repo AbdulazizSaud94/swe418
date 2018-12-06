@@ -63,34 +63,40 @@ class RemoveStudentState extends State<RemoveStudent> {
                           ),
                           textColor: Colors.grey,
                           onPressed: () async {
-                            confirmDialog(context).then((bool value) async {
-                              await Firestore.instance
-                                  .collection('Users')
-                                  .document(widget.stuIDA)
-                                  .updateData({
-                                'Position': '0',
-                                'Building': '0',
-                                'Room': '0',
+                            if (widget.stuIDA == '0') {
+                            } else {
+                              confirmDialog(context).then((bool value) async {
+                                if (value) {
+                                  await Firestore.instance
+                                      .collection('Users')
+                                      .document(widget.stuIDA)
+                                      .updateData({
+                                    'Position': '0',
+                                    'Building': '0',
+                                    'Room': '0',
+                                  });
+                                  await Firestore.instance
+                                      .collection('Room')
+                                      .document(
+                                          '${widget.buildingNumber}-${widget.roomNumber}')
+                                      .updateData({
+                                    'Email1': 'empty',
+                                    'UID1': '0',
+                                    'room_status': 'Vacant',
+                                  });
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                            buildingNumber:
+                                                widget.buildingNumber,
+                                            roomNumber: widget.roomNumber,
+                                          ),
+                                    ),
+                                  );
+                                }
                               });
-                              await Firestore.instance
-                                  .collection('Room')
-                                  .document(
-                                      '${widget.buildingNumber}-${widget.roomNumber}')
-                                  .updateData({
-                                'Email1': 'empty',
-                                'UID1': '0',
-                                'room_status': 'Vacant',
-                              });
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => HViewRoom(
-                                        buildingNumber: widget.buildingNumber,
-                                        roomNumber: widget.roomNumber,
-                                      ),
-                                ),
-                              );
-                            });
+                            }
                           },
                         ),
                       ),
@@ -128,35 +134,37 @@ class RemoveStudentState extends State<RemoveStudent> {
                           textColor: Colors.grey,
                           onPressed: () async {
                             if (widget.stuIdB == '0') {
-
                             } else {
                               confirmDialog(context).then((bool value) async {
-                                await Firestore.instance
-                                    .collection('Users')
-                                    .document(widget.stuIdB)
-                                    .updateData({
-                                  'Position': '0',
-                                  'Building': '0',
-                                  'Room': '0',
-                                });
-                                await Firestore.instance
-                                    .collection('Room')
-                                    .document(
-                                        '${widget.buildingNumber}-${widget.roomNumber}')
-                                    .updateData({
-                                  'Email2': 'empty',
-                                  'UID2': '0',
-                                  'room_status': 'Vacant',
-                                });
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HViewRoom(
-                                          buildingNumber: widget.buildingNumber,
-                                          roomNumber: widget.roomNumber,
-                                        ),
-                                  ),
-                                );
+                                if (value) {
+                                  await Firestore.instance
+                                      .collection('Users')
+                                      .document(widget.stuIdB)
+                                      .updateData({
+                                    'Position': '0',
+                                    'Building': '0',
+                                    'Room': '0',
+                                  });
+                                  await Firestore.instance
+                                      .collection('Room')
+                                      .document(
+                                          '${widget.buildingNumber}-${widget.roomNumber}')
+                                      .updateData({
+                                    'Email2': 'empty',
+                                    'UID2': '0',
+                                    'room_status': 'Vacant',
+                                  });
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HViewRoom(
+                                            buildingNumber:
+                                                widget.buildingNumber,
+                                            roomNumber: widget.roomNumber,
+                                          ),
+                                    ),
+                                  );
+                                }
                               });
                             }
                           },
