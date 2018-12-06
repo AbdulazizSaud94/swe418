@@ -304,6 +304,9 @@ class StudentProfileState extends State<StudentProfile> {
                                   ),
                                   FlatButton(
                                     onPressed: () {
+                                      if(stuRoom == '0'){
+                                      }
+                                      else{
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -312,10 +315,12 @@ class StudentProfileState extends State<StudentProfile> {
                                                 roomNumber: '$stuRoom',
                                               ),
                                         ),
-                                      );
+                                      );}
                                     },
                                     child: Text(
-                                      '$stuBuilding-$stuRoom',
+                                      (stuRoom == '0'
+                                          ? 'No room'
+                                          : '$stuBuilding-$stuRoom'),
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       style: new TextStyle(

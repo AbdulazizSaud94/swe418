@@ -7,7 +7,6 @@ import 'EditProfile.dart';
 import 'SetProfilePicture.dart';
 import '../Shared/ViewRoom.dart';
 
-
 class ProfilePage extends StatefulWidget {
   @override
   ProfilePageState createState() => new ProfilePageState();
@@ -79,10 +78,9 @@ class ProfilePageState extends State<ProfilePage> {
             return new ListView(children: <Widget>[
               new Stack(
                 children: <Widget>[
-                  Positioned(child: ButtonBar(
-                    children: <Widget>[
-
-                    ],
+                  Positioned(
+                      child: ButtonBar(
+                    children: <Widget>[],
                   )),
                   Positioned(
                     top: 70.0,
@@ -336,27 +334,38 @@ class ProfilePageState extends State<ProfilePage> {
                                         fontSize: 16.0),
                                   ),
                                   FlatButton(
-                                    onPressed: (){
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ViewRoom(
-                                            buildingNumber: '$building',
-                                            roomNumber: '$room',
+                                    onPressed: () {
+                                      if (room == '0') {
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ViewRoom(
+                                                  buildingNumber: '$building',
+                                                  roomNumber: '$room',
+                                                ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      }
                                     },
                                     child: Text(
-                                      '$building-$room',
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: new TextStyle(
-                                        color: Colors.black54,
-                                        fontSize: 16.0,
-                                        decoration: TextDecoration.underline,
+                                      (room == '0'
+                                          ? 'No room'
+                                          : '$building-$room'),
+                                      style: TextStyle(
+                                        fontSize: 16,
                                       ),
                                     ),
+//                                    Text(
+//                                      '$building-$room',
+//                                      textAlign: TextAlign.center,
+//                                      overflow: TextOverflow.ellipsis,
+//                                      style: new TextStyle(
+//                                        color: Colors.black54,
+//                                        fontSize: 16.0,
+//                                        decoration: TextDecoration.underline,
+//                                      ),
+//                                    ),
                                   ),
                                 ],
                               ),

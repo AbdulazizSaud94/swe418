@@ -65,7 +65,7 @@ class HViewRoomState extends State<HViewRoom> {
           icon: new Icon(
             Icons.arrow_back,
           ),
-          onPressed: () => Navigator.push(
+          onPressed: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => ViewBuilding(

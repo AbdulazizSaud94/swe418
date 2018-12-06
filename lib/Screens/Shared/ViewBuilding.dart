@@ -70,7 +70,10 @@ class ViewBuildingState extends State<ViewBuilding> {
               icon: new Icon(
                 Icons.arrow_back,
               ),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed('/BuildingList');
+              },
             ),
             title: Text(
               'Building ${widget.buildingNumber}',
