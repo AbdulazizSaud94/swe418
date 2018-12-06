@@ -53,7 +53,7 @@ class ChangeRoomStatusState extends State<ChangeRoomStatus> {
       body: ListView(
         children: <Widget>[
           SizedBox(
-            height: 30,
+            height: 40,
           ),
           Row(
             children: <Widget>[
@@ -61,25 +61,25 @@ class ChangeRoomStatusState extends State<ChangeRoomStatus> {
                 ' Current Status: ',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 18,
                 ),
               ),
               Text(
                 roomStatus,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                 ),
               ),
             ],
           ),
           SizedBox(
-            height: 30,
+            height: 45,
           ),
           Text(
             ' Change status to: ',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 18,
             ),
           ),
           Row(
@@ -89,43 +89,115 @@ class ChangeRoomStatusState extends State<ChangeRoomStatus> {
                 groupValue: roomStatus,
                 onChanged: (String val) => valueRadio(val),
               ),
-              Radio(
-                value: 'Full',
-                groupValue: roomStatus,
-                onChanged:  (String val) => valueRadio(val),
+              Text(
+                'Unavailable',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
-              Radio(
-                value: 'Vacant',
-                groupValue: roomStatus,
-                onChanged:  (String val) => valueRadio(val),
-              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
               Radio(
                 value: 'Single',
                 groupValue: roomStatus,
-                onChanged:  (String val) => valueRadio(val),
+                onChanged: (String val) => valueRadio(val),
+              ),
+              Text(
+                'Single',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
               ),
             ],
+          ),
+          Row(
+            children: <Widget>[
+              Radio(
+                value: 'Vacant',
+                groupValue: roomStatus,
+                onChanged: (String val) => valueRadio(val),
+              ),
+              Text(
+                'Vacant',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Radio(
+                value: 'Full',
+                groupValue: roomStatus,
+                onChanged: (String val) => valueRadio(val),
+              ),
+              Text(
+                'Full',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(100, 0, 100, 0),
+            height: 35,
+            width: 80,
+            child: RaisedButton(
+                child: Text(
+                  'Save Status',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                    fontSize: 18,
+                  ),
+                ),
+                onPressed: () {
+                  _handlePressed();
+                }),
           ),
         ],
       ),
     );
   }
 
+  void _handlePressed() {
+    confirmDialog(context).then((bool value) async {
+      await Firestore.instance
+          .collection('Room')
+          .document('${widget.buildingNumber}-${widget.roomNumber}')
+          .updateData({
+        'room_status': roomStatus,
+      });
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HViewRoom(
+                buildingNumber: widget.buildingNumber,
+                roomNumber: widget.roomNumber,
+              ),
+        ),
+      );
+    });
+  }
+
   void valueRadio(String val) {
     setState(() {
       if (val == 'Unavailable') {
         roomStatus = 'Unavailable';
-      }
-      else if (val == 'Full') {
+      } else if (val == 'Full') {
         roomStatus = 'Full';
-      }
-      else if (val == 'Vacant') {
+      } else if (val == 'Vacant') {
         roomStatus = 'Vacant';
-      }
-      else {
+      } else {
         roomStatus = 'Single';
       }
-
     });
   }
 
@@ -135,7 +207,7 @@ class ChangeRoomStatusState extends State<ChangeRoomStatus> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return new AlertDialog(
-            title: new Text("Confirm assigning student to this room?"),
+            title: new Text("Confirm upadting this room status?"),
             actions: <Widget>[
               new FlatButton(
                 child: Text("Yes"),

@@ -268,7 +268,7 @@ class HViewRoomState extends State<HViewRoom> {
                             if( roomStatus == 'Full'){
                               final snackBar = SnackBar(
                                 content: Text(
-                                  'Error, this room is Full!',
+                                  'Error, this room status is Full!',
                                   style: TextStyle(
                                     fontSize: 18.0,
                                   ),
@@ -281,7 +281,7 @@ class HViewRoomState extends State<HViewRoom> {
                             else if(roomStatus == 'Single'){
                               final snackBar = SnackBar(
                                 content: Text(
-                                  'Error, this room is Single!',
+                                  'Error, this room satatus is Single!',
                                   style: TextStyle(
                                     fontSize: 18.0,
                                   ),
