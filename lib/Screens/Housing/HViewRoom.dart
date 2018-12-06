@@ -291,6 +291,20 @@ class HViewRoomState extends State<HViewRoom> {
                             ),
                           ),
                           onPressed: () {
+                            if(uid1 == '0' && uid2 == '0'){
+                              final snackBar = SnackBar(
+                                content: Text(
+                                  'Error, this room is already empty!',
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              );
+                              // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                              Scaffold.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                            else{
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -303,7 +317,7 @@ class HViewRoomState extends State<HViewRoom> {
                                       roomNumber: widget.roomNumber,
                                     ),
                               ),
-                            );
+                            );}
                           }),
                     ),
                   ],
