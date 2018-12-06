@@ -6,6 +6,7 @@ import '../Shared/StudentProfile.dart';
 import 'RemoveStudent.dart';
 import 'AssignStudent.dart';
 import '../Shared/ViewBuilding.dart';
+import 'ChangeRoomStatus.dart';
 
 class HViewRoom extends StatefulWidget {
   @override
@@ -242,12 +243,14 @@ class HViewRoomState extends State<HViewRoom> {
                   ),
                 ),
                 SizedBox(
-                  height: 9,
+                  height: 15,
                 ),
                 Row(
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      height: 35,
+                      width: 150,
+                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                       child: RaisedButton.icon(
                           icon: Icon(
                             FontAwesomeIcons.userCheck,
@@ -303,8 +306,16 @@ class HViewRoomState extends State<HViewRoom> {
 
                           }),
                     ),
+
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(25, 0, 50, 0),
+                      height: 35,
+                      width: 150,
+                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
                       child: RaisedButton.icon(
                           icon: Icon(
                             FontAwesomeIcons.userTimes,
@@ -333,19 +344,55 @@ class HViewRoomState extends State<HViewRoom> {
                                   .showSnackBar(snackBar);
                             }
                             else{
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RemoveStudent(
+                                    stuIDA: uid1,
+                                    stuIdB: uid2,
+                                    emailA: stuEmail1,
+                                    emailB: stuEmail2,
+                                    buildingNumber: widget.buildingNumber,
+                                    roomNumber: widget.roomNumber,
+                                  ),
+                                ),
+                              );}
+                          }),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: <Widget>[
+                    Container(
+                      height: 35,
+                      width: 150,
+                      padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      child: RaisedButton.icon(
+                          icon: Icon(
+                            FontAwesomeIcons.usersCog,
+                            color: Colors.black87,
+                            size: 20,
+                          ),
+                          label: Text(
+                            ' Status',
+                            style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 14,
+                            ),
+                          ),
+                          onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => RemoveStudent(
-                                      stuIDA: uid1,
-                                      stuIdB: uid2,
-                                      emailA: stuEmail1,
-                                      emailB: stuEmail2,
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: widget.roomNumber,
-                                    ),
+                                builder: (context) => ChangeRoomStatus(
+                                  stuIDA: uid1,
+                                  stuIdB: uid2,
+                                  buildingNumber: widget.buildingNumber,
+                                  roomNumber: widget.roomNumber,
+                                ),
                               ),
-                            );}
+                            );
                           }),
                     ),
                   ],
