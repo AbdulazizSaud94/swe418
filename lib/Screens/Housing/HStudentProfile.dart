@@ -2,20 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'EditProfile.dart';
-import 'SetProfilePicture.dart';
-import 'ViewRoom.dart';
+import 'HViewRoom.dart';
 
-class ProfilePage extends StatefulWidget {
+class HStudentProfile extends StatefulWidget {
   @override
-  ProfilePageState createState() => new ProfilePageState();
+  HStudentProfileState createState() => new HStudentProfileState();
+
+  final String stuId;
+  final String building;
+  final String room;
+
+  //constructor
+  HStudentProfile({
+    this.stuId,
+    this.building,
+    this.room,
+  });
 }
 
-class ProfilePageState extends State<ProfilePage> {
+class HStudentProfileState extends State<HStudentProfile> {
   String name;
   String email;
-  String uid;
   String city;
   String mobile;
   String intrestsHobbies;
@@ -23,15 +30,26 @@ class ProfilePageState extends State<ProfilePage> {
   String graduationTerm;
   String major;
   String smoking;
-  String avatar;
-  String room;
-  String building;
+  String stuBuilding;
+  String stuRoom;
+  String stuPosition;
+  String stuAvatar;
   bool bol = false;
+  String userEmail;
+  String userRoom;
+  String userBuilding;
+  String userPosition;
+  String userRole;
+
+  DateTime swapCreated;
+  String uid;
 
   @override
   void initState() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       this.uid = user.uid;
+      this.userEmail = user.email;
+
       await Firestore.instance
           .collection('Users')
           .document(uid)
@@ -39,8 +57,24 @@ class ProfilePageState extends State<ProfilePage> {
           .then((data) {
         if (data.exists) {
           setState(() {
+            this.userBuilding = data['Building'];
+            this.userRoom = data['Room'];
+            this.userPosition = data['Position'];
+            this.userRole = data['Role'];
+          });
+        }
+      });
+
+      await Firestore.instance
+          .collection('Users')
+          .document(widget.stuId)
+          .get()
+          .then((data) {
+        if (data.exists) {
+          setState(() {
             this.name = data['Name'];
             this.email = data['Email'];
+            this.mobile = data['Mobile'];
             this.major = data['Major'];
             this.city = data['City'];
             this.graduationTerm = data['GraduationTerm'];
@@ -48,9 +82,10 @@ class ProfilePageState extends State<ProfilePage> {
             this.mobile = data['Mobile'];
             this.intrestsHobbies = data['IntrestsHobbies'];
             this.dislike = data['Dislikes'];
-            this.avatar = data['Avatar'];
-            this.building = data['Building'];
-            this.room = data['Room'];
+            this.stuBuilding = data['Building'];
+            this.stuRoom = data['Room'];
+            this.stuPosition = data['Position'];
+            this.stuAvatar = data['Avatar'];
             this.bol = true;
           });
         }
@@ -66,9 +101,13 @@ class ProfilePageState extends State<ProfilePage> {
         title: new Text(
           'Profile',
         ),
+        backgroundColor: Colors.green,
       ),
       body: new FutureBuilder<DocumentSnapshot>(
-          future: Firestore.instance.collection('Users').document(uid).get(),
+          future: Firestore.instance
+              .collection('Users')
+              .document(widget.stuId)
+              .get(),
           builder: (context, snapshot) {
             if (!bol) {
               return new Center(
@@ -79,78 +118,8 @@ class ProfilePageState extends State<ProfilePage> {
               new Stack(
                 children: <Widget>[
                   Positioned(
-                      child: ButtonBar(
-                    children: <Widget>[],
-                  )),
-                  Positioned(
-                    top: 70.0,
-                    left: 310.0,
-                    child: Container(
-                      height: 50.0,
-                      width: 50.0,
-                      child: RaisedButton(
-                          child: Icon(
-                            FontAwesomeIcons.solidImages,
-                            color: Colors.white,
-                          ),
-                          color: Colors.grey.withOpacity(0.78),
-                          elevation: 1.0,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(75.0)),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SetProfilePicture(
-                                      name: name,
-                                      uid: uid,
-                                      email: email,
-                                      avatar: avatar,
-                                    ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ),
-                  Positioned(
-                    top: 15.0,
-                    left: 310.0,
-                    child: Container(
-                      height: 50.0,
-                      width: 50.0,
-                      child: RaisedButton(
-                          child: Icon(
-                            FontAwesomeIcons.userEdit,
-                            color: Colors.white,
-                          ),
-                          color: Colors.grey.withOpacity(0.78),
-                          elevation: 1.0,
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(75.0)),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditProfile(
-                                      name: name,
-                                      city: city,
-                                      major: major,
-                                      graduationTerm: graduationTerm,
-                                      smoking: smoking,
-                                      mobile: mobile,
-                                      intrestsHobbies: intrestsHobbies,
-                                      dislike: dislike,
-                                      uid: uid,
-                                      email: email,
-                                    ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ),
-                  Positioned(
-                    width: 320.0,
-                    left: 25.0,
+                    width: 350.0,
+                    left: 10.0,
                     top: MediaQuery.of(context).size.height / 40,
                     child: Column(
                       children: <Widget>[
@@ -161,7 +130,7 @@ class ProfilePageState extends State<ProfilePage> {
                             decoration: BoxDecoration(
                                 color: Colors.blueGrey,
                                 image: DecorationImage(
-                                    image: NetworkImage(avatar),
+                                    image: NetworkImage(stuAvatar),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(75.0)),
@@ -173,7 +142,7 @@ class ProfilePageState extends State<ProfilePage> {
                         ),
                         SizedBox(height: 35.0),
                         new Text(
-                          'Hello, $name!',
+                          '$name',
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
                           style: new TextStyle(
@@ -227,7 +196,7 @@ class ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   Positioned(
-                    top: 338.0,
+                    top: 320.0,
                     child: Stack(
                       children: <Widget>[
                         Container(
@@ -237,7 +206,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 30.0)),
+                                      padding: EdgeInsets.only(top: 59.0)),
                                   Text(
                                     'City:',
                                     style: TextStyle(
@@ -253,7 +222,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 75.0)),
+                                      padding: EdgeInsets.only(top: 105.0)),
                                   Text(
                                     'Graduation Term:',
                                     style: TextStyle(
@@ -269,7 +238,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 120.0)),
+                                      padding: EdgeInsets.only(top: 150.0)),
                                   Text(
                                     'Smoking:',
                                     style: TextStyle(
@@ -285,7 +254,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 170.0)),
+                                      padding: EdgeInsets.only(top: 195.0)),
                                   Text(
                                     'Major:',
                                     style: TextStyle(
@@ -301,7 +270,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 220.0)),
+                                      padding: EdgeInsets.only(top: 240.0)),
                                   Text(
                                     'Mobile:',
                                     style: TextStyle(
@@ -326,7 +295,7 @@ class ProfilePageState extends State<ProfilePage> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 270.0)),
+                                      padding: EdgeInsets.only(top: 285.0)),
                                   Text(
                                     'Room:',
                                     style: TextStyle(
@@ -335,37 +304,32 @@ class ProfilePageState extends State<ProfilePage> {
                                   ),
                                   FlatButton(
                                     onPressed: () {
-                                      if (room == '0') {
+                                      if (stuRoom == '0') {
                                       } else {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => ViewRoom(
-                                                  buildingNumber: '$building',
-                                                  roomNumber: '$room',
+                                            builder: (context) => HViewRoom(
+                                                  buildingNumber:
+                                                      '$stuBuilding',
+                                                  roomNumber: '$stuRoom',
                                                 ),
                                           ),
                                         );
                                       }
                                     },
                                     child: Text(
-                                      (room == '0'
+                                      (stuRoom == '0'
                                           ? 'No room'
-                                          : '$building-$room'),
-                                      style: TextStyle(
-                                        fontSize: 16,
+                                          : '$stuBuilding-$stuRoom'),
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: new TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16.0,
+                                        decoration: TextDecoration.underline,
                                       ),
                                     ),
-//                                    Text(
-//                                      '$building-$room',
-//                                      textAlign: TextAlign.center,
-//                                      overflow: TextOverflow.ellipsis,
-//                                      style: new TextStyle(
-//                                        color: Colors.black54,
-//                                        fontSize: 16.0,
-//                                        decoration: TextDecoration.underline,
-//                                      ),
-//                                    ),
                                   ),
                                 ],
                               ),
@@ -377,7 +341,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                   Positioned(
                     child: Container(
-                      padding: EdgeInsets.only(top: 490.0),
+                      padding: EdgeInsets.only(top: 470.0),
                       child: ListView(
                         shrinkWrap: true,
                         children: <Widget>[
@@ -415,76 +379,6 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ]);
           }),
-      //Drawer
-      drawer: new Drawer(
-        child: new ListView(
-          children: <Widget>[
-            new Container(
-              height: 120.0,
-              child: new DrawerHeader(
-                padding: new EdgeInsets.all(0.0),
-                decoration: new BoxDecoration(
-                  color: new Color(0xFFECEFF1),
-                ),
-                child: new Center(
-                  child: new FlutterLogo(
-                    colors: Colors.lightGreen,
-                    size: 54.0,
-                  ),
-                ),
-              ),
-            ),
-            new Divider(),
-            new ListTile(
-                leading: new Icon(FontAwesomeIcons.bullhorn),
-                title: new Text('Announcements List'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).pushNamed('/AnnouncementsList');
-                }),
-            new ListTile(
-                leading: new Icon(FontAwesomeIcons.externalLinkAlt),
-                title: new Text('Requests Page'),
-                onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/RequestsPage');
-                }),
-            new ListTile(
-                leading: new Icon(Icons.library_books),
-                title: new Text('Your Contract'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/RoomContract');
-                }),
-            new ListTile(
-                leading: new Icon(FontAwesomeIcons.building),
-                title: new Text('Building List'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/BuildingList');
-                }),
-            new ListTile(
-                leading: new Icon(FontAwesomeIcons.mailchimp),
-                title: new Text('Posts'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/PostPage');
-                }),
-            new ListTile(
-                leading: new Icon(Icons.pan_tool),
-                title: new Text('Complaints'),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/Complaints');
-                }),
-            new ListTile(
-                leading: new Icon(FontAwesomeIcons.signOutAlt),
-                title: new Text('Sign Out'),
-                onTap: () {
-                  FirebaseAuth.instance.signOut().then((value) {
-                    Navigator.of(context).pushReplacementNamed('/LoginPage');
-                  }).catchError((e) {
-                    print(e);
-                  });
-                }),
-          ],
-        ),
-      ),
     );
   }
 
@@ -507,9 +401,25 @@ class ProfilePageState extends State<ProfilePage> {
       throw 'Could not launch $url';
     }
   }
+}
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
-  }
+Future<bool> confirmDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Send Request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
 }

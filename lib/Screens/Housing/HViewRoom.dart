@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../Shared/StudentProfile.dart';
+import 'HStudentProfile.dart';
 import 'RemoveStudent.dart';
 import 'AssignStudent.dart';
-import '../Shared/ViewBuilding.dart';
+import 'HViewBuilding.dart';
 import 'ChangeRoomStatus.dart';
 
 class HViewRoom extends StatefulWidget {
@@ -68,7 +68,7 @@ class HViewRoomState extends State<HViewRoom> {
           onPressed: () => Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => ViewBuilding(
+              builder: (context) => HViewBuilding(
                 buildingNumber: widget.buildingNumber,
               ),
             ),
@@ -175,7 +175,7 @@ class HViewRoomState extends State<HViewRoom> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => StudentProfile(
+                            builder: (context) => HStudentProfile(
                                   stuId: uid1,
                                 ),
                           ),
@@ -209,7 +209,7 @@ class HViewRoomState extends State<HViewRoom> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => StudentProfile(
+                              builder: (context) => HStudentProfile(
                                     stuId: uid2,
                                   ),
                             ),

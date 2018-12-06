@@ -23,23 +23,26 @@ import 'Screens/Student/Complaints.dart';
 import 'Screens/Housing/HComplaintsList.dart';
 import 'Screens/Student/EditProfile.dart';
 import 'Screens/Housing/InspectionForm.dart';
-import 'Screens/Shared/BuildingList.dart';
+import 'Screens/Student/BuildingList.dart';
 import 'Screens/Housing/HKeyList.dart';
 import 'Screens/Student/RoomContract.dart';
 import 'Screens/Admin/Announcements.dart';
 import 'Screens/Student/AnnouncementsList.dart';
 import 'Screens/Student/change_room_request.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'Screens/Shared/ViewBuilding.dart';
-import 'Screens/Shared/ViewRoom.dart';
+import 'Screens/Student/ViewBuilding.dart';
+import 'Screens/Student/ViewRoom.dart';
 import 'Screens/Housing/HSwapList.dart';
-import 'Screens/Shared/StudentProfile.dart';
+import 'Screens/Student/StudentProfile.dart';
 import 'Screens/Student/RequestSwap.dart';
 import 'screens/Student/posts.dart';
 import 'Screens/Housing/HSwapRequest.dart';
 import 'Screens/Student/SetProfilePicture.dart';
 import 'Screens/Housing/HAnnouncements.dart';
 import 'package:flutter/services.dart';
+import 'Screens/Housing/HBuildingList.dart';
+import 'Screens/Housing/HViewBuilding.dart';
+import 'Screens/Housing/HViewRoom.dart';
 
 
 void main() {
@@ -113,6 +116,14 @@ class MyApp extends StatelessWidget {
         '/PostPage': (BuildContext context) => new PostPage(),
         '/SetProfilePicture': (BuildContext context) => new SetProfilePicture(),
         '/HAnnouncements': (BuildContext context) => new HAnnouncements(),
+        '/HViewRoom': (BuildContext context) => new HViewRoom(),
+        '/HBuildingList': (BuildContext context) => new HBuildingList(),
+        '/HViewBuilding': (BuildContext context) => new HViewBuilding(),
+
+
+
+
+
 
 
       },
