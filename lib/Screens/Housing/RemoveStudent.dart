@@ -36,7 +36,9 @@ class RemoveStudentState extends State<RemoveStudent> {
       ),
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           Container(
             child: ListView(
               shrinkWrap: true,
@@ -72,7 +74,8 @@ class RemoveStudentState extends State<RemoveStudent> {
                               });
                               await Firestore.instance
                                   .collection('Room')
-                                  .document('${widget.buildingNumber}-${widget.roomNumber}')
+                                  .document(
+                                      '${widget.buildingNumber}-${widget.roomNumber}')
                                   .updateData({
                                 'Email1': 'empty',
                                 'UID1': '0',
@@ -82,14 +85,12 @@ class RemoveStudentState extends State<RemoveStudent> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => HViewRoom(
-                                    buildingNumber:
-                                    widget.buildingNumber,
-                                    roomNumber: widget.roomNumber,
-                                  ),
+                                        buildingNumber: widget.buildingNumber,
+                                        roomNumber: widget.roomNumber,
+                                      ),
                                 ),
                               );
                             });
-
                           },
                         ),
                       ),
@@ -99,7 +100,9 @@ class RemoveStudentState extends State<RemoveStudent> {
               ],
             ),
           ),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           Container(
             child: ListView(
               shrinkWrap: true,
@@ -124,6 +127,9 @@ class RemoveStudentState extends State<RemoveStudent> {
                           ),
                           textColor: Colors.grey,
                           onPressed: () async {
+                            if (widget.stuIdB == '0') {
+
+                            } else {
                               confirmDialog(context).then((bool value) async {
                                 await Firestore.instance
                                     .collection('Users')
@@ -135,7 +141,8 @@ class RemoveStudentState extends State<RemoveStudent> {
                                 });
                                 await Firestore.instance
                                     .collection('Room')
-                                    .document('${widget.buildingNumber}-${widget.roomNumber}')
+                                    .document(
+                                        '${widget.buildingNumber}-${widget.roomNumber}')
                                     .updateData({
                                   'Email2': 'empty',
                                   'UID2': '0',
@@ -145,14 +152,13 @@ class RemoveStudentState extends State<RemoveStudent> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => HViewRoom(
-                                      buildingNumber:
-                                      widget.buildingNumber,
-                                      roomNumber: widget.roomNumber,
-                                    ),
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: widget.roomNumber,
+                                        ),
                                   ),
                                 );
                               });
-
+                            }
                           },
                         ),
                       ),
