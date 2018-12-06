@@ -15,6 +15,8 @@ class BuildingList extends StatefulWidget {
 class BuildingListState extends State<BuildingList> {
   String uid;
   QuerySnapshot doc;
+  bool bol = false;
+  String role;
 
   MapView mapView = new MapView();
   CameraPosition cameraPosition;
@@ -27,6 +29,19 @@ class BuildingListState extends State<BuildingList> {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
       this.uid = user.uid;
       doc = await Firestore.instance.collection('Building').orderBy('building_number', descending: true).getDocuments();
+
+      await Firestore.instance
+          .collection('Users')
+          .document(uid)
+          .get()
+          .then((data) {
+        if (data.exists) {
+          setState(() {
+            this.role = data['Role'];
+            this.bol = true;
+          });
+        }
+      });
     });
 
     super.initState();
@@ -38,6 +53,22 @@ class BuildingListState extends State<BuildingList> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Building List'),
+
+        leading: new IconButton(
+          icon: new Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            if(role == 'Housing'){
+              Navigator.of(context)
+                  .pushReplacementNamed('/HousingPage');
+            }
+            else{
+              Navigator.of(context)
+                  .pushReplacementNamed('/RequestsPage');
+            }
+          }
+        ),
       ),
       body: new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance.collection('Building').orderBy('building_number', descending: false).snapshots(),
