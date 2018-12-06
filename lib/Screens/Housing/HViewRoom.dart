@@ -262,17 +262,45 @@ class HViewRoomState extends State<HViewRoom> {
                             ),
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => AssignStudent(
-                                      stuIDA: uid1,
-                                      stuIdB: uid2,
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: widget.roomNumber,
-                                    ),
-                              ),
-                            );
+                            if( roomStatus == 'Full'){
+                              final snackBar = SnackBar(
+                                content: Text(
+                                  'Error, this room is Full!',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                              );
+                              // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                              Scaffold.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                            else if(roomStatus == 'Single'){
+                              final snackBar = SnackBar(
+                                content: Text(
+                                  'Error, this room is Single!',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                  ),
+                                ),
+                              );
+                              // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                              Scaffold.of(context)
+                                  .showSnackBar(snackBar);
+                            }
+                            else{
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AssignStudent(
+                                    stuIDA: uid1,
+                                    stuIdB: uid2,
+                                    buildingNumber: widget.buildingNumber,
+                                    roomNumber: widget.roomNumber,
+                                  ),
+                                ),
+                              );}
+
                           }),
                     ),
                     Container(
