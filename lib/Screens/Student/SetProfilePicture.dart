@@ -124,14 +124,16 @@ class SetProfilePictureState extends State<SetProfilePicture> {
                     borderRadius: new BorderRadius.circular(50.0)),
                 onPressed: () {
                   confirmDefaultDialog(context).then((bool value) async {
-                    await Firestore.instance
-                        .collection('Users')
-                        .document(widget.uid)
-                        .updateData({
-                      'Avatar':
-                          'https://firebasestorage.googleapis.com/v0/b/swe418-483b9.appspot.com/o/Avatars%2Fdefault.png?alt=media&token=da415113-0c8c-4fb7-b65e-23a41bb201bd',
-                    });
-                    Navigator.of(context).pushNamed('/ProfilePage');
+                    if (value) {
+                      await Firestore.instance
+                          .collection('Users')
+                          .document(widget.uid)
+                          .updateData({
+                        'Avatar':
+                            'https://firebasestorage.googleapis.com/v0/b/swe418-483b9.appspot.com/o/Avatars%2Fdefault.png?alt=media&token=da415113-0c8c-4fb7-b65e-23a41bb201bd',
+                      });
+                      Navigator.of(context).pushNamed('/ProfilePage');
+                    }
                   });
                 }),
           ),
