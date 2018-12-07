@@ -15,7 +15,6 @@ class BuildingListState extends State<BuildingList> {
   String uid;
   QuerySnapshot doc;
   bool bol = false;
-  String role;
 
   MapView mapView = new MapView();
   CameraPosition cameraPosition;
@@ -39,7 +38,6 @@ class BuildingListState extends State<BuildingList> {
           .then((data) {
         if (data.exists) {
           setState(() {
-            this.role = data['Role'];
             this.bol = true;
           });
         }
