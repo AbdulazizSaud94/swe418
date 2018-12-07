@@ -9,12 +9,26 @@ class RequestPairing extends StatefulWidget {
 }
 
 class RequestPairingState extends State<RequestPairing> {
-  String uemail;
+  String uemail,uid,userBuilding, userRoom,userPosition,stuBuilding,stuRoom,stuPosition;
 
   @override
   Widget build(BuildContext context) {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+      uid=user.uid;
       uemail = user.email;
+        await Firestore.instance
+          .collection('Users')
+          .document(uid)
+          .get()
+          .then((data) {
+        if (data.exists) {
+          setState(() {
+            this.userBuilding = data['Building'];
+            this.userRoom = data['Room'];
+            this.userPosition = data['Position'];
+          });
+        }
+      });
     });
 
     return new Scaffold(
@@ -133,8 +147,8 @@ class RequestPairingState extends State<RequestPairing> {
                         .collection('Requests')
                         .document('Pairing')
                         .collection('PairingRequests')
-                        .where('To', isEqualTo: uemail)
-                        .where('Status', isEqualTo: 'Pending')
+                        .where('Receiver', isEqualTo: uemail)
+                        .where('ReceiverApproval', isEqualTo: 'Pending')
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -153,7 +167,9 @@ class RequestPairingState extends State<RequestPairing> {
                                     .map((DocumentSnapshot document) {
                                   return new ListTile(
                                     title: new Text(
-                                        'From: ${document['From'].toString()}'),
+                                        'From: ${document['Sender']}'),
+                                  subtitle: new Text('Building/room: ' +
+                                  document['SenderBuilding']+'/'+document['SenderRoom']),
                                     trailing: new Row(
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[
@@ -197,6 +213,19 @@ class RequestPairingState extends State<RequestPairing> {
   }
 
   void _handlePressed(BuildContext context, DocumentSnapshot document) {
+        Firestore.instance
+          .collection('Users')
+          .document(document.documentID)
+          .get()
+          .then((data) {
+        if (data.exists) {
+          setState(() {
+            this.stuBuilding = data['Building'];
+            this.stuRoom = data['Room'];
+            this.stuPosition = data['Position'];
+          });
+        }
+      });
     confirmDialog(context).then((bool value) async {
       if (value) {
         FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -206,11 +235,19 @@ class RequestPairingState extends State<RequestPairing> {
             .collection('PairingRequests')
             .document()
             .setData({
-          'from_user_id': user.uid,
-          'From': user.email,
-          'to_user_id': document.documentID,
-          'To': document['Email'],
-          'Status': 'Pending'
+        'Sender': uemail,
+        'Receiver': document['Email'],
+        'SenderUID': uid,
+        'ReceiverUID':  document.documentID,
+        'SenderPosition': userPosition,
+        'ReceiverPosition': stuPosition,
+
+        'ReceiverApproval': 'Pending',
+        'HousingApproval': 'Pending',
+        'SenderBuilding': userBuilding,
+        'SenderRoom': userRoom,
+        'ReceiverBuilding': stuBuilding,
+        'ReceiverRoom': stuRoom,
         });
       }
     });
@@ -240,31 +277,22 @@ class RequestPairingState extends State<RequestPairing> {
   void _handleReceived(
       BuildContext context, DocumentSnapshot document, String check) async {
     if (check.contains('email')) {
-      String url = 'mailto:' + document['From'] + '?subject=Pairing Request ';
+      String url = 'mailto:' + document['Sender'] + '?subject=Pairing Request ';
       if (await canLaunch(url)) {
         await launch(url);
       } else {
         throw 'Could not launch $url';
       }
-    } else if (check.contains('send')) {
+    } else if (check.contains('send')) { confirmDialog(context).then((bool value) async {
+      if (value) {
       Firestore.instance.runTransaction((transaction) async {
         DocumentSnapshot ds = await transaction.get(document.reference);
         await transaction
-            .update(ds.reference, {'Status': 'Waiting For Housing'});
+            .update(ds.reference, {'ReceiverApproval': 'Approved'});
       });
-      Firestore.instance
-          .collection('Requests')
-          .document('Pairing')
-          .collection('HousingPairing')
-          .document()
-          .setData({
-        'Student1': uemail,
-        'Student2': document['From'],
-        'Status': 'Pending'
-      });
-
+       
       _showToast(context, "Request is generated successfully!");
-    }
+    }});}
   }
 
   void _showToast(BuildContext context, String message) {
