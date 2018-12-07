@@ -39,29 +39,13 @@ class EditProfileState extends State<EditProfile> {
   final formKey = GlobalKey<FormState>();
   String uid;
   String newName;
-  String newCity = 'City';
+  String newCity;
   String newMobile;
   String newIntrestsHobbies;
   String newDislike;
   String newGraduationTerm;
   String newMajor;
   String newSmoking = 'Do you smoke?';
-
-  DateTime birthDate = new DateTime(2000);
-
-  Future<Null> selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: birthDate,
-        firstDate: new DateTime(1950),
-        lastDate: DateTime.now());
-    if (picked != null && picked != birthDate) {
-      print('Birth Date: ${birthDate.toString()}');
-      setState(() {
-        birthDate = picked;
-      });
-    }
-  }
 
   //method to check for empty fields
   bool validateAndSave() {
@@ -108,6 +92,8 @@ class EditProfileState extends State<EditProfile> {
               TextFormField(
                 initialValue: widget.major,
                 onSaved: (value) => newMajor = value,
+                maxLength: 3,
+                keyboardType: TextInputType.text,
                 validator: (value) {
                   if (value.isEmpty) {
                     // The form is empty
@@ -126,6 +112,8 @@ class EditProfileState extends State<EditProfile> {
               TextFormField(
                 initialValue: widget.graduationTerm,
                 onSaved: (value) => newGraduationTerm = value,
+                keyboardType: TextInputType.number,
+                maxLength: 3,
                 validator: (value) {
                   if (value.isEmpty) {
                     // The form is empty
@@ -143,8 +131,9 @@ class EditProfileState extends State<EditProfile> {
               SizedBox(height: 30.0),
               TextFormField(
                 initialValue: widget.mobile,
-                onSaved: (value) => newGraduationTerm = value,
+                onSaved: (value) => newMobile = value,
                 keyboardType: TextInputType.phone,
+                maxLength: 13,
                 validator: (value) {
                   if (value.isEmpty) {
                     // The form is empty
@@ -161,8 +150,43 @@ class EditProfileState extends State<EditProfile> {
               ),
               SizedBox(height: 30.0),
               TextFormField(
+                initialValue: widget.city,
+                onSaved: (value) => newCity = value,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    // The form is empty
+                    return "Field can\'t be empty";
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'City: ',
+                  labelStyle: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ),
+              SizedBox(height: 30.0),
+              TextFormField(
+                initialValue: widget.smoking,
+                onSaved: (value) => newSmoking = value,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    // The form is empty
+                    return "Field can\'t be empty";
+                  }
+                },
+                decoration: InputDecoration(
+                  labelText: 'Do you smoke?',
+                  labelStyle: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ),
+              SizedBox(height: 30.0),
+              TextFormField(
                   initialValue: widget.intrestsHobbies,
-                  maxLines: 3,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     labelText: 'Intrests & Hobbies:',
@@ -181,7 +205,6 @@ class EditProfileState extends State<EditProfile> {
               SizedBox(height: 30.0),
               TextFormField(
                   initialValue: widget.dislike,
-                  maxLines: 3,
                   keyboardType: TextInputType.multiline,
                   decoration: InputDecoration(
                     labelText: 'Things I dislike:',
@@ -198,126 +221,6 @@ class EditProfileState extends State<EditProfile> {
                     }
                   }),
               SizedBox(height: 30.0),
-              Text(
-                'City:',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              DropdownButton<String>(
-                hint: Text(widget.city,
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54)),
-                items: <String>[
-                  'Abha',
-                  'Bisha',
-                  'Al Bahah',
-                  'Dammam',
-                  'Dhahran',
-                  'Hail',
-                  'Al-Hasa',
-                  'Hafr Al-Batin',
-                  'Al Jawf',
-                  'Jeddah',
-                  'Jizan',
-                  'Jubail',
-                  'Khafji',
-                  'Khobar',
-                  'Al Majmaah',
-                  'Mecca',
-                  'Medina',
-                  'Najran',
-                  'Qatif',
-                  'Qassim',
-                  'Riyadh',
-                  'Saihat',
-                  'Taif',
-                  'Tabuk',
-                  'Yanbu'
-                ].map((String value) {
-                  return new DropdownMenuItem<String>(
-                    value: value,
-                    child: new Text(value),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  this.setState(() {
-                    Text(value,
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54));
-                    newCity = value;
-                  });
-                },
-              ),
-              SizedBox(height: 30.0),
-              Row(
-                children: <Widget>[
-                  Text(
-                    'Birth Date:',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    height: 30.0,
-                    padding: EdgeInsets.only(right: 50.0, left: 20.0),
-                    child: RaisedButton(
-                      child: Text(
-                        'Select Date',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      onPressed: () {
-                        selectDate(context);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30.0),
-              Text(
-                'Do you smoke?',
-                style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              DropdownButton<String>(
-                hint: Text(widget.smoking,
-                    style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54)),
-                items: <String>[
-                  'I Don\'t Smoke',
-                  'I Smoke',
-                  'Not Specified',
-                ].map((String value) {
-                  return new DropdownMenuItem<String>(
-                    value: value,
-                    child: new Text(value),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  this.setState(() {
-                    Text(value,
-                        style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54));
-                    newSmoking = value;
-                  });
-                },
-              ),
-              SizedBox(height: 40.0),
               Container(
                 height: 50.0,
                 padding: EdgeInsets.only(left: 65.0, right: 65.0),
@@ -332,14 +235,25 @@ class EditProfileState extends State<EditProfile> {
                     splashColor: Colors.lightGreen,
                     onPressed: () async {
                       if (validateAndSave()) {
-                        await Firestore.instance
-                            .collection('Users')
-                            .document(widget.uid)
-                            .updateData({'Name': newName, 'Email': widget.email, 'Role': 'Student', 'Mobile': newMobile, 'Major': newMajor,
-                        'City': newCity, 'GraduationTerm': newGraduationTerm, 'Smoking': newSmoking, 'IntrestsHobbies': newIntrestsHobbies, 'Dislikes': newDislike});
-                        _showToast(context, "Request is generated successfully!");
-                        Navigator.of(context)
-                            .pushReplacementNamed('/ProfilePage');
+                        confirmDialog(context).then((bool value) async {
+                          await Firestore.instance
+                              .collection('Users')
+                              .document(widget.uid)
+                              .updateData({
+                            'Name': newName,
+                            'Email': widget.email,
+                            'Role': 'Student',
+                            'Mobile': newMobile,
+                            'Major': newMajor,
+                            'City': newCity,
+                            'GraduationTerm': newGraduationTerm,
+                            'Smoking': newSmoking,
+                            'IntrestsHobbies': newIntrestsHobbies,
+                            'Dislikes': newDislike
+                          });
+                          Navigator.of(context)
+                              .pushReplacementNamed('/ProfilePage');
+                        });
                       }
                     }),
               ),
@@ -351,15 +265,35 @@ class EditProfileState extends State<EditProfile> {
     );
   }
 
-
   void _showToast(BuildContext context, String message) {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content:  Text(message),
+        content: Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
   }
+}
+
+Future<bool> confirmDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Update profile?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
 }

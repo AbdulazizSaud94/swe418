@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class LoginPage extends StatefulWidget {
   @override
@@ -129,10 +131,7 @@ class LoginPageSate extends State<LoginPage> {
                         alignment: Alignment(1.0, 0.0),
                         padding: EdgeInsets.only(top: 15.0, left: 20.0),
                         child: InkWell(
-                          onTap: () {
-                            FirebaseAuth.instance
-                                .sendPasswordResetEmail(email: email);
-                          },
+                          onTap: _launchEmail,
                           child: Text(
                             'Forgot Password?',
                             style: TextStyle(
@@ -229,5 +228,14 @@ class LoginPageSate extends State<LoginPage> {
         ],
       ),
     );
+  }
+}
+
+_launchEmail() async {
+  String url = 'mailto:admin@admin.com?subject=Forgot%20Password&body=User%20Email:';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

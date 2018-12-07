@@ -124,7 +124,7 @@ class RequestSwapState extends State<RequestSwap> {
                                             'From: ${document['Sender']}'),
                                         children: <Widget>[
                                           new Text(
-                                              'Status: ${document['ReceiverApproval'].toString()}'),
+                                              'Room: ${document['SenderBuilding'].toString()}-${document['SenderRoom'].toString()}'),
                                           new Text(
                                               'Sent: ${document['Sent'].toString()}'),
                                         ],
@@ -137,7 +137,10 @@ class RequestSwapState extends State<RequestSwap> {
                                                 child: Icon(FontAwesomeIcons
                                                     .solidCheckSquare),
                                                 textColor: Colors.grey,
-                                                onPressed: () {_handlePressedApprove(context, document);},
+                                                onPressed: () {
+                                                  _handlePressedApprove(
+                                                      context, document);
+                                                },
                                               ),
                                             ),
                                             new Container(
@@ -146,7 +149,10 @@ class RequestSwapState extends State<RequestSwap> {
                                                 child: Icon(FontAwesomeIcons
                                                     .solidWindowClose),
                                                 textColor: Colors.grey,
-                                                onPressed: () {_handlePressedReject(context, document);},
+                                                onPressed: () {
+                                                  _handlePressedReject(
+                                                      context, document);
+                                                },
                                               ),
                                             ),
                                           ],
@@ -156,7 +162,7 @@ class RequestSwapState extends State<RequestSwap> {
                                   ),
                                 ]);
                           } else {
-                            return new Text('You Have No Requests');
+                            return new Text('  You Have No Requests');
                           }
                         }),
                   ],
@@ -194,10 +200,12 @@ class RequestSwapState extends State<RequestSwap> {
                                       .map((DocumentSnapshot document) {
                                     return new ExpansionTile(
                                       title: new Text(
-                                          'To: ${document['Receiver']}'),
+                                          'To: ${document['Receiver']}\nStatus: ${document['HousingApproval'].toString()}'),
                                       children: <Widget>[
                                         new Text(
-                                            'Status: ${document['ReceiverApproval'].toString()}'),
+                                            'Receiver Approval: ${document['ReceiverApproval'].toString()}'),
+                                        new Text(
+                                            'Housing Approval: ${document['HousingApproval'].toString()}'),
                                         new Text(
                                             'Sent: ${document['Sent'].toString()}'),
                                       ],
@@ -209,7 +217,10 @@ class RequestSwapState extends State<RequestSwap> {
                                             child: new FlatButton(
                                               child: Icon(Icons.delete_forever),
                                               textColor: Colors.grey,
-                                              onPressed: () {_handlePressedDelete(context, document);},
+                                              onPressed: () {
+                                                _handlePressedDelete(
+                                                    context, document);
+                                              },
                                             ),
                                           ),
                                         ],
@@ -220,7 +231,7 @@ class RequestSwapState extends State<RequestSwap> {
                               ],
                             );
                           } else {
-                            return new Text('You Have No Requests');
+                            return new Text('  You Have No Requests');
                           }
                         }),
                   ],
@@ -251,7 +262,8 @@ class RequestSwapState extends State<RequestSwap> {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'ReceiverApproval': 'Rejected'});
+          await transaction
+              .update(ds.reference, {'ReceiverApproval': 'Rejected'});
           _showToast(context, "Request is rejected!");
         });
       }
@@ -263,7 +275,8 @@ class RequestSwapState extends State<RequestSwap> {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction.update(ds.reference, {'ReceiverApproval': 'Approved'});
+          await transaction
+              .update(ds.reference, {'ReceiverApproval': 'Approved'});
           _showToast(context, "Request is Approved!");
         });
       }
@@ -290,7 +303,6 @@ Future<bool> confirmDialogDelete(BuildContext context) {
           ],
         );
       });
-
 }
 
 Future<bool> confirmDialogReject(BuildContext context) {
@@ -333,5 +345,4 @@ Future<bool> confirmDialogApprove(BuildContext context) {
           ],
         );
       });
-
 }

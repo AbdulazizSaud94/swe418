@@ -2,24 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'HViewRoom.dart';
 
-class StudentProfile extends StatefulWidget {
+class HStudentProfile extends StatefulWidget {
   @override
-  StudentProfileState createState() => new StudentProfileState();
+  HStudentProfileState createState() => new HStudentProfileState();
 
   final String stuId;
   final String building;
   final String room;
 
   //constructor
-  StudentProfile({
+  HStudentProfile({
     this.stuId,
     this.building,
     this.room,
   });
 }
 
-class StudentProfileState extends State<StudentProfile> {
+class HStudentProfileState extends State<HStudentProfile> {
   String name;
   String email;
   String city;
@@ -31,10 +32,14 @@ class StudentProfileState extends State<StudentProfile> {
   String smoking;
   String stuBuilding;
   String stuRoom;
+  String stuPosition;
+  String stuAvatar;
   bool bol = false;
   String userEmail;
   String userRoom;
   String userBuilding;
+  String userPosition;
+  String userRole;
 
   DateTime swapCreated;
   String uid;
@@ -54,6 +59,8 @@ class StudentProfileState extends State<StudentProfile> {
           setState(() {
             this.userBuilding = data['Building'];
             this.userRoom = data['Room'];
+            this.userPosition = data['Position'];
+            this.userRole = data['Role'];
           });
         }
       });
@@ -77,6 +84,8 @@ class StudentProfileState extends State<StudentProfile> {
             this.dislike = data['Dislikes'];
             this.stuBuilding = data['Building'];
             this.stuRoom = data['Room'];
+            this.stuPosition = data['Position'];
+            this.stuAvatar = data['Avatar'];
             this.bol = true;
           });
         }
@@ -121,8 +130,7 @@ class StudentProfileState extends State<StudentProfile> {
                             decoration: BoxDecoration(
                                 color: Colors.blueGrey,
                                 image: DecorationImage(
-                                    image: NetworkImage(
-                                        'https://i.stack.imgur.com/l60Hf.png'),
+                                    image: NetworkImage(stuAvatar),
                                     fit: BoxFit.cover),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(75.0)),
@@ -188,7 +196,7 @@ class StudentProfileState extends State<StudentProfile> {
                     ),
                   ),
                   Positioned(
-                    top: 326.0,
+                    top: 320.0,
                     child: Stack(
                       children: <Widget>[
                         Container(
@@ -198,7 +206,7 @@ class StudentProfileState extends State<StudentProfile> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 60.0)),
+                                      padding: EdgeInsets.only(top: 59.0)),
                                   Text(
                                     'City:',
                                     style: TextStyle(
@@ -246,7 +254,7 @@ class StudentProfileState extends State<StudentProfile> {
                               Row(
                                 children: <Widget>[
                                   Container(
-                                      padding: EdgeInsets.only(top: 200.0)),
+                                      padding: EdgeInsets.only(top: 195.0)),
                                   Text(
                                     'Major:',
                                     style: TextStyle(
@@ -273,6 +281,47 @@ class StudentProfileState extends State<StudentProfile> {
                                     onPressed: _LaunchMobile,
                                     child: Text(
                                       '$mobile',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: new TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 16.0,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Container(
+                                      padding: EdgeInsets.only(top: 285.0)),
+                                  Text(
+                                    'Room:',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.0),
+                                  ),
+                                  FlatButton(
+                                    onPressed: () {
+                                      if (stuRoom == '0') {
+                                      } else {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => HViewRoom(
+                                                  buildingNumber:
+                                                      '$stuBuilding',
+                                                  roomNumber: '$stuRoom',
+                                                ),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    child: Text(
+                                      (stuRoom == '0'
+                                          ? 'No room'
+                                          : '$stuBuilding-$stuRoom'),
                                       textAlign: TextAlign.center,
                                       overflow: TextOverflow.ellipsis,
                                       style: new TextStyle(
@@ -322,71 +371,6 @@ class StudentProfileState extends State<StudentProfile> {
                               Text('$dislike'),
                             ],
                           ),
-                          Builder(builder: (BuildContext context) {
-                            return ExpansionTile(
-                              title: Text(
-                                'Options',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              children: <Widget>[
-                                Container(
-                                  height: 30.0,
-                                  width: 98.0,
-                                  child: RaisedButton.icon(
-                                    onPressed: () {
-                                      confirmDialog(context)
-                                          .then((bool value) async {
-                                        if (value) {
-                                          swapCreated = DateTime.now();
-                                          await Firestore.instance
-                                              .collection('Requests')
-                                              .document('SwapRoom')
-                                              .collection('SwapRoom')
-                                              .document()
-                                              .setData({
-                                            'Sender': userEmail,
-                                            'Receiver': email,
-                                            'SenderUID': uid,
-                                            'ReceiverUID': widget.stuId,
-                                            'Sent': swapCreated,
-                                            'ReceiverApproval': 'Pending',
-                                            'HousingApproval': 'Pending',
-                                            'FromRoom': '${userBuilding}-${userRoom}',
-                                            'ToRoom': '${stuBuilding}-${stuRoom}',
-                                          });
-
-                                          final snackBar = SnackBar(
-                                            content: Text(
-                                              'Swap Request Created',
-                                              style: TextStyle(
-                                                fontSize: 17.0,
-                                              ),
-                                            ),
-                                          );
-
-                                          // Find the Scaffold in the Widget tree and use it to show a SnackBar!
-                                          Scaffold.of(context)
-                                              .showSnackBar(snackBar);
-                                        }
-                                      });
-                                    },
-                                    icon: Icon(
-                                      Icons.swap_horiz,
-                                      color: Colors.black54,
-                                    ),
-                                    label: Text(
-                                      'Swap',
-                                      style: TextStyle(color: Colors.black54),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
                         ],
                       ),
                     ),
@@ -399,7 +383,9 @@ class StudentProfileState extends State<StudentProfile> {
   }
 
   _launchEmail() async {
-    String url = 'mailto:' + email + '?subject=From%20STUHousing_&body=From%20STUHousing';
+    String url = 'mailto:' +
+        email +
+        '?subject=From%20STUHousing_&body=From%20STUHousing';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

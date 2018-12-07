@@ -41,7 +41,6 @@ class HMaintenanceListState extends State<HMaintenanceList> {
             ),
             title: Text(
               'Maintenance Requests',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
@@ -54,11 +53,9 @@ class HMaintenanceListState extends State<HMaintenanceList> {
                     SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending',
+                      child: Text('Pending Requests:',
                           style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 20.0, fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
@@ -75,65 +72,70 @@ class HMaintenanceListState extends State<HMaintenanceList> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(shrinkWrap: true, children: <
-                              Widget>[
-                            new ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data.documents
-                                  .map((DocumentSnapshot document) {
-                                return new ExpansionTile(
-                                  title: new Text(
-                                      'Title: ${document['Title']} \nStatus: ${document['Status']}'),
-                                  children: <Widget>[
-                                    new Text('Details: ${document['Details']}',
-                                        textAlign: TextAlign.left),
-                                    new Text('Status: ${document['Status']}'),
-                                    new Text(
-                                        'Created: ${document['Created'].toString()}'),
-                                    new Text(
-                                        'Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
-                                  ],
-                                  trailing: new Row(
-                                    mainAxisSize: MainAxisSize.min,
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(shrinkWrap: true, children: <
+                                Widget>[
+                              new ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data.documents
+                                    .map((DocumentSnapshot document) {
+                                  return new ExpansionTile(
+                                    title: new Text(
+                                        'Title: ${document['Title']} \nStatus: ${document['Status']}'),
                                     children: <Widget>[
-                                      new Container(
-                                        width: 50.0,
-                                        child: new FlatButton(
-                                          child: Icon(FontAwesomeIcons
-                                              .angleDoubleRight),
-                                          onPressed: () {
-                                            _handlePressed(context, document);
-                                          },
-                                        ),
-                                      ),
-                                      new Container(
-                                        width: 50.0,
-                                        child: new FlatButton(
-                                          child: Icon(Icons.attachment),
-                                          textColor: Colors.blueAccent,
-                                          onPressed: () {
-                                            _launchURL(context, document);
-                                          },
-                                        ),
-                                      ),
+                                      new Text(
+                                          'Details: ${document['Details']}',
+                                          textAlign: TextAlign.left),
+                                      new Text('Status: ${document['Status']}'),
+                                      new Text(
+                                          'Created: ${document['Created'].toString()}'),
+                                      new Text(
+                                          'Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
                                     ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ]);
+                                    trailing: new Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        new Container(
+                                          width: 50.0,
+                                          child: new FlatButton(
+                                            child: Icon(FontAwesomeIcons
+                                                .angleDoubleRight),
+                                            onPressed: () {
+                                              _handlePressed(context, document);
+                                            },
+                                          ),
+                                        ),
+                                        new Container(
+                                          width: 50.0,
+                                          child: new FlatButton(
+                                            child: Icon(Icons.attachment),
+                                            textColor: Colors.grey,
+                                            onPressed: () {
+                                              _launchURL(context, document);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ]);
+                          } else {
+                            return new Text(' No Requests Found');
+                          }
                         }),
                   ],
                 ),
               ),
               //Second tab
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Done:',
+                        'Done Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -154,31 +156,35 @@ class HMaintenanceListState extends State<HMaintenanceList> {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Title: ${document['Title']} \nStatus: ${document['Status']}'),
-                                        children: <Widget>[
-                                          new Text(
-                                              'Details: ${document['Details']}',
-                                              textAlign: TextAlign.left),
-                                          new Text(
-                                              'Status: ${document['Status']}'),
-                                          new Text(
-                                              'Created: ${document['Created'].toString()}'),
-                                          new Text(
-                                              'Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Title: ${document['Title']} \nStatus: ${document['Status']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Details: ${document['Details']}',
+                                                textAlign: TextAlign.left),
+                                            new Text(
+                                                'Status: ${document['Status']}'),
+                                            new Text(
+                                                'Created: ${document['Created'].toString()}'),
+                                            new Text(
+                                                'Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text(' No Requests Found');
+                            }
                           }),
                     ],
                   ),

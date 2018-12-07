@@ -7,7 +7,7 @@ class HousingChangeRoomPage extends StatelessWidget {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
-        content:  Text(message),
+        content: Text(message),
         action: SnackBarAction(
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
@@ -36,7 +36,6 @@ class HousingChangeRoomPage extends StatelessWidget {
             ),
             title: Text(
               'Change Room Requests',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
           ),
@@ -49,11 +48,11 @@ class HousingChangeRoomPage extends StatelessWidget {
                     SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending',
+                      child: Text('Pending Requests:',
                           style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          )),
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
@@ -66,127 +65,135 @@ class HousingChangeRoomPage extends StatelessWidget {
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) return new Text('Loading...');
-                        return new ListView(
-                          shrinkWrap: true,
-                          children: snapshot.data.documents
-                              .map((DocumentSnapshot document) {
-                            return new ListTile(
-                              title: new Text("ID_1: " +
-                                  document['requester_id'] +
-                                  " ID_2: " +
-                                  document['partner_id']),
-                              subtitle: new Text("Request to go to: " +
-                                  document['requested_building'] +
-                                  " / " +
-                                  document['requested_room']),
-                              trailing: new Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  new Container(
-                                    width: 50.0,
-                                    child: new FlatButton(
-                                      child: Icon(Icons.delete_forever),
-                                      textColor: Colors.blueAccent,
-                                      onPressed: () async {
-                                        var token, token2;
-                                        await Firestore.instance
-                                            .collection("Users")
-                                            .document(document['requester_id'])
-                                            .get()
-                                            .then((data) {
-                                          token = data.data['token'];
-                                        });
-                                        await Firestore.instance
-                                            .collection("Users")
-                                            .document(document['partner_id'])
-                                            .get()
-                                            .then((data) {
-                                          token = data.data['token'];
-                                        });
-                                        await Firestore.instance
-                                            .collection("Notifications")
-                                            .add({
-                                          "date": new DateTime.now(),
-                                          "message": "Your request is refused!",
-                                          "title": "Request to change room",
-                                          "sender": "Housing department",
-                                          "to_token": token,
-                                          "reciever": document['requester_id']
-                                        });
-                                        _showToast(context,
-                                            "Request is refused successfully!");
-                                        await Firestore.instance
-                                            .collection("Notifications")
-                                            .add({
-                                          "date": new DateTime.now(),
-                                          "message": "Your request is refused!",
-                                          "title": "Request to change room",
-                                          "sender": "Housing department",
-                                          "to_token": token2,
-                                          "reciever": document['partner_id']
-                                        });
-                                        document.reference.updateData(
-                                            {"request_status": "refused"});
-                                      },
+                        if (snapshot.data.documents.isNotEmpty) {
+                          return new ListView(
+                            shrinkWrap: true,
+                            children: snapshot.data.documents
+                                .map((DocumentSnapshot document) {
+                              return new ListTile(
+                                title: new Text("ID_1: " +
+                                    document['requester_id'] +
+                                    " ID_2: " +
+                                    document['partner_id']),
+                                subtitle: new Text("Request to go to: " +
+                                    document['requested_building'] +
+                                    " / " +
+                                    document['requested_room']),
+                                trailing: new Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    new Container(
+                                      width: 50.0,
+                                      child: new FlatButton(
+                                        child: Icon(Icons.delete_forever),
+                                        textColor: Colors.blueAccent,
+                                        onPressed: () async {
+                                          var token, token2;
+                                          await Firestore.instance
+                                              .collection("Users")
+                                              .document(
+                                                  document['requester_id'])
+                                              .get()
+                                              .then((data) {
+                                            token = data.data['token'];
+                                          });
+                                          await Firestore.instance
+                                              .collection("Users")
+                                              .document(document['partner_id'])
+                                              .get()
+                                              .then((data) {
+                                            token = data.data['token'];
+                                          });
+                                          await Firestore.instance
+                                              .collection("Notifications")
+                                              .add({
+                                            "date": new DateTime.now(),
+                                            "message":
+                                                "Your request is refused!",
+                                            "title": "Request to change room",
+                                            "sender": "Housing department",
+                                            "to_token": token,
+                                            "reciever": document['requester_id']
+                                          });
+                                          _showToast(context,
+                                              "Request is refused successfully!");
+                                          await Firestore.instance
+                                              .collection("Notifications")
+                                              .add({
+                                            "date": new DateTime.now(),
+                                            "message":
+                                                "Your request is refused!",
+                                            "title": "Request to change room",
+                                            "sender": "Housing department",
+                                            "to_token": token2,
+                                            "reciever": document['partner_id']
+                                          });
+                                          document.reference.updateData(
+                                              {"request_status": "refused"});
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  new Container(
-                                    width: 50.0,
-                                    alignment: Alignment(0.0, 0.0),
-                                    child: new FlatButton(
-                                      child: Icon(Icons.add),
-                                      textColor: Colors.blueAccent,
-                                      onPressed: () async {
-                                        var token, token2;
-                                        await Firestore.instance
-                                            .collection("Users")
-                                            .document(document['requester_id'])
-                                            .get()
-                                            .then((data) {
-                                          token = data.data['token'];
-                                        });
-                                        await Firestore.instance
-                                            .collection("Users")
-                                            .document(document['partner_id'])
-                                            .get()
-                                            .then((data) {
-                                          token2 = data.data['token'];
-                                        });
-                                        _showToast(
-                                            context, "Request is approved");
-                                        await Firestore.instance
-                                            .collection("Notifications")
-                                            .add({
-                                          "date": new DateTime.now(),
-                                          "message":
-                                              "Your request is approved!",
-                                          "title": "Request to change room",
-                                          "sender": "Housing department",
-                                          "to_token": token,
-                                          "reciever": document['requester_id']
-                                        });
-                                        await Firestore.instance
-                                            .collection("Notifications")
-                                            .add({
-                                          "date": new DateTime.now(),
-                                          "message":
-                                              "Your request is approved!",
-                                          "title": "Request to change room",
-                                          "sender": "Housing department",
-                                          "to_token": token2,
-                                          "reciever": document['partner_id']
-                                        });
-                                        document.reference.updateData(
-                                            {"request_status": "approve"});
-                                      },
+                                    new Container(
+                                      width: 50.0,
+                                      alignment: Alignment(0.0, 0.0),
+                                      child: new FlatButton(
+                                        child: Icon(Icons.add),
+                                        textColor: Colors.blueAccent,
+                                        onPressed: () async {
+                                          var token, token2;
+                                          await Firestore.instance
+                                              .collection("Users")
+                                              .document(
+                                                  document['requester_id'])
+                                              .get()
+                                              .then((data) {
+                                            token = data.data['token'];
+                                          });
+                                          await Firestore.instance
+                                              .collection("Users")
+                                              .document(document['partner_id'])
+                                              .get()
+                                              .then((data) {
+                                            token2 = data.data['token'];
+                                          });
+                                          _showToast(
+                                              context, "Request is approved");
+                                          await Firestore.instance
+                                              .collection("Notifications")
+                                              .add({
+                                            "date": new DateTime.now(),
+                                            "message":
+                                                "Your request is approved!",
+                                            "title": "Request to change room",
+                                            "sender": "Housing department",
+                                            "to_token": token,
+                                            "reciever": document['requester_id']
+                                          });
+                                          await Firestore.instance
+                                              .collection("Notifications")
+                                              .add({
+                                            "date": new DateTime.now(),
+                                            "message":
+                                                "Your request is approved!",
+                                            "title": "Request to change room",
+                                            "sender": "Housing department",
+                                            "to_token": token2,
+                                            "reciever": document['partner_id']
+                                          });
+                                          document.reference.updateData(
+                                              {"request_status": "approve"});
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              onTap: () {}, // view user detaild TODO
-                            );
-                          }).toList(),
-                        );
+                                  ],
+                                ),
+                                onTap: () {}, // view user detaild TODO
+                              );
+                            }).toList(),
+                          );
+                        } else {
+                          return new Text('  No Requests Found');
+                        }
                       },
                     ),
                   ],
@@ -194,12 +201,12 @@ class HousingChangeRoomPage extends StatelessWidget {
               ),
               //Second tab
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Approved:',
+                        'Approved Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -219,40 +226,44 @@ class HousingChangeRoomPage extends StatelessWidget {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Requsted Building: ${document['requested_building']}Requested Room: ${document['requested_room']}'),
-                                        children: <Widget>[
-                                          new Text(
-                                              'Student 1: ${document['partner_id']}'),
-                                          new Text(
-                                              'Student 2: ${document['requester_id']}'),
-                                          new Text(
-                                              'Status: ${document['request_status']}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Requsted Building: ${document['requested_building']}Requested Room: ${document['requested_room']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Student 1: ${document['partner_id']}'),
+                                            new Text(
+                                                'Student 2: ${document['requester_id']}'),
+                                            new Text(
+                                                'Status: ${document['request_status']}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text(' No Requests Found');
+                            }
                           }),
                     ],
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Declined:',
+                        'Declined Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -272,28 +283,32 @@ class HousingChangeRoomPage extends StatelessWidget {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Requsted Building: ${document['requested_building']}Requested Room: ${document['requested_room']}'),
-                                        children: <Widget>[
-                                          new Text(
-                                              'Student 1: ${document['partner_id']}'),
-                                          new Text(
-                                              'Student 2: ${document['requester_id']}'),
-                                          new Text(
-                                              'Status: ${document['request_status']}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Requsted Building: ${document['requested_building']}Requested Room: ${document['requested_room']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Student 1: ${document['partner_id']}'),
+                                            new Text(
+                                                'Student 2: ${document['requester_id']}'),
+                                            new Text(
+                                                'Status: ${document['request_status']}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text(' No Requests Found');
+                            }
                           }),
                     ],
                   ),

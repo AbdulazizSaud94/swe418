@@ -69,75 +69,99 @@ class ViewRoomState extends State<ViewRoom> {
             }
             return ListView(
               children: <Widget>[
-                SizedBox(height: 25.0,),
-                Row(
-                  children: <Widget>[
-                    Text('Room number: ',
-                      style: new TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text('${widget.roomNumber}',
-                      style: new TextStyle(
-                        fontSize: 16.0,
-                      ),),
-                  ],
+                SizedBox(
+                  height: 25.0,
                 ),
-                SizedBox(height: 15.0,),
                 Row(
                   children: <Widget>[
-                    Text('Building number: ',
+                    Text(
+                      ' Room number: ',
                       style: new TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('${widget.buildingNumber}',
+                    Text(
+                      '${widget.roomNumber}',
                       style: new TextStyle(
                         fontSize: 16.0,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 15.0,),
+                SizedBox(
+                  height: 15.0,
+                ),
                 Row(
                   children: <Widget>[
-                    Text('Room status: ',
+                    Text(
+                      ' Building number: ',
                       style: new TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text('$roomStatus',
+                    Text(
+                      '${widget.buildingNumber}',
                       style: new TextStyle(
                         fontSize: 16.0,
-                      ),),
+                      ),
+                    ),
                   ],
                 ),
-                SizedBox(height: 35.0,),
+                SizedBox(
+                  height: 15.0,
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      ' Room status: ',
+                      style: new TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '$roomStatus',
+                      style: new TextStyle(
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 35.0,
+                ),
                 Text(
-                  'Room occupiers',
-                  style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+                  ' Room Occupiers:',
+                  style: TextStyle(
+                    fontSize: 22.0,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student1: ',
+                    Text(
+                      '  Student A: ',
                       style: new TextStyle(
                         fontSize: 16.0,
                       ),
                     ),
                     FlatButton(
-                      onPressed:(){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => StudentProfile(
-                              stuId: uid1,
-
+                      onPressed: () {
+                        if (stuEmail1 == 'empty') {
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudentProfile(
+                                    stuId: uid1,
+                                  ),
                             ),
-                          ),
-                        );                      },
+                          );
+                        }
+                      },
                       child: Text(
                         '$stuEmail1',
                         overflow: TextOverflow.ellipsis,
@@ -153,20 +177,25 @@ class ViewRoomState extends State<ViewRoom> {
                 ),
                 Row(
                   children: <Widget>[
-                    Text('Student2: ',
+                    Text(
+                      '  Student B: ',
                       style: new TextStyle(
                         fontSize: 16.0,
-                      ),),
+                      ),
+                    ),
                     FlatButton(
-                      onPressed:(){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => StudentProfile(
-                              stuId: uid2,
+                      onPressed: () {
+                        if (stuEmail2 == 'empty') {
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StudentProfile(
+                                    stuId: uid2,
+                                  ),
                             ),
-                          ),
-                        );
+                          );
+                        }
                       },
                       child: Text(
                         '$stuEmail2',

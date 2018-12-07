@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'ViewRoom.dart';
+import 'HViewRoom.dart';
 
-class ViewBuilding extends StatefulWidget {
+class HViewBuilding extends StatefulWidget {
   @override
-  ViewBuildingState createState() => new ViewBuildingState();
+  HViewBuildingState createState() => new HViewBuildingState();
 
   final String buildingNumber;
 
   //constructor
-  ViewBuilding({
+  HViewBuilding({
     this.buildingNumber,
   });
 }
 
-class ViewBuildingState extends State<ViewBuilding> {
+class HViewBuildingState extends State<HViewBuilding> {
+  String uid;
+  String email;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,7 +45,9 @@ class ViewBuildingState extends State<ViewBuilding> {
               icon: new Icon(
                 Icons.arrow_back,
               ),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                Navigator.of(context).pushReplacementNamed('/HBuildingList');
+              },
             ),
             title: Text(
               'Building ${widget.buildingNumber}',
@@ -69,7 +73,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '101',
                                         ),
@@ -87,7 +91,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '103',
                                         ),
@@ -105,7 +109,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '105',
                                         ),
@@ -123,7 +127,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '107',
                                         ),
@@ -141,7 +145,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '109',
                                         ),
@@ -159,7 +163,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '111',
                                         ),
@@ -177,7 +181,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '113',
                                         ),
@@ -195,7 +199,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '115',
                                         ),
@@ -213,7 +217,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '117',
                                         ),
@@ -231,7 +235,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '119',
                                         ),
@@ -249,7 +253,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '121',
                                         ),
@@ -267,7 +271,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '102',
                                         ),
@@ -285,7 +289,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '104',
                                         ),
@@ -303,7 +307,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '106',
                                         ),
@@ -321,7 +325,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '108',
                                         ),
@@ -339,7 +343,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '110',
                                         ),
@@ -357,7 +361,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
+                                    builder: (context) => HViewRoom(
                                           buildingNumber: widget.buildingNumber,
                                           roomNumber: '112',
                                         ),
@@ -375,10 +379,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '114',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '114',
+                                        ),
                                   ),
                                 );
                               },
@@ -393,10 +397,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '116',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '116',
+                                        ),
                                   ),
                                 );
                               },
@@ -411,10 +415,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '118',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '118',
+                                        ),
                                   ),
                                 );
                               },
@@ -429,10 +433,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '120',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '120',
+                                        ),
                                   ),
                                 );
                               },
@@ -447,10 +451,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '122',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '122',
+                                        ),
                                   ),
                                 );
                               },
@@ -482,10 +486,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '201',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '201',
+                                        ),
                                   ),
                                 );
                               },
@@ -500,10 +504,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '203',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '203',
+                                        ),
                                   ),
                                 );
                               },
@@ -518,10 +522,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '205',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '205',
+                                        ),
                                   ),
                                 );
                               },
@@ -532,15 +536,17 @@ class ViewBuildingState extends State<ViewBuilding> {
                             top: 130.0,
                             left: 170.0,
                             child: FlatButton(
-                              onPressed: () {Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ViewRoom(
-                                    buildingNumber: widget.buildingNumber,
-                                    roomNumber: '207',
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '207',
+                                        ),
                                   ),
-                                ),
-                              );},
+                                );
+                              },
                               child: Text('Room 207'),
                             ),
                           ),
@@ -552,10 +558,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '209',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '209',
+                                        ),
                                   ),
                                 );
                               },
@@ -570,10 +576,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '211',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '211',
+                                        ),
                                   ),
                                 );
                               },
@@ -588,10 +594,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '213',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '213',
+                                        ),
                                   ),
                                 );
                               },
@@ -606,10 +612,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '215',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '215',
+                                        ),
                                   ),
                                 );
                               },
@@ -624,10 +630,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '217',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '217',
+                                        ),
                                   ),
                                 );
                               },
@@ -642,10 +648,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '219',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '219',
+                                        ),
                                   ),
                                 );
                               },
@@ -660,10 +666,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '221',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '221',
+                                        ),
                                   ),
                                 );
                               },
@@ -678,10 +684,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '202',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '202',
+                                        ),
                                   ),
                                 );
                               },
@@ -696,10 +702,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '204',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '204',
+                                        ),
                                   ),
                                 );
                               },
@@ -714,10 +720,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '206',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '206',
+                                        ),
                                   ),
                                 );
                               },
@@ -732,10 +738,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '208',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '208',
+                                        ),
                                   ),
                                 );
                               },
@@ -750,10 +756,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '210',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '210',
+                                        ),
                                   ),
                                 );
                               },
@@ -768,10 +774,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '212',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '212',
+                                        ),
                                   ),
                                 );
                               },
@@ -786,10 +792,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '214',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '214',
+                                        ),
                                   ),
                                 );
                               },
@@ -804,10 +810,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '216',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '216',
+                                        ),
                                   ),
                                 );
                               },
@@ -822,10 +828,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '218',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '218',
+                                        ),
                                   ),
                                 );
                               },
@@ -840,10 +846,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '220',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '220',
+                                        ),
                                   ),
                                 );
                               },
@@ -858,10 +864,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '222',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '222',
+                                        ),
                                   ),
                                 );
                               },
@@ -893,10 +899,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '301',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '301',
+                                        ),
                                   ),
                                 );
                               },
@@ -911,10 +917,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '303',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '303',
+                                        ),
                                   ),
                                 );
                               },
@@ -929,10 +935,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '305',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '305',
+                                        ),
                                   ),
                                 );
                               },
@@ -947,10 +953,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '307',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '307',
+                                        ),
                                   ),
                                 );
                               },
@@ -965,10 +971,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '309',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '309',
+                                        ),
                                   ),
                                 );
                               },
@@ -983,10 +989,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '311',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '311',
+                                        ),
                                   ),
                                 );
                               },
@@ -1001,10 +1007,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '313',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '313',
+                                        ),
                                   ),
                                 );
                               },
@@ -1019,10 +1025,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '315',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '315',
+                                        ),
                                   ),
                                 );
                               },
@@ -1037,10 +1043,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '317',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '317',
+                                        ),
                                   ),
                                 );
                               },
@@ -1055,10 +1061,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '319',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '319',
+                                        ),
                                   ),
                                 );
                               },
@@ -1073,10 +1079,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '321',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '321',
+                                        ),
                                   ),
                                 );
                               },
@@ -1091,10 +1097,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '302',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '302',
+                                        ),
                                   ),
                                 );
                               },
@@ -1109,10 +1115,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '304',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '304',
+                                        ),
                                   ),
                                 );
                               },
@@ -1127,10 +1133,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '306',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '306',
+                                        ),
                                   ),
                                 );
                               },
@@ -1145,10 +1151,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '308',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '308',
+                                        ),
                                   ),
                                 );
                               },
@@ -1163,10 +1169,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '310',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '310',
+                                        ),
                                   ),
                                 );
                               },
@@ -1181,10 +1187,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '312',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '312',
+                                        ),
                                   ),
                                 );
                               },
@@ -1199,10 +1205,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '314',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '314',
+                                        ),
                                   ),
                                 );
                               },
@@ -1217,10 +1223,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '316',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '316',
+                                        ),
                                   ),
                                 );
                               },
@@ -1235,10 +1241,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '318',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '318',
+                                        ),
                                   ),
                                 );
                               },
@@ -1253,10 +1259,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '320',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '320',
+                                        ),
                                   ),
                                 );
                               },
@@ -1271,10 +1277,10 @@ class ViewBuildingState extends State<ViewBuilding> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewRoom(
-                                      buildingNumber: widget.buildingNumber,
-                                      roomNumber: '322',
-                                    ),
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '322',
+                                        ),
                                   ),
                                 );
                               },

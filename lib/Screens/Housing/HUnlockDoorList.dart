@@ -37,8 +37,7 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
               ],
             ),
             title: Text(
-              'Unlock Door',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              'Unlock Door Requests',
             ),
             centerTitle: true,
           ),
@@ -51,11 +50,9 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
                     SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending',
+                      child: Text('Pending Requests:',
                           style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 20.0, fontWeight: FontWeight.bold)),
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
@@ -72,53 +69,58 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(shrinkWrap: true, children: <
-                              Widget>[
-                            new ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data.documents
-                                  .map((DocumentSnapshot document) {
-                                return new ExpansionTile(
-                                  title: new Text(
-                                      'Building: ${document['Building']} Room: ${document['Room']}'),
-                                  children: <Widget>[
-                                    new Text('Name: ${document['Name']}'),
-                                    new Text('Status: ${document['Status']}'),
-                                    new Text('Status: ${document['Comment']}'),
-                                    new Text(
-                                        'Created: ${document['Created'].toString()}'),
-                                  ],
-                                  trailing: new Row(
-                                    mainAxisSize: MainAxisSize.min,
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(shrinkWrap: true, children: <
+                                Widget>[
+                              new ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data.documents
+                                    .map((DocumentSnapshot document) {
+                                  return new ExpansionTile(
+                                    title: new Text(
+                                        'Building: ${document['Building']} Room: ${document['Room']}'),
                                     children: <Widget>[
-                                      new Container(
-                                        width: 50.0,
-                                        child: new FlatButton(
-                                          child: Icon(Icons.recent_actors),
-                                          textColor: Colors.blueAccent,
-                                          onPressed: () {
-                                            _handlePressed(context, document);
-                                          },
-                                        ),
-                                      ),
+                                      new Text('Name: ${document['Name']}'),
+                                      new Text('Status: ${document['Status']}'),
+                                      new Text(
+                                          'Status: ${document['Comment']}'),
+                                      new Text(
+                                          'Created: ${document['Created'].toString()}'),
                                     ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ]);
+                                    trailing: new Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        new Container(
+                                          width: 50.0,
+                                          child: new FlatButton(
+                                            child: Icon(Icons.check),
+                                            textColor: Colors.grey,
+                                            onPressed: () {
+                                              _handlePressed(context, document);
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ]);
+                          } else {
+                            return new Text('  No Requests Found');
+                          }
                         }),
                   ],
                 ),
               ),
               //Second tab
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Done:',
+                        'Done Rquests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -139,29 +141,34 @@ class UnlockDoorListState extends State<HUnlockDoorList> {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Building: ${document['Building']} Room: ${document['Room']}'),
-                                        children: <Widget>[
-                                          new Text('Name: ${document['Name']}'),
-                                          new Text(
-                                              'Status: ${document['Status']}'),
-                                          new Text(
-                                              'Status: ${document['Comment']}'),
-                                          new Text(
-                                              'Created: ${document['Created'].toString()}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Building: ${document['Building']} Room: ${document['Room']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Name: ${document['Name']}'),
+                                            new Text(
+                                                'Status: ${document['Status']}'),
+                                            new Text(
+                                                'Status: ${document['Comment']}'),
+                                            new Text(
+                                                'Created: ${document['Created'].toString()}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text('  No Requests Found');
+                            }
                           }),
                     ],
                   ),

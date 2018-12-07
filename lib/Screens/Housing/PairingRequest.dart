@@ -9,6 +9,7 @@ class PairingRequest extends StatefulWidget {
 
 class PairingRequestState extends State<PairingRequest> {
   String uid;
+
   @override
   void _showToast(BuildContext context, String message) {
     final scaffold = Scaffold.of(context);
@@ -45,8 +46,7 @@ class PairingRequestState extends State<PairingRequest> {
               ],
             ),
             title: Text(
-              'Pairing Request',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              'Pairing Requests',
             ),
             centerTitle: true,
           ),
@@ -59,11 +59,10 @@ class PairingRequestState extends State<PairingRequest> {
                     SizedBox(height: 30.0),
                     Container(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Pending Requests',
+                      child: Text('Pending Requests: ',
                           style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,)),
                     ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
@@ -80,152 +79,160 @@ class PairingRequestState extends State<PairingRequest> {
                               child: new CircularProgressIndicator(),
                             );
                           }
-                          return new ListView(shrinkWrap: true, children: <
-                              Widget>[
-                            new ListView(
-                              shrinkWrap: true,
-                              children: snapshot.data.documents
-                                  .map((DocumentSnapshot document) {
-                                return new ListTile(
-                                    title: new Text(
-                                        'Student1: ${document['Student1'].toString()}'),
-                                    subtitle: new Text(
-                                        'Student2: ${document['Student2'].toString()}'),
-                                    trailing: new Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          new Container(
-                                            width: 50.0,
-                                            child: new FlatButton(
-                                              child: Icon(Icons.done),
-                                              textColor: Colors.blueAccent,
-                                              onPressed: () async {
-                                                _handlePressed(context,
-                                                    document, "Approve");
-                                                var token, token2;
-                                                await Firestore.instance
-                                                    .collection("Users")
-                                                    .document(document[
-                                                        'from_user_id'])
-                                                    .get()
-                                                    .then((data) {
-                                                  token = data.data['token'];
-                                                });
-                                                await Firestore.instance
-                                                    .collection("Users")
-                                                    .document(
-                                                        document['to_user_id'])
-                                                    .get()
-                                                    .then((data) {
-                                                  token2 = data.data['token'];
-                                                });
-                                                await Firestore.instance
-                                                    .collection("Notifications")
-                                                    .add({
-                                                  "date": new DateTime.now(),
-                                                  "message":
-                                                      "Your request is approved!",
-                                                  "title":
-                                                      "Request to change room",
-                                                  "sender":
-                                                      "Housing department",
-                                                  "to_token": token,
-                                                  "reciever":
-                                                      document['from_user_id']
-                                                });
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(shrinkWrap: true, children: <
+                                Widget>[
+                              new ListView(
+                                shrinkWrap: true,
+                                children: snapshot.data.documents
+                                    .map((DocumentSnapshot document) {
+                                  return new ListTile(
+                                      title: new Text(
+                                          'Student1: ${document['Student1'].toString()}'),
+                                      subtitle: new Text(
+                                          'Student2: ${document['Student2'].toString()}'),
+                                      trailing: new Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(Icons.done),
+                                                textColor: Colors.blueAccent,
+                                                onPressed: () async {
+                                                  _handlePressed(context,
+                                                      document, "Approve");
+                                                  var token, token2;
+                                                  await Firestore.instance
+                                                      .collection("Users")
+                                                      .document(document[
+                                                          'from_user_id'])
+                                                      .get()
+                                                      .then((data) {
+                                                    token = data.data['token'];
+                                                  });
+                                                  await Firestore.instance
+                                                      .collection("Users")
+                                                      .document(document[
+                                                          'to_user_id'])
+                                                      .get()
+                                                      .then((data) {
+                                                    token2 = data.data['token'];
+                                                  });
+                                                  await Firestore.instance
+                                                      .collection(
+                                                          "Notifications")
+                                                      .add({
+                                                    "date": new DateTime.now(),
+                                                    "message":
+                                                        "Your request is approved!",
+                                                    "title":
+                                                        "Request to change room",
+                                                    "sender":
+                                                        "Housing department",
+                                                    "to_token": token,
+                                                    "reciever":
+                                                        document['from_user_id']
+                                                  });
 
-                                                _showToast(context,
-                                                    "Request is approved successfully!");
-                                                await Firestore.instance
-                                                    .collection("Notifications")
-                                                    .add({
-                                                  "date": new DateTime.now(),
-                                                  "message":
-                                                      "Your request is approved!",
-                                                  "title": "Pairing request",
-                                                  "sender":
-                                                      "Housing department",
-                                                  "to_token": token2,
-                                                  "reciever":
-                                                      document['to_user_id']
-                                                });
-                                              },
+                                                  _showToast(context,
+                                                      "Request is approved successfully!");
+                                                  await Firestore.instance
+                                                      .collection(
+                                                          "Notifications")
+                                                      .add({
+                                                    "date": new DateTime.now(),
+                                                    "message":
+                                                        "Your request is approved!",
+                                                    "title": "Pairing request",
+                                                    "sender":
+                                                        "Housing department",
+                                                    "to_token": token2,
+                                                    "reciever":
+                                                        document['to_user_id']
+                                                  });
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                          new Container(
-                                            width: 50.0,
-                                            child: new FlatButton(
-                                              child: Icon(Icons.remove),
-                                              textColor: Colors.blueAccent,
-                                              onPressed: () async {
-                                                _handlePressed(context,
-                                                    document, "Decline");
-                                                var token, token2;
-                                                await Firestore.instance
-                                                    .collection("Users")
-                                                    .document(document[
-                                                        'from_user_id'])
-                                                    .get()
-                                                    .then((data) {
-                                                  token = data.data['token'];
-                                                });
-                                                await Firestore.instance
-                                                    .collection("Users")
-                                                    .document(
-                                                        document['to_user_id'])
-                                                    .get()
-                                                    .then((data) {
-                                                  token2 = data.data['token'];
-                                                });
-                                                await Firestore.instance
-                                                    .collection("Notifications")
-                                                    .add({
-                                                  "date": new DateTime.now(),
-                                                  "message":
-                                                      "Your request is declined!",
-                                                  "title":
-                                                      "Request to change room",
-                                                  "sender":
-                                                      "Housing department",
-                                                  "to_token": token,
-                                                  "reciever":
-                                                      document['from_user_id']
-                                                });
-                                                await Firestore.instance
-                                                    .collection("Notifications")
-                                                    .add({
-                                                  "date": new DateTime.now(),
-                                                  "message":
-                                                      "Your request is declined!",
-                                                  "title": "Pairing request",
-                                                  "sender":
-                                                      "Housing department",
-                                                  "to_token": token2,
-                                                  "reciever":
-                                                      document['to_user_id']
-                                                });
+                                            new Container(
+                                              width: 50.0,
+                                              child: new FlatButton(
+                                                child: Icon(Icons.remove),
+                                                textColor: Colors.blueAccent,
+                                                onPressed: () async {
+                                                  _handlePressed(context,
+                                                      document, "Decline");
+                                                  var token, token2;
+                                                  await Firestore.instance
+                                                      .collection("Users")
+                                                      .document(document[
+                                                          'from_user_id'])
+                                                      .get()
+                                                      .then((data) {
+                                                    token = data.data['token'];
+                                                  });
+                                                  await Firestore.instance
+                                                      .collection("Users")
+                                                      .document(document[
+                                                          'to_user_id'])
+                                                      .get()
+                                                      .then((data) {
+                                                    token2 = data.data['token'];
+                                                  });
+                                                  await Firestore.instance
+                                                      .collection(
+                                                          "Notifications")
+                                                      .add({
+                                                    "date": new DateTime.now(),
+                                                    "message":
+                                                        "Your request is declined!",
+                                                    "title":
+                                                        "Request to change room",
+                                                    "sender":
+                                                        "Housing department",
+                                                    "to_token": token,
+                                                    "reciever":
+                                                        document['from_user_id']
+                                                  });
+                                                  await Firestore.instance
+                                                      .collection(
+                                                          "Notifications")
+                                                      .add({
+                                                    "date": new DateTime.now(),
+                                                    "message":
+                                                        "Your request is declined!",
+                                                    "title": "Pairing request",
+                                                    "sender":
+                                                        "Housing department",
+                                                    "to_token": token2,
+                                                    "reciever":
+                                                        document['to_user_id']
+                                                  });
 
-                                                _showToast(context,
-                                                    "Request is declined successfully!");
-                                              },
+                                                  _showToast(context,
+                                                      "Request is declined successfully!");
+                                                },
+                                              ),
                                             ),
-                                          ),
-                                        ]));
-                              }).toList(),
-                            ),
-                          ]);
+                                          ]));
+                                }).toList(),
+                              ),
+                            ]);
+                          } else {
+                            return new Text('  No Requests Found');
+                          }
                         }),
                   ],
                 ),
               ),
               //Second tab
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Approved:',
+                        'Approved Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -245,24 +252,28 @@ class PairingRequestState extends State<PairingRequest> {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Student 1: ${document['Student1']} Student 2: ${document['Student2']}'),
-                                        children: <Widget>[
-                                          new Text(
-                                              'Status: ${document['Status']}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Student 1: ${document['Student1']} Student 2: ${document['Student2']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Status: ${document['Status']}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text('  No Requests Found');
+                            }
                           }),
                     ],
                   ),
@@ -270,12 +281,12 @@ class PairingRequestState extends State<PairingRequest> {
               ),
               //3rd tab
               Container(
-                padding: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                padding: EdgeInsets.only(top: 30.0, left: 20.0, right: 20.0),
                 child: new Form(
                   child: new ListView(
                     children: <Widget>[
                       Text(
-                        'Declined:',
+                        'Declined Requests:',
                         style: TextStyle(
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
@@ -295,24 +306,28 @@ class PairingRequestState extends State<PairingRequest> {
                               return new Center(
                                 child: new CircularProgressIndicator(),
                               );
-                            return new ListView(
-                                shrinkWrap: true,
-                                children: <Widget>[
-                                  new ListView(
-                                    shrinkWrap: true,
-                                    children: snapshot.data.documents
-                                        .map((DocumentSnapshot document) {
-                                      return new ExpansionTile(
-                                        title: new Text(
-                                            'Student 1: ${document['Student1']} Student 2: ${document['Student2']}'),
-                                        children: <Widget>[
-                                          new Text(
-                                              'Status: ${document['Status']}'),
-                                        ],
-                                      );
-                                    }).toList(),
-                                  ),
-                                ]);
+                            if (snapshot.data.documents.isNotEmpty) {
+                              return new ListView(
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    new ListView(
+                                      shrinkWrap: true,
+                                      children: snapshot.data.documents
+                                          .map((DocumentSnapshot document) {
+                                        return new ExpansionTile(
+                                          title: new Text(
+                                              'Student 1: ${document['Student1']} Student 2: ${document['Student2']}'),
+                                          children: <Widget>[
+                                            new Text(
+                                                'Status: ${document['Status']}'),
+                                          ],
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ]);
+                            } else {
+                              return new Text('  No Requests Found');
+                            }
                           }),
                     ],
                   ),

@@ -63,8 +63,7 @@ class InspectionFormSate extends State<InspectionForm> {
                   onPressed: () => Navigator.of(context).pop(),
                 ),
                 title: Text(
-                  'Incpection Requests',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  'Room Incpections',
                 ),
               ),
               body: TabBarView(children: [
@@ -74,10 +73,9 @@ class InspectionFormSate extends State<InspectionForm> {
                   SizedBox(height: 30.0),
                   Container(
                     padding: EdgeInsets.only(left: 8.0),
-                    child: Text('Inpections',
+                    child: Text('Inpections:',
                         style: TextStyle(
                             fontSize: 22.0,
-                            fontStyle: FontStyle.italic,
                             fontWeight: FontWeight.bold)),
                   ),
                   SizedBox(height: 15.0),
@@ -119,7 +117,7 @@ class InspectionFormSate extends State<InspectionForm> {
                                           width: 50.0,
                                           child: new FlatButton(
                                             child: Icon(Icons.done),
-                                            textColor: Colors.blueAccent,
+                                            textColor: Colors.grey,
                                             onPressed: () {
                                               _handle(
                                                   context, document, "Done");
@@ -130,7 +128,7 @@ class InspectionFormSate extends State<InspectionForm> {
                                           width: 50.0,
                                           child: new FlatButton(
                                             child: Icon(Icons.delete),
-                                            textColor: Colors.blueAccent,
+                                            textColor: Colors.grey,
                                             onPressed: () {
                                               _handle(
                                                   context, document, "Decline");
@@ -157,6 +155,7 @@ class InspectionFormSate extends State<InspectionForm> {
                                   fontSize: 25.0, fontWeight: FontWeight.bold)),
                         ),
                       ])),
+                  SizedBox(height: 40,),
                   Form(
                       key: formKey,
                       child: Stack(children: <Widget>[
@@ -224,7 +223,7 @@ class InspectionFormSate extends State<InspectionForm> {
                             ])),
                         Container(
                             padding: EdgeInsets.only(
-                                top: 280.0, left: 20.0, right: 20.0),
+                                top: 220.0, left: 20.0, right: 20.0),
                             child: Column(children: <Widget>[
                               TextFormField(
                                   maxLines: 5,
@@ -245,8 +244,10 @@ class InspectionFormSate extends State<InspectionForm> {
                                   }),
                             ])),
                       ])),
+                  SizedBox(height: 40,),
                   Container(
                     // height: 10.0,
+                    padding: EdgeInsets.fromLTRB(80, 0, 80, 0),
                     child: RaisedButton(
                         child: Text(
                           'Submit',

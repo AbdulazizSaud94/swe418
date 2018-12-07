@@ -78,8 +78,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         .child('MaintenanceRequests/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
     _showToast(context, "Request is generated successfully!");
-
-    Navigator.of(context).pop();
   }
 
   void _showToast(BuildContext context, String message) {
@@ -122,7 +120,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
             ),
             title: Text(
               'Maintenance Requests',
-              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
           body: TabBarView(
@@ -171,7 +168,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                               ],
                             );
                           } else {
-                            return new Text('You Have No Requests');
+                            return new Text('  You Have No Requests');
                           }
                         }),
                   ],
@@ -237,6 +234,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
+                            maxLength: 3,
                             decoration: InputDecoration(
                               labelText: 'Building:',
                               labelStyle: TextStyle(
@@ -254,6 +252,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
+                            maxLength: 1,
                             decoration: InputDecoration(
                               labelText: 'Floor:',
                               labelStyle: TextStyle(
@@ -271,6 +270,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         padding: EdgeInsets.only(right: 277.0),
                         child: TextFormField(
+                            maxLength: 3,
                             decoration: InputDecoration(
                               labelText: 'Room:',
                               labelStyle: TextStyle(
@@ -289,7 +289,10 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                       Container(
                         width: 70,
                         child: FlatButton(
-                          child: Icon(Icons.add_a_photo, size: 35,),
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 35,
+                          ),
                           textColor: Colors.grey,
                           onPressed: () {
                             getImage();
@@ -333,6 +336,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
     confirmDialog(context).then((bool value) {
       if (value) {
         validateAndSubmit();
+        Navigator.of(context).pushReplacementNamed('/RequestMaintenance');
       }
     });
   }
