@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'HViewRoom.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HViewBuilding extends StatefulWidget {
   @override
@@ -17,29 +15,7 @@ class HViewBuilding extends StatefulWidget {
 
 class HViewBuildingState extends State<HViewBuilding> {
   String uid;
-  String role;
   String email;
-
-  @override
-  void initState() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      this.uid = user.uid;
-      this.email = user.email;
-
-      await Firestore.instance
-          .collection('Users')
-          .document(uid)
-          .get()
-          .then((data) {
-        if (data.exists) {
-          setState(() {
-            role = data['Role'];
-          });
-        }
-      });
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -1280,18 +1256,15 @@ class HViewBuildingState extends State<HViewBuilding> {
                             left: 10.0,
                             child: FlatButton(
                               onPressed: () {
-                                if (role == 'Housing') {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HViewRoom(
-                                            buildingNumber:
-                                                widget.buildingNumber,
-                                            roomNumber: '320',
-                                          ),
-                                    ),
-                                  );
-                                }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HViewRoom(
+                                          buildingNumber: widget.buildingNumber,
+                                          roomNumber: '320',
+                                        ),
+                                  ),
+                                );
                               },
                               child: Text('Room 320'),
                             ),

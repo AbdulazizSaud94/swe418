@@ -39,7 +39,6 @@ class StudentProfileState extends State<StudentProfile> {
   String userRoom;
   String userBuilding;
   String userPosition;
-  String userRole;
 
   DateTime swapCreated;
   String uid;
@@ -60,7 +59,6 @@ class StudentProfileState extends State<StudentProfile> {
             this.userBuilding = data['Building'];
             this.userRoom = data['Room'];
             this.userPosition = data['Position'];
-            this.userRole = data['Role'];
           });
         }
       });
