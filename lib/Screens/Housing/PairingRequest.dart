@@ -8,7 +8,6 @@ class PairingRequest extends StatefulWidget {
 }
 
 class PairingRequestState extends State<PairingRequest> {
-  String uid;
 
   @override
   void _showToast(BuildContext context, String message) {
@@ -24,9 +23,7 @@ class PairingRequestState extends State<PairingRequest> {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      uid = user.email;
-    });
+    
     return new Scaffold(
       body: DefaultTabController(
         length: 3,
@@ -69,8 +66,9 @@ class PairingRequestState extends State<PairingRequest> {
                         stream: Firestore.instance
                             .collection('Requests')
                             .document('Pairing')
-                            .collection('HousingPairing')
-                            .where('Status', isEqualTo: 'Pending')
+                            .collection('PairingRequests')
+                            .where('HousingApproval', isEqualTo:'Pending')
+                            .where('ReceiverApproval', isEqualTo: 'Approved')
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -88,9 +86,8 @@ class PairingRequestState extends State<PairingRequest> {
                                     .map((DocumentSnapshot document) {
                                   return new ListTile(
                                       title: new Text(
-                                          'Student1: ${document['Student1'].toString()}'),
-                                      subtitle: new Text(
-                                          'Student2: ${document['Student2'].toString()}'),
+                                          'Student1: ${document['Sender'].toString()}'+
+                                          '\nStudent2: ${document['Receiver'].toString()}'),
                                       trailing: new Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
@@ -106,7 +103,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                   await Firestore.instance
                                                       .collection("Users")
                                                       .document(document[
-                                                          'from_user_id'])
+                                                          'SenderUID'])
                                                       .get()
                                                       .then((data) {
                                                     token = data.data['token'];
@@ -114,7 +111,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                   await Firestore.instance
                                                       .collection("Users")
                                                       .document(document[
-                                                          'to_user_id'])
+                                                          'ReceiverUID'])
                                                       .get()
                                                       .then((data) {
                                                     token2 = data.data['token'];
@@ -132,7 +129,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                         "Housing department",
                                                     "to_token": token,
                                                     "reciever":
-                                                        document['from_user_id']
+                                                        document['SenderUID']
                                                   });
 
                                                   _showToast(context,
@@ -149,7 +146,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                         "Housing department",
                                                     "to_token": token2,
                                                     "reciever":
-                                                        document['to_user_id']
+                                                        document['ReceiverUID']
                                                   });
                                                 },
                                               ),
@@ -166,7 +163,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                   await Firestore.instance
                                                       .collection("Users")
                                                       .document(document[
-                                                          'from_user_id'])
+                                                          'SenderUID'])
                                                       .get()
                                                       .then((data) {
                                                     token = data.data['token'];
@@ -174,7 +171,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                   await Firestore.instance
                                                       .collection("Users")
                                                       .document(document[
-                                                          'to_user_id'])
+                                                          'ReceiverUID'])
                                                       .get()
                                                       .then((data) {
                                                     token2 = data.data['token'];
@@ -192,7 +189,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                         "Housing department",
                                                     "to_token": token,
                                                     "reciever":
-                                                        document['from_user_id']
+                                                        document['SenderUID']
                                                   });
                                                   await Firestore.instance
                                                       .collection(
@@ -206,7 +203,7 @@ class PairingRequestState extends State<PairingRequest> {
                                                         "Housing department",
                                                     "to_token": token2,
                                                     "reciever":
-                                                        document['to_user_id']
+                                                        document['ReceiverUID']
                                                   });
 
                                                   _showToast(context,
@@ -243,8 +240,8 @@ class PairingRequestState extends State<PairingRequest> {
                           stream: Firestore.instance
                               .collection('Requests')
                               .document('Pairing')
-                              .collection('HousingPairing')
-                              .where('Status', isEqualTo: 'Approved')
+                              .collection('PairingRequests')
+                              .where('HousingApproval', isEqualTo: 'Approved')
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -262,10 +259,10 @@ class PairingRequestState extends State<PairingRequest> {
                                           .map((DocumentSnapshot document) {
                                         return new ExpansionTile(
                                           title: new Text(
-                                              'Student 1: ${document['Student1']} Student 2: ${document['Student2']}'),
+                                              'Student 1: ${document['Sender']} \nStudent 2: ${document['Receiver']}'),
                                           children: <Widget>[
                                             new Text(
-                                                'Status: ${document['Status']}'),
+                                                'Status: ${document['HousingApproval']}'),
                                           ],
                                         );
                                       }).toList(),
@@ -297,8 +294,8 @@ class PairingRequestState extends State<PairingRequest> {
                           stream: Firestore.instance
                               .collection('Requests')
                               .document('Pairing')
-                              .collection('HousingPairing')
-                              .where('Status', isEqualTo: 'Declined')
+                              .collection('PairingRequests')
+                              .where('HousingApproval', isEqualTo: 'Declined')
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -316,10 +313,10 @@ class PairingRequestState extends State<PairingRequest> {
                                           .map((DocumentSnapshot document) {
                                         return new ExpansionTile(
                                           title: new Text(
-                                              'Student 1: ${document['Student1']} Student 2: ${document['Student2']}'),
+                                              'Student 1: ${document['Sender']}\nStudent 2: ${document['Receiver']}'),
                                           children: <Widget>[
                                             new Text(
-                                                'Status: ${document['Status']}'),
+                                                'Status: ${document['HousingApproval']}'),
                                           ],
                                         );
                                       }).toList(),
@@ -345,12 +342,62 @@ class PairingRequestState extends State<PairingRequest> {
     if (check.contains('Decline')) {
       Firestore.instance.runTransaction((transaction) async {
         DocumentSnapshot ds = await transaction.get(document.reference);
-        await transaction.update(ds.reference, {'Status': 'Decline'});
+        await transaction.update(ds.reference, {'HousingApproval': 'Declined'});
       });
-    } else if (check.contains('Approve')) {
+    } 
+    if (check.contains('Approve')) {
+      
+      
       Firestore.instance.runTransaction((transaction) async {
         DocumentSnapshot ds = await transaction.get(document.reference);
-        await transaction.update(ds.reference, {'Status': 'Approved'});
+        await transaction.update(ds.reference, {'HousingApproval': 'Approved'});
+
+                   if(document['SenderPosition']=='A'){
+                     Firestore.instance
+                  .collection('Room')
+                  .document('${document['senderBuilding']}-${document['senderRoom']}')
+                  .updateData({'Email1': document['Receiver'], 'UID1':document['ReceiverUID'],});
+
+                      Firestore.instance
+                  .collection('Users')
+                  .document(document['ReceiverUID'])
+                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'], 'Position': 'A'});
+                   }
+                   else{
+                     Firestore.instance
+                  .collection('Room')
+                  .document('${document['senderBuilding']}-${document['senderRoom']}')
+                  .updateData({'Email1': document['Receiver'], 'UID1':document['ReceiverUID'],});
+
+                      Firestore.instance
+                  .collection('Users')
+                  .document(document['ReceiverUID'])
+                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'], 'Position': 'B'});
+                   }
+
+                   if(document['ReceiverPosition']=='A'){
+                     Firestore.instance
+                  .collection('Room')
+                  .document('${document['ReceiverBuilding']}-${document['ReceiverRoom']}')
+                  .updateData({'Email1': document['Sender'], 'UID1': document['SenderUID']});
+
+                   Firestore.instance
+                  .collection('Users')
+                  .document(document['SenderUID'])
+                  .updateData({'Building':document['ReceiverBuilding'], 'Room': document['ReceiverRoom'], 'Position': 'A'});
+                   }
+                   else{
+                   Firestore.instance
+                  .collection('Room')
+                  .document('${document['ReceiverBuilding']}-${document['ReceiverRoom']}')
+                  .updateData({'Email1': document['Sender'], 'UID1': document['SenderUID']});
+
+                  Firestore.instance
+                  .collection('Users')
+                  .document(document['SenderUID'])
+                  .updateData({'Building':document['ReceiverBuilding'], 'Room': document['ReceiverRoom'],'Position': 'B'});
+                   }
+      
       });
     }
   }
