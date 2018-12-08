@@ -347,7 +347,11 @@ class PairingRequestState extends State<PairingRequest> {
     } 
     if (check.contains('Approve')) {
       
-      
+      Firestore.instance
+      .collection('Users')
+      .document(document['SenderUID'])
+      .updateData({'Status':'paired'});
+
       Firestore.instance.runTransaction((transaction) async {
         DocumentSnapshot ds = await transaction.get(document.reference);
         await transaction.update(ds.reference, {'HousingApproval': 'Approved'});
@@ -361,7 +365,7 @@ class PairingRequestState extends State<PairingRequest> {
                       Firestore.instance
                   .collection('Users')
                   .document(document['ReceiverUID'])
-                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'], 'Position': 'A'});
+                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'], 'Position': 'B','Status':'paired'});
                    }
                    else{
                      Firestore.instance
@@ -369,35 +373,13 @@ class PairingRequestState extends State<PairingRequest> {
                   .document('${document['senderBuilding']}-${document['senderRoom']}')
                   .updateData({'Email1': document['Receiver'], 'UID1':document['ReceiverUID'],});
 
-                      Firestore.instance
-                  .collection('Users')
-                  .document(document['ReceiverUID'])
-                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'], 'Position': 'B'});
-                   }
-
-                   if(document['ReceiverPosition']=='A'){
-                     Firestore.instance
-                  .collection('Room')
-                  .document('${document['ReceiverBuilding']}-${document['ReceiverRoom']}')
-                  .updateData({'Email1': document['Sender'], 'UID1': document['SenderUID']});
-
-                   Firestore.instance
-                  .collection('Users')
-                  .document(document['SenderUID'])
-                  .updateData({'Building':document['ReceiverBuilding'], 'Room': document['ReceiverRoom'], 'Position': 'A'});
-                   }
-                   else{
-                   Firestore.instance
-                  .collection('Room')
-                  .document('${document['ReceiverBuilding']}-${document['ReceiverRoom']}')
-                  .updateData({'Email1': document['Sender'], 'UID1': document['SenderUID']});
-
                   Firestore.instance
                   .collection('Users')
-                  .document(document['SenderUID'])
-                  .updateData({'Building':document['ReceiverBuilding'], 'Room': document['ReceiverRoom'],'Position': 'B'});
+                  .document(document['ReceiverUID'])
+                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'],'Position': 'A','Status':'paired'});
                    }
-      
+                   
+
       });
     }
   }
