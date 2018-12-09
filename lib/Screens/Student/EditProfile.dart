@@ -22,17 +22,16 @@ class EditProfile extends StatefulWidget {
   final String email;
 
   //constructor
-  EditProfile(
-      {this.name,
-      this.city,
-      this.major,
-      this.graduationTerm,
-      this.smoking,
-      this.mobile,
-      this.intrestsHobbies,
-      this.dislike,
-      this.uid,
-      this.email});
+  EditProfile({this.name,
+    this.city,
+    this.major,
+    this.graduationTerm,
+    this.smoking,
+    this.mobile,
+    this.intrestsHobbies,
+    this.dislike,
+    this.uid,
+    this.email});
 }
 
 class EditProfileState extends State<EditProfile> {
@@ -55,6 +54,24 @@ class EditProfileState extends State<EditProfile> {
       return true;
     }
     return false;
+  }
+
+  @override
+  void initState() {
+    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+      await Firestore.instance
+          .collection('Users')
+          .document(widget.uid)
+          .get()
+          .then((data) {
+        if (data.exists) {
+          setState(() {
+            newSmoking = data['Smoking'];
+          });
+        }
+      });
+    });
+    super.initState();
   }
 
   @override
@@ -149,42 +166,99 @@ class EditProfileState extends State<EditProfile> {
                 ),
               ),
               SizedBox(height: 30.0),
-              TextFormField(
-                initialValue: widget.city,
-                onSaved: (value) => newCity = value,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    // The form is empty
-                    return "Field can\'t be empty";
-                  }
+              Text(
+                'City:',
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54),
+              ),
+              DropdownButton<String>(
+                hint: Text(widget.city,
+                    style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black54)),
+                items: <String>[
+                  'Abha',
+                  'Bisha',
+                  'Al Bahah',
+                  'Dammam',
+                  'Dhahran',
+                  'Hail',
+                  'Al-Hasa',
+                  'Hafr Al-Batin',
+                  'Al Jawf',
+                  'Jeddah',
+                  'Jizan',
+                  'Jubail',
+                  'Khafji',
+                  'Khobar',
+                  'Al Majmaah',
+                  'Mecca',
+                  'Medina',
+                  'Najran',
+                  'Qatif',
+                  'Qassim',
+                  'Riyadh',
+                  'Saihat',
+                  'Taif',
+                  'Tabuk',
+                  'Yanbu'
+                ].map((String value) {
+                  return new DropdownMenuItem<String>(
+                    value: value,
+                    child: new Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  this.setState(() {
+                    Text(value,
+                        style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54));
+                    newCity = value;
+                  });
                 },
-                decoration: InputDecoration(
-                  labelText: 'City: ',
-                  labelStyle: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black54),
-                ),
               ),
               SizedBox(height: 30.0),
-              TextFormField(
-                initialValue: widget.smoking,
-                onSaved: (value) => newSmoking = value,
-                validator: (value) {
-                  if (value.isEmpty) {
-                    // The form is empty
-                    return "Field can\'t be empty";
-                  }
-                },
-                decoration: InputDecoration(
-                  labelText: 'Do you smoke?',
-                  labelStyle: TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black54),
-                ),
+//              TextFormField(
+//                initialValue: widget.smoking,
+//                onSaved: (value) => newSmoking = value,
+//                validator: (value) {
+//                  if (value.isEmpty) {
+//                    // The form is empty
+//                    return "Field can\'t be empty";
+//                  }
+//                },
+//                decoration: InputDecoration(
+//                  labelText: 'Do you smoke?',
+//                  labelStyle: TextStyle(
+//                      fontSize: 20.0,
+//                      fontWeight: FontWeight.bold,
+//                      color: Colors.black54),
+//                ),
+//              ),
+              Text('Do yo smoke?',
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54),),
+              Row(
+                children: <Widget>[
+                  Radio(value: 'I Don\'t Smoke', groupValue: newSmoking, onChanged: (String val) => valueRadio(val),),
+                  Text('I Don\'t Smoke.', style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black54),),
+                  SizedBox(width: 18,),
+                  Radio(value: 'I Somke', groupValue: newSmoking, onChanged: (String val) => valueRadio(val),),
+                  Text('I Somke.', style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black54),),
+                ],
               ),
-              SizedBox(height: 30.0),
+              SizedBox(height: 15.0),
               TextFormField(
                   initialValue: widget.intrestsHobbies,
                   keyboardType: TextInputType.multiline,
@@ -202,7 +276,7 @@ class EditProfileState extends State<EditProfile> {
                       return "Field can\'t be empty";
                     }
                   }),
-              SizedBox(height: 30.0),
+              SizedBox(height: 15.0),
               TextFormField(
                   initialValue: widget.dislike,
                   keyboardType: TextInputType.multiline,
@@ -236,21 +310,41 @@ class EditProfileState extends State<EditProfile> {
                     onPressed: () async {
                       if (validateAndSave()) {
                         confirmDialog(context).then((bool value) async {
-                          await Firestore.instance
-                              .collection('Users')
-                              .document(widget.uid)
-                              .updateData({
-                            'Name': newName,
-                            'Email': widget.email,
-                            'Role': 'Student',
-                            'Mobile': newMobile,
-                            'Major': newMajor,
-                            'City': newCity,
-                            'GraduationTerm': newGraduationTerm,
-                            'Smoking': newSmoking,
-                            'IntrestsHobbies': newIntrestsHobbies,
-                            'Dislikes': newDislike
-                          });
+
+                          if (newCity == null) {
+                            await Firestore.instance
+                                .collection('Users')
+                                .document(widget.uid)
+                                .updateData({
+                              'Name': newName,
+                              'Email': widget.email,
+                              'Role': 'Student',
+                              'Mobile': newMobile,
+                              'Major': newMajor,
+                              'City': widget.city,
+                              'GraduationTerm': newGraduationTerm,
+                              'Smoking': newSmoking,
+                              'IntrestsHobbies': newIntrestsHobbies,
+                              'Dislikes': newDislike
+                            });
+                          } else {
+                            await Firestore.instance
+                                .collection('Users')
+                                .document(widget.uid)
+                                .updateData({
+                              'Name': newName,
+                              'Email': widget.email,
+                              'Role': 'Student',
+                              'Mobile': newMobile,
+                              'Major': newMajor,
+                              'City': newCity,
+                              'GraduationTerm': newGraduationTerm,
+                              'Smoking': newSmoking,
+                              'IntrestsHobbies': newIntrestsHobbies,
+                              'Dislikes': newDislike
+                            });
+                          }
+
                           Navigator.of(context)
                               .pushReplacementNamed('/ProfilePage');
                         });
@@ -275,25 +369,36 @@ class EditProfileState extends State<EditProfile> {
       ),
     );
   }
+
+  void valueRadio(String val) {
+    setState(() {
+      if (val == 'I Somke') {
+        newSmoking = 'I Somke';
+      }
+       else {
+        newSmoking = 'I Don\'t Smoke';
+      }
+    });
+  }
 }
 
-Future<bool> confirmDialog(BuildContext context) {
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text("Update profile?"),
-          actions: <Widget>[
-            new FlatButton(
-              child: Text("Yes"),
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-            new FlatButton(
-              child: Text("No"),
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-          ],
-        );
-      });
-}
+  Future<bool> confirmDialog(BuildContext context) {
+    return showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: new Text("Update profile?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: Text("Yes"),
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+              new FlatButton(
+                child: Text("No"),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+            ],
+          );
+        });
+  }
