@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HKeyList extends StatefulWidget {
   @override
@@ -22,38 +23,28 @@ class HKeyListState extends State<HKeyList> {
   String uid;
   QuerySnapshot doc;
   String role;
-  File _image;
 
-
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = image;
-    });
-  }
-
-  @override
-  void initState() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      this.uid = user.uid;
-      doc = await Firestore.instance
-          .collection('Keys')
-          .where("Type", isEqualTo: "Room")
-          .getDocuments();
-    });
-
-    // FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-    //   this.uid = user.uid;
-    //   await Firestore.instance
-    //       .collection('Users')
-    //       .where("Role", isEqualTo: 'Security')
-    //       .then((data) {
-    //     this.secuirtyName = data['Name'];
-    //     });
-    // });
-    super.initState();
-  }
+//  @override
+//  void initState() {
+//    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+//      this.uid = user.uid;
+//      doc = await Firestore.instance
+//          .collection('Building')
+//          .where("Key_H", isEqualTo: "Room")
+//          .getDocuments();
+//    });
+//
+//    // FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+//    //   this.uid = user.uid;
+//    //   await Firestore.instance
+//    //       .collection('Users')
+//    //       .where("Role", isEqualTo: 'Security')
+//    //       .then((data) {
+//    //     this.secuirtyName = data['Name'];
+//    //     });
+//    // });
+//    super.initState();
+//  }
 
   void validateAndSubmit() async {
     created = DateTime.now();
@@ -80,10 +71,10 @@ class HKeyListState extends State<HKeyList> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  text: 'Room Keys',
+                  text: 'Not with housing',
                 ),
                 Tab(
-                  text: 'Master Keys',
+                  text: 'With housing',
                 ),
               ],
             ),
@@ -94,8 +85,7 @@ class HKeyListState extends State<HKeyList> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
-              'Room Keys',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              'Master Keys',
             ),
             centerTitle: true,
           ),
@@ -106,19 +96,15 @@ class HKeyListState extends State<HKeyList> {
                 child: ListView(
                   children: <Widget>[
                     SizedBox(height: 30.0),
-                    Container(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Room Keys',
-                          style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
-                    ),
-                    SizedBox(height: 15.0),
+                    Text(' Keys not held by housing:',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),),
                     new StreamBuilder<QuerySnapshot>(
                         stream: Firestore.instance
-                            .collection('Keys')
-                            .where('Type', isEqualTo: "Room")
+                            .collection('Building')
+                            .where('key_holder', isEqualTo: "Not Housing")
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -142,14 +128,65 @@ class HKeyListState extends State<HKeyList> {
                                   // );
                                   return new ExpansionTile(
                                     title: new Text(
-                                        'Building/Room: ${document['Name']}'),
+                                      'Building: ${document['building_number']}',
+                                    ),
                                     children: <Widget>[
-                                      new Text('Owner1: ${document['Owner1']}',
-                                          textAlign: TextAlign.left),
-                                      new Text('Owner2: ${document['Owner2']}',
-                                          textAlign: TextAlign.left),
-                                      // new Text('Created: ${document['Created'].toString()}'),
-                                      // new Text('Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
+                                      new FlatButton(
+                                        onPressed: () async {
+                                          String url = 'mailto:' +
+                                              document['holder_email'] +
+                                              '?subject=From%20STUHousing_&body=From%20STUHousing';
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child: Text(
+                                          'Holder email: ' +
+                                              document['holder_email'],
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: new TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                      ),
+                                      new FlatButton(
+                                        onPressed: () async {
+                                          String url = 'tel:' +
+                                              document['holder_mobile'];
+                                          if (await canLaunch(url)) {
+                                            await launch(url);
+                                          } else {
+                                            throw 'Could not launch $url';
+                                          }
+                                        },
+                                        child: Text(
+                                          'Holder mobile: ' +
+                                              document['holder_mobile'],
+                                          textAlign: TextAlign.center,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: new TextStyle(
+                                            color: Colors.black54,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 25,
+                                        width: 120,
+                                        child: RaisedButton(
+                                          onPressed: () {},
+                                          child: Text(
+                                            'Retrieve key',
+                                            style: TextStyle(
+                                                color: Colors.black87),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 15,),
                                     ],
                                   );
                                 }).toList(),
@@ -165,19 +202,11 @@ class HKeyListState extends State<HKeyList> {
                 child: ListView(
                   children: <Widget>[
                     SizedBox(height: 30.0),
-                    Container(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Master Keys',
-                          style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
-                    ),
                     SizedBox(height: 15.0),
                     new StreamBuilder<QuerySnapshot>(
                         stream: Firestore.instance
-                            .collection('Keys')
-                            .where('Type', isEqualTo: "Master")
+                            .collection('Building')
+                            .where('key_holder', isEqualTo: "Housing")
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -201,12 +230,11 @@ class HKeyListState extends State<HKeyList> {
                                   // );
                                   return new ExpansionTile(
                                     title: new Text(
-                                        'Building/Room: ${document['Name']}'),
+                                        'Building number: ${document['building_number']}'),
                                     children: <Widget>[
-                                      new Text('Holder: ${document['Holder']}',
-                                          textAlign: TextAlign.left),
                                       new Text(
-                                          'Hold Time: ${document['Date'].toString()}'),
+                                          'Holder: ${document['key_holder']}',
+                                          textAlign: TextAlign.left),
                                       // new Text('Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
                                     ],
                                     trailing: new Row(
@@ -298,84 +326,94 @@ class HKeyListState extends State<HKeyList> {
       }
     });
   }
-}
 
-Future<bool> confirmDialog(BuildContext context, DocumentSnapshot document) {
+//
+//  _LaunchMobile() async {
+//    String url = 'tel:' + mobile;
+//    if (await canLaunch(url)) {
+//      await launch(url);
+//    } else {
+//      throw 'Could not launch $url';
+//    }
+//  }
+//}
 
-  void _showToast(BuildContext context, String message) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content:  Text(message),
-        action: SnackBarAction(
-            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
-  }
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text(
-              "Assign Master Key of Building ${document['Name']} to Security Employee?"),
-          actions: <Widget>[
-            new FlatButton(
-              child: Text("Yes"),
-              onPressed: () {Navigator.of(context).pop(true);
-              _showToast(context, "It is assigned!");
-              },
-            ),
-            new FlatButton(
-              child: Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop(false);
+  Future<bool> confirmDialog(BuildContext context, DocumentSnapshot document) {
+    void _showToast(BuildContext context, String message) {
+      final scaffold = Scaffold.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: Text(message),
+          action: SnackBarAction(
+              label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+        ),
+      );
+    }
 
-                _showToast(context, "No assignment!");
-              },
-            ),
-          ],
-        );
-      });
-}
+    return showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: new Text(
+                "Assign Master Key of Building ${document['Name']} to Security Employee?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: Text("Yes"),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  _showToast(context, "It is assigned!");
+                },
+              ),
+              new FlatButton(
+                child: Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
 
-Future<bool> _confirmDialog(BuildContext context, DocumentSnapshot document) {
-
-  void _showToast(BuildContext context, String message) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content:  Text(message),
-        action: SnackBarAction(
-            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
+                  _showToast(context, "No assignment!");
+                },
+              ),
+            ],
+          );
+        });
   }
 
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text(
-              "Assign Master Key of Building ${document['Name']} to Housing Employee?"),
-          actions: <Widget>[
-            new FlatButton(
-              child: Text("Yes"),
-              onPressed: () { Navigator.of(context).pop(true);
-              _showToast(context, "It is assigned!");
-              },
-            ),
-            new FlatButton(
-              child: Text("No"),
-              onPressed: () {Navigator.of(context).pop(false);
-              _showToast(context, "No assignment!");
+  Future<bool> _confirmDialog(BuildContext context, DocumentSnapshot document) {
+    void _showToast(BuildContext context, String message) {
+      final scaffold = Scaffold.of(context);
+      scaffold.showSnackBar(
+        SnackBar(
+          content: Text(message),
+          action: SnackBarAction(
+              label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+        ),
+      );
+    }
 
-              },
-            ),
-          ],
-        );
-      });
-
-
+    return showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return new AlertDialog(
+            title: new Text(
+                "Assign Master Key of Building ${document['Name']} to Housing Employee?"),
+            actions: <Widget>[
+              new FlatButton(
+                child: Text("Yes"),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  _showToast(context, "It is assigned!");
+                },
+              ),
+              new FlatButton(
+                child: Text("No"),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  _showToast(context, "No assignment!");
+                },
+              ),
+            ],
+          );
+        });
+  }
 }

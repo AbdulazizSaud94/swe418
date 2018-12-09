@@ -22,29 +22,30 @@ class EditProfile extends StatefulWidget {
   final String email;
 
   //constructor
-  EditProfile({this.name,
-    this.city,
-    this.major,
-    this.graduationTerm,
-    this.smoking,
-    this.mobile,
-    this.intrestsHobbies,
-    this.dislike,
-    this.uid,
-    this.email});
+  EditProfile(
+      {this.name,
+      this.city,
+      this.major,
+      this.graduationTerm,
+      this.smoking,
+      this.mobile,
+      this.intrestsHobbies,
+      this.dislike,
+      this.uid,
+      this.email});
 }
 
 class EditProfileState extends State<EditProfile> {
   final formKey = GlobalKey<FormState>();
   String uid;
   String newName;
-  String newCity;
+  String newCity = 'City';
   String newMobile;
   String newIntrestsHobbies;
   String newDislike;
   String newGraduationTerm;
   String newMajor;
-  String newSmoking = 'Do you smoke?';
+  String newSmoking = 'Do you smoke';
 
   //method to check for empty fields
   bool validateAndSave() {
@@ -67,6 +68,7 @@ class EditProfileState extends State<EditProfile> {
         if (data.exists) {
           setState(() {
             newSmoking = data['Smoking'];
+
           });
         }
       });
@@ -240,22 +242,36 @@ class EditProfileState extends State<EditProfile> {
 //                      color: Colors.black54),
 //                ),
 //              ),
-              Text('Do yo smoke?',
+              Text(
+                'Do yo smoke?',
                 style: TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54),),
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black54),
+              ),
               Row(
                 children: <Widget>[
-                  Radio(value: 'I Don\'t Smoke', groupValue: newSmoking, onChanged: (String val) => valueRadio(val),),
-                  Text('I Don\'t Smoke.', style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black54),),
-                  SizedBox(width: 18,),
-                  Radio(value: 'I Somke', groupValue: newSmoking, onChanged: (String val) => valueRadio(val),),
-                  Text('I Somke.', style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black54),),
+                  Radio(
+                    value: 'I Don\'t Smoke',
+                    groupValue: newSmoking,
+                    onChanged: (String val) => valueRadio(val),
+                  ),
+                  Text(
+                    'I Don\'t Smoke.',
+                    style: TextStyle(fontSize: 16.0, color: Colors.black54),
+                  ),
+                  SizedBox(
+                    width: 18,
+                  ),
+                  Radio(
+                    value: 'I Somke',
+                    groupValue: newSmoking,
+                    onChanged: (String val) => valueRadio(val),
+                  ),
+                  Text(
+                    'I Somke.',
+                    style: TextStyle(fontSize: 16.0, color: Colors.black54),
+                  ),
                 ],
               ),
               SizedBox(height: 15.0),
@@ -310,7 +326,6 @@ class EditProfileState extends State<EditProfile> {
                     onPressed: () async {
                       if (validateAndSave()) {
                         confirmDialog(context).then((bool value) async {
-
                           if (newCity == null) {
                             await Firestore.instance
                                 .collection('Users')
@@ -374,31 +389,30 @@ class EditProfileState extends State<EditProfile> {
     setState(() {
       if (val == 'I Somke') {
         newSmoking = 'I Somke';
-      }
-       else {
+      } else {
         newSmoking = 'I Don\'t Smoke';
       }
     });
   }
 }
 
-  Future<bool> confirmDialog(BuildContext context) {
-    return showDialog<bool>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new AlertDialog(
-            title: new Text("Update profile?"),
-            actions: <Widget>[
-              new FlatButton(
-                child: Text("Yes"),
-                onPressed: () => Navigator.of(context).pop(true),
-              ),
-              new FlatButton(
-                child: Text("No"),
-                onPressed: () => Navigator.of(context).pop(false),
-              ),
-            ],
-          );
-        });
-  }
+Future<bool> confirmDialog(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Update profile?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+}
