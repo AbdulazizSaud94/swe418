@@ -432,7 +432,7 @@ class StudentProfileState extends State<StudentProfile> {
                                             Scaffold.of(context)
                                                 .showSnackBar(snackBar);
                                           } else {
-                                            confirmDialog(context)
+                                            confirmDialogSwap(context)
                                                 .then((bool value) async {
                                               if (value) {
                                                 swapCreated = DateTime.now();
@@ -536,7 +536,7 @@ class StudentProfileState extends State<StudentProfile> {
                                             Scaffold.of(context)
                                                 .showSnackBar(snackBar);
                                           } else {
-                                            confirmDialog(context)
+                                            confirmDialogPairing(context)
                                                 .then((bool value) async {
                                               if (value) {
                                                 swapCreated = DateTime.now();
@@ -633,13 +633,13 @@ class StudentProfileState extends State<StudentProfile> {
   }
 }
 
-Future<bool> confirmDialog(BuildContext context) {
+Future<bool> confirmDialogSwap(BuildContext context) {
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text("Send Request?"),
+          title: new Text("Send Swap Request?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
@@ -653,3 +653,24 @@ Future<bool> confirmDialog(BuildContext context) {
         );
       });
 }
+Future<bool> confirmDialogPairing(BuildContext context) {
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Send Pairing Request?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed: () => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      });
+}
+
