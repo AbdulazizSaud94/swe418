@@ -397,7 +397,20 @@ class StudentProfileState extends State<StudentProfile> {
                                         // Find the Scaffold in the Widget tree and use it to show a SnackBar!
                                         Scaffold.of(context)
                                             .showSnackBar(snackBar);
-                                      } else {
+                                      }else if(userRoom == '0'){
+                                        final snackBar = SnackBar(
+                                          content: Text(
+                                            'Error, you have no room!',
+                                            style: TextStyle(
+                                              fontSize: 15.0,
+                                            ),
+                                          ),
+                                        );
+                                        // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                        Scaffold.of(context)
+                                            .showSnackBar(snackBar);
+                                      }
+                                      else {
                                         confirmDialog(context)
                                             .then((bool value) async {
                                           if (value) {
