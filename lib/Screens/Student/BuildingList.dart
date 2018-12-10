@@ -53,13 +53,6 @@ class BuildingListState extends State<BuildingList> {
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Building List'),
-        leading: new IconButton(
-            icon: new Icon(
-              Icons.arrow_back,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/RequestsPage');
-            }),
       ),
       body: new StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance

@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'AssignKey.dart';
 
 class HKeyList extends StatefulWidget {
   @override
@@ -22,38 +25,28 @@ class HKeyListState extends State<HKeyList> {
   String uid;
   QuerySnapshot doc;
   String role;
-  File _image;
 
-
-  Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      _image = image;
-    });
-  }
-
-  @override
-  void initState() {
-    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-      this.uid = user.uid;
-      doc = await Firestore.instance
-          .collection('Keys')
-          .where("Type", isEqualTo: "Room")
-          .getDocuments();
-    });
-
-    // FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
-    //   this.uid = user.uid;
-    //   await Firestore.instance
-    //       .collection('Users')
-    //       .where("Role", isEqualTo: 'Security')
-    //       .then((data) {
-    //     this.secuirtyName = data['Name'];
-    //     });
-    // });
-    super.initState();
-  }
+//  @override
+//  void initState() {
+//    FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+//      this.uid = user.uid;
+//      doc = await Firestore.instance
+//          .collection('Building')
+//          .where("Key_H", isEqualTo: "Room")
+//          .getDocuments();
+//    });
+//
+//    // FirebaseAuth.instance.currentUser().then((FirebaseUser user) async {
+//    //   this.uid = user.uid;
+//    //   await Firestore.instance
+//    //       .collection('Users')
+//    //       .where("Role", isEqualTo: 'Security')
+//    //       .then((data) {
+//    //     this.secuirtyName = data['Name'];
+//    //     });
+//    // });
+//    super.initState();
+//  }
 
   void validateAndSubmit() async {
     created = DateTime.now();
@@ -80,10 +73,10 @@ class HKeyListState extends State<HKeyList> {
             bottom: TabBar(
               tabs: [
                 Tab(
-                  text: 'Room Keys',
+                  text: 'Not with housing',
                 ),
                 Tab(
-                  text: 'Master Keys',
+                  text: 'With housing',
                 ),
               ],
             ),
@@ -94,8 +87,7 @@ class HKeyListState extends State<HKeyList> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             title: Text(
-              'Room Keys',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              'Master Keys',
             ),
             centerTitle: true,
           ),
@@ -106,19 +98,18 @@ class HKeyListState extends State<HKeyList> {
                 child: ListView(
                   children: <Widget>[
                     SizedBox(height: 30.0),
-                    Container(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Room Keys',
-                          style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                    Text(
+                      ' Keys not held by housing:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 10.0),
                     new StreamBuilder<QuerySnapshot>(
                         stream: Firestore.instance
-                            .collection('Keys')
-                            .where('Type', isEqualTo: "Room")
+                            .collection('Building')
+                            .where('key_holder', isEqualTo: "Not Housing")
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -126,36 +117,93 @@ class HKeyListState extends State<HKeyList> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  // return new ListTile(
-                                  //   title:
-                                  //       new Text('Building/Room: ${document['Name']}'),
-                                  //   subtitle: new Text(
-                                  //     'Building/Room: ${document['Name']}\n Owner1: ${document['Owner1']}\n Owner2: ${document['Owner2']}'),
-                                  //   onTap: () {}, // view user detaild TODO
-                                  // );
-                                  return new ExpansionTile(
-                                    title: new Text(
-                                        'Building/Room: ${document['Name']}'),
-                                    children: <Widget>[
-                                      new Text('Owner1: ${document['Owner1']}',
-                                          textAlign: TextAlign.left),
-                                      new Text('Owner2: ${document['Owner2']}',
-                                          textAlign: TextAlign.left),
-                                      // new Text('Created: ${document['Created'].toString()}'),
-                                      // new Text('Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
-                                    ],
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ExpansionTile(
+                                      title: new Text(
+                                        'Building: ${document['building_number']}',
+                                      ),
+                                      children: <Widget>[
+                                        new FlatButton(
+                                          onPressed: () async {
+                                            String url = 'mailto:' +
+                                                document['holder_email'] +
+                                                '?subject=From%20STUHousing_&body=From%20STUHousing';
+                                            if (await canLaunch(url)) {
+                                              await launch(url);
+                                            } else {
+                                              throw 'Could not launch $url';
+                                            }
+                                          },
+                                          child: Text(
+                                            'Holder email: ' +
+                                                document['holder_email'],
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: new TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 16.0,
+                                            ),
+                                          ),
+                                        ),
+                                        new FlatButton(
+                                          onPressed: () async {
+                                            String url = 'tel:' +
+                                                document['holder_mobile'];
+                                            if (await canLaunch(url)) {
+                                              await launch(url);
+                                            } else {
+                                              throw 'Could not launch $url';
+                                            }
+                                          },
+                                          child: Text(
+                                            'Holder mobile: ' +
+                                                document['holder_mobile'],
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: new TextStyle(
+                                              color: Colors.black54,
+                                              fontSize: 16.0,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 25,
+                                          width: 120,
+                                          child: RaisedButton(
+                                            onPressed: () {
+                                              retrieveHandlePressed(
+                                                  context, document);
+                                            },
+                                            child: Text(
+                                              'Retrieve key',
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                      ],
+                                    );
+//                                  } else {
+//                                    return new Text(
+//                                        '  All keys are held by housing.');
+//                                  }
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('  All keys are held by housing.');
+                          }
                         }),
                   ],
                 ),
@@ -165,19 +213,18 @@ class HKeyListState extends State<HKeyList> {
                 child: ListView(
                   children: <Widget>[
                     SizedBox(height: 30.0),
-                    Container(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: Text('Master Keys',
-                          style: TextStyle(
-                              fontSize: 22.0,
-                              fontStyle: FontStyle.italic,
-                              fontWeight: FontWeight.bold)),
+                    Text(
+                      ' Keys held by housing:',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    SizedBox(height: 15.0),
+                    SizedBox(height: 10.0),
                     new StreamBuilder<QuerySnapshot>(
                         stream: Firestore.instance
-                            .collection('Keys')
-                            .where('Type', isEqualTo: "Master")
+                            .collection('Building')
+                            .where('key_holder', isEqualTo: "Housing")
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -185,83 +232,53 @@ class HKeyListState extends State<HKeyList> {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
-                          return new ListView(
-                            shrinkWrap: true,
-                            children: <Widget>[
-                              new ListView(
-                                shrinkWrap: true,
-                                children: snapshot.data.documents
-                                    .map((DocumentSnapshot document) {
-                                  // return new ListTile(
-                                  //   title:
-                                  //       new Text('Building/Room: ${document['Name']}'),
-                                  //   subtitle: new Text(
-                                  //     'Building/Room: ${document['Name']}\n Owner1: ${document['Owner1']}\n Owner2: ${document['Owner2']}'),
-                                  //   onTap: () {}, // view user detaild TODO
-                                  // );
-                                  return new ExpansionTile(
-                                    title: new Text(
-                                        'Building/Room: ${document['Name']}'),
-                                    children: <Widget>[
-                                      new Text('Holder: ${document['Holder']}',
-                                          textAlign: TextAlign.left),
-                                      new Text(
-                                          'Hold Time: ${document['Date'].toString()}'),
-                                      // new Text('Bulding: ${document['Building']}, Floor: ${document['Floor']}, Room: ${document['Room']}'),
-                                    ],
-                                    trailing: new Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        new Container(
-                                          width: 50.0,
-                                          child: new FlatButton(
-                                            child: Icon(Icons.assignment),
-                                            onPressed: () {
-                                              handlePressed(context, document);
-                                            },
+                          if (snapshot.data.documents.isNotEmpty) {
+                            return new ListView(
+                              shrinkWrap: true,
+                              children: <Widget>[
+                                new ListView(
+                                  shrinkWrap: true,
+                                  children: snapshot.data.documents
+                                      .map((DocumentSnapshot document) {
+                                    return new ListTile(
+                                      title: new Text(
+                                          'Building number: ${document['building_number']}'),
+                                      trailing: new Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          new Container(
+                                            width: 50.0,
+                                            child: new FlatButton(
+                                              child: Icon(
+                                                FontAwesomeIcons.userPlus,
+                                                size: 20,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AssignKey(
+                                                          buildingNumber:
+                                                              '${document['building_number']}',
+                                                          buildingID: document
+                                                              .documentID,
+                                                        ),
+                                                  ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
-                                        new Container(
-                                          width: 50.0,
-                                          child: new FlatButton(
-                                            child: Icon(Icons.person),
-                                            onPressed: () {
-                                              _handlePressed(context, document);
-                                            },
-                                          ),
-                                        ),
-                                        // new DropdownButton<String>(
-                                        //   hint: Text(role,
-                                        //       style: TextStyle(
-                                        //           fontSize: 18.0,
-                                        //           fontWeight: FontWeight.bold,
-                                        //           color: Colors.black54)),
-                                        //   items: <String>['Student', 'Housing', 'Security']
-                                        //       .map((String value) {
-                                        //     return new DropdownMenuItem<String>(
-                                        //       value: value,
-                                        //       child: new Text(value),
-                                        //     );
-                                        //   }).toList(),
-                                        //   onChanged: (value) {
-                                        //     this.setState(() {
-                                        //       Text(value,
-                                        //           style: TextStyle(
-                                        //               fontSize: 18.0,
-                                        //               fontWeight: FontWeight.bold,
-                                        //               color: Colors.black54));
-                                        //       role = value;
-                                        //     });
-                                        //   },
-                                        // ),
-                                        // SizedBox(height: 20.0),
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ],
-                          );
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return new Text('  All keys are not held by housing.');
+                          }
                         }),
                   ],
                 ),
@@ -273,109 +290,40 @@ class HKeyListState extends State<HKeyList> {
     );
   }
 
-  void handlePressed(BuildContext context, DocumentSnapshot document) {
-    confirmDialog(context, document).then((bool value) async {
+  void retrieveHandlePressed(BuildContext context, DocumentSnapshot document) {
+    confirmRetrieveDialog(context).then((bool value) async {
       if (value) {
         Firestore.instance.runTransaction((transaction) async {
-          created = DateTime.now();
           DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction
-              .update(ds.reference, {'Date': created, 'Holder': "Security"});
-        });
-      }
-    });
-  }
 
-  void _handlePressed(BuildContext context, DocumentSnapshot document) {
-    _confirmDialog(context, document).then((bool value) async {
-      if (value) {
-        Firestore.instance.runTransaction((transaction) async {
-          created = DateTime.now();
-          DocumentSnapshot ds = await transaction.get(document.reference);
-          await transaction
-              .update(ds.reference, {'Date': created, 'Holder': "Housing"});
+          await transaction.update(ds.reference, {
+            'key_holder': 'Housing',
+            'holder_email': '0',
+            'holder_mobile': '0'
+          });
         });
       }
     });
   }
 }
 
-Future<bool> confirmDialog(BuildContext context, DocumentSnapshot document) {
-
-  void _showToast(BuildContext context, String message) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content:  Text(message),
-        action: SnackBarAction(
-            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
-  }
+Future<bool> confirmRetrieveDialog(BuildContext context) {
   return showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return new AlertDialog(
-          title: new Text(
-              "Assign Master Key of Building ${document['Name']} to Security Employee?"),
+          title: new Text("Retrieve key?"),
           actions: <Widget>[
             new FlatButton(
               child: Text("Yes"),
-              onPressed: () {Navigator.of(context).pop(true);
-              _showToast(context, "It is assigned!");
-              },
+              onPressed: () => Navigator.of(context).pop(true),
             ),
             new FlatButton(
               child: Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop(false);
-
-                _showToast(context, "No assignment!");
-              },
+              onPressed: () => Navigator.of(context).pop(false),
             ),
           ],
         );
       });
-}
-
-Future<bool> _confirmDialog(BuildContext context, DocumentSnapshot document) {
-
-  void _showToast(BuildContext context, String message) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
-      SnackBar(
-        content:  Text(message),
-        action: SnackBarAction(
-            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
-      ),
-    );
-  }
-
-  return showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return new AlertDialog(
-          title: new Text(
-              "Assign Master Key of Building ${document['Name']} to Housing Employee?"),
-          actions: <Widget>[
-            new FlatButton(
-              child: Text("Yes"),
-              onPressed: () { Navigator.of(context).pop(true);
-              _showToast(context, "It is assigned!");
-              },
-            ),
-            new FlatButton(
-              child: Text("No"),
-              onPressed: () {Navigator.of(context).pop(false);
-              _showToast(context, "No assignment!");
-
-              },
-            ),
-          ],
-        );
-      });
-
-
 }

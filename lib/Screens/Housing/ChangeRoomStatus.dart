@@ -22,7 +22,7 @@ class ChangeRoomStatus extends StatefulWidget {
 }
 
 class ChangeRoomStatusState extends State<ChangeRoomStatus> {
-  String roomStatus = 'Full';
+  String roomStatus = 'Unavailable';
 
   @override
   void initState() {

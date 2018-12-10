@@ -46,7 +46,7 @@ class ViewBuildingState extends State<ViewBuilding> {
                 Icons.arrow_back,
               ),
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/BuildingList');
+                Navigator.of(context).pop();
               },
             ),
             title: Text(

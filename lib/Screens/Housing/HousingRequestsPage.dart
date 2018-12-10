@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 class HousingRequestsPage extends StatefulWidget {
   @override
   RequestsPageState createState() => new RequestsPageState();
@@ -52,7 +51,6 @@ class RequestsPageState extends State<HousingRequestsPage> {
                         ),
                       ],
                     ),
-
                   ],
                 ),
               ),
@@ -127,8 +125,8 @@ class RequestsPageState extends State<HousingRequestsPage> {
                                     bottomLeft: Radius.circular(10.0)),
                               ),
                               onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed('/HSwapList');                              },
+                                Navigator.of(context).pushNamed('/HSwapList');
+                              },
                             ),
                           ),
                         );
@@ -528,15 +526,14 @@ class RequestsPageState extends State<HousingRequestsPage> {
                 title: new Text('Announcements'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/HAnnouncements');
-                }
-            ),
+                }),
             new ListTile(
                 leading: new Icon(Icons.pan_tool),
                 title: new Text('Complaints'),
                 onTap: () {
                   Navigator.of(context).pushNamed('/HComplaintsList');
                 }),
-                new ListTile(
+            new ListTile(
                 leading: new Icon(FontAwesomeIcons.fileSignature),
                 title: new Text('Inspections'),
                 onTap: () {
@@ -549,9 +546,9 @@ class RequestsPageState extends State<HousingRequestsPage> {
                   Navigator.of(context).pushNamed('/HBuildingList');
                 }),
             new ListTile(
-              leading: new Icon(Icons.vpn_key),
-              title: new Text('Room Keys'),
-              onTap: () {
+                leading: new Icon(Icons.vpn_key),
+                title: new Text('Master Keys'),
+                onTap: () {
                   Navigator.of(context).pushNamed('/HKeyList');
                 }),
             new ListTile(
