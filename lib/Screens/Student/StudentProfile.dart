@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'ViewRoom.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StudentProfile extends StatefulWidget {
   @override
@@ -11,12 +12,14 @@ class StudentProfile extends StatefulWidget {
   final String stuId;
   final String building;
   final String room;
+  final String roomStatus;
 
   //constructor
   StudentProfile({
     this.stuId,
     this.building,
     this.room,
+    this.roomStatus,
   });
 }
 
@@ -380,74 +383,217 @@ class StudentProfileState extends State<StudentProfile> {
                                 ),
                               ),
                               children: <Widget>[
-                                Container(
-                                  height: 30.0,
-                                  width: 98.0,
-                                  child: RaisedButton.icon(
-                                    onPressed: () {
-                                      if (uid == widget.stuId) {
-                                        final snackBar = SnackBar(
-                                          content: Text(
-                                            'Error, this profile belongs to your account!',
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                            ),
-                                          ),
-                                        );
-                                        // Find the Scaffold in the Widget tree and use it to show a SnackBar!
-                                        Scaffold.of(context)
-                                            .showSnackBar(snackBar);
-                                      } else {
-                                        confirmDialog(context)
-                                            .then((bool value) async {
-                                          if (value) {
-                                            swapCreated = DateTime.now();
-                                            await Firestore.instance
-                                                .collection('Requests')
-                                                .document('SwapRoom')
-                                                .collection('SwapRoom')
-                                                .document()
-                                                .setData({
-                                              'Sender': userEmail,
-                                              'Receiver': email,
-                                              'SenderUID': uid,
-                                              'ReceiverUID': widget.stuId,
-                                              'SenderPosition': userPosition,
-                                              'ReceiverPosition': stuPosition,
-                                              'Sent': swapCreated,
-                                              'ReceiverApproval': 'Pending',
-                                              'HousingApproval': 'Pending',
-                                              'SenderBuilding': userBuilding,
-                                              'SenderRoom': userRoom,
-                                              'ReceiverBuilding': stuBuilding,
-                                              'ReceiverRoom': stuRoom,
-                                            });
-
+                                Row(
+                                  children: <Widget>[
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+// Swap request
+                                    Container(
+                                      height: 30.0,
+                                      width: 98.0,
+                                      child: RaisedButton.icon(
+                                        onPressed: () {
+                                          if (uid == widget.stuId) {
                                             final snackBar = SnackBar(
                                               content: Text(
-                                                'Swap Request Created',
+                                                'Error, this profile belongs to your account!',
                                                 style: TextStyle(
-                                                  fontSize: 17.0,
+                                                  fontSize: 15.0,
                                                 ),
                                               ),
                                             );
-
                                             // Find the Scaffold in the Widget tree and use it to show a SnackBar!
                                             Scaffold.of(context)
                                                 .showSnackBar(snackBar);
+                                          } else if (userRoom == '0') {
+                                            final snackBar = SnackBar(
+                                              content: Text(
+                                                'Error, you have no room!',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            );
+                                            // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                            Scaffold.of(context)
+                                                .showSnackBar(snackBar);
+                                          } else if (widget.roomStatus ==
+                                              'Single') {
+                                            final snackBar = SnackBar(
+                                              content: Text(
+                                                'Error, this room status is single!',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            );
+                                            // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                            Scaffold.of(context)
+                                                .showSnackBar(snackBar);
+                                          } else {
+                                            confirmDialog(context)
+                                                .then((bool value) async {
+                                              if (value) {
+                                                swapCreated = DateTime.now();
+                                                await Firestore.instance
+                                                    .collection('Requests')
+                                                    .document('SwapRoom')
+                                                    .collection('SwapRoom')
+                                                    .document()
+                                                    .setData({
+                                                  'Sender': userEmail,
+                                                  'Receiver': email,
+                                                  'SenderUID': uid,
+                                                  'ReceiverUID': widget.stuId,
+                                                  'SenderPosition':
+                                                      userPosition,
+                                                  'ReceiverPosition':
+                                                      stuPosition,
+                                                  'Sent': swapCreated,
+                                                  'ReceiverApproval': 'Pending',
+                                                  'HousingApproval': 'Pending',
+                                                  'SenderBuilding':
+                                                      userBuilding,
+                                                  'SenderRoom': userRoom,
+                                                  'ReceiverBuilding':
+                                                      stuBuilding,
+                                                  'ReceiverRoom': stuRoom,
+                                                });
+
+                                                final snackBar = SnackBar(
+                                                  content: Text(
+                                                    'Swap Request Created',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                    ),
+                                                  ),
+                                                );
+
+                                                // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                                Scaffold.of(context)
+                                                    .showSnackBar(snackBar);
+                                              }
+                                            });
                                           }
-                                        });
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.swap_horiz,
-                                      color: Colors.black54,
+                                        },
+                                        icon: Icon(
+                                          Icons.swap_horiz,
+                                          color: Colors.black54,
+                                        ),
+                                        label: Text(
+                                          'Swap',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        ),
+                                      ),
                                     ),
-                                    label: Text(
-                                      'Swap',
-                                      style: TextStyle(color: Colors.black54),
+                                    SizedBox(
+                                      width: 30,
                                     ),
-                                  ),
+// Pairing request
+                                    Container(
+                                      height: 30.0,
+                                      width: 98.0,
+                                      child: RaisedButton.icon(
+                                        onPressed: () {
+                                          if (uid == widget.stuId) {
+                                            final snackBar = SnackBar(
+                                              content: Text(
+                                                'Error, this profile belongs to your account!',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            );
+                                            // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                            Scaffold.of(context)
+                                                .showSnackBar(snackBar);
+                                          } else if (widget.roomStatus ==
+                                              'Full') {
+                                            final snackBar = SnackBar(
+                                              content: Text(
+                                                'Error, this student already has a roommate!',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            );
+                                            // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                            Scaffold.of(context)
+                                                .showSnackBar(snackBar);
+                                          } else if (widget.roomStatus ==
+                                              'Single') {
+                                            final snackBar = SnackBar(
+                                              content: Text(
+                                                'Error, this room status is single!',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                ),
+                                              ),
+                                            );
+                                            // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                            Scaffold.of(context)
+                                                .showSnackBar(snackBar);
+                                          } else {
+                                            confirmDialog(context)
+                                                .then((bool value) async {
+                                              if (value) {
+                                                swapCreated = DateTime.now();
+                                                await Firestore.instance
+                                                    .collection('Requests')
+                                                    .document('Pairing')
+                                                    .collection(
+                                                        'PairingRequests')
+                                                    .document()
+                                                    .setData({
+                                                  'Sender': userEmail,
+                                                  'Receiver': email,
+                                                  'SenderUID': uid,
+                                                  'ReceiverUID': widget.stuId,
+                                                  'SenderPosition':
+                                                      userPosition,
+                                                  'ReceiverPosition':
+                                                      stuPosition,
+                                                  'ReceiverApproval': 'Pending',
+                                                  'HousingApproval': 'Pending',
+                                                  'SenderBuilding':
+                                                      userBuilding,
+                                                  'SenderRoom': userRoom,
+                                                  'ReceiverBuilding':
+                                                      stuBuilding,
+                                                  'ReceiverRoom': stuRoom,
+                                                });
+
+                                                final snackBar = SnackBar(
+                                                  content: Text(
+                                                    'Pairing Request Created',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                    ),
+                                                  ),
+                                                );
+
+                                                // Find the Scaffold in the Widget tree and use it to show a SnackBar!
+                                                Scaffold.of(context)
+                                                    .showSnackBar(snackBar);
+                                              }
+                                            });
+                                          }
+                                        },
+                                        icon: Icon(
+                                          FontAwesomeIcons.handshake,
+                                          size: 16,
+                                          color: Colors.black54,
+                                        ),
+                                        label: Text(
+                                          'Pairing',
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(
                                   height: 14,

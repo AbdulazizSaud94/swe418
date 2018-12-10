@@ -23,7 +23,7 @@ class PairingRequestState extends State<PairingRequest> {
 
   @override
   Widget build(BuildContext context) {
-    
+
     return new Scaffold(
       body: DefaultTabController(
         length: 3,
@@ -344,9 +344,9 @@ class PairingRequestState extends State<PairingRequest> {
         DocumentSnapshot ds = await transaction.get(document.reference);
         await transaction.update(ds.reference, {'HousingApproval': 'Declined'});
       });
-    } 
+    }
     if (check.contains('Approve')) {
-      
+
       Firestore.instance
       .collection('Users')
       .document(document['SenderUID'])
@@ -356,30 +356,58 @@ class PairingRequestState extends State<PairingRequest> {
         DocumentSnapshot ds = await transaction.get(document.reference);
         await transaction.update(ds.reference, {'HousingApproval': 'Approved'});
 
-                   if(document['SenderPosition']=='A'){
+                   if(document['ReceiverPosition']=='A'){
                      Firestore.instance
                   .collection('Room')
-                  .document('${document['senderBuilding']}-${document['senderRoom']}')
-                  .updateData({'Email1': document['Receiver'], 'UID1':document['ReceiverUID'],});
+                  .document('${document['ReceiverBuilding']}-${document['ReceiverRoom']}')
+                  .updateData({'Email2': document['Sender'], 'UID2':document['SenderUID'], 'room_status': 'Full'});
 
                       Firestore.instance
                   .collection('Users')
-                  .document(document['ReceiverUID'])
-                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'], 'Position': 'B','Status':'paired'});
+                  .document(document['SenderUID'])
+                  .updateData({'Building': document['ReceiverBuilding'], 'Room': document['ReceiverRoom'], 'Position': 'B','Status':'paired'});
+
+
+                      if(document['SenderRoom'] != '0'){
+                     if(document['SenderPosition']=='A'){
+                       Firestore.instance
+                           .collection('Room')
+                           .document('${document['SenderBuilding']}-${document['SenderRoom']}')
+                           .updateData({'Email1': '0', 'UID1':'0',  'room_status': 'Vacant'});
+                     }else{
+                       Firestore.instance
+                           .collection('Room')
+                           .document('${document['SenderBuilding']}-${document['SenderRoom']}')
+                           .updateData({'Email2': '0', 'UID2':'0', 'room_status': 'Vacant'});
+                     }}
+
+
                    }
                    else{
                      Firestore.instance
                   .collection('Room')
-                  .document('${document['senderBuilding']}-${document['senderRoom']}')
-                  .updateData({'Email1': document['Receiver'], 'UID1':document['ReceiverUID'],});
+                  .document('${document['ReceiverBuilding']}-${document['ReceiverRoom']}')
+                  .updateData({'Email1': document['Sender'], 'UID1':document['SenderUID'], 'room_status': 'Full'});
 
                   Firestore.instance
                   .collection('Users')
-                  .document(document['ReceiverUID'])
-                  .updateData({'Building': document['SenderBuilding'], 'Room': document['SenderRoom'],'Position': 'A','Status':'paired'});
-                   }
-                   
+                  .document(document['SenderUID'])
+                  .updateData({'Building': document['ReceiverBuilding'], 'Room': document['ReceiverRoom'],'Position': 'A','Status':'paired'});
 
+                  if(document['SenderRoom'] != '0'){
+                     if(document['SenderPosition']=='A'){
+                       Firestore.instance
+                           .collection('Room')
+                           .document('${document['SenderBuilding']}-${document['SenderRoom']}')
+                           .updateData({'Email1': '0', 'UID1':'0',  'room_status': 'Vacant'});
+                     }else{
+                       Firestore.instance
+                           .collection('Room')
+                           .document('${document['SenderBuilding']}-${document['SenderRoom']}')
+                           .updateData({'Email2': 'empty', 'UID2':'0', 'room_status': 'Vacant'});
+                     }
+                  }
+                   }
       });
     }
   }
