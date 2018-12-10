@@ -91,7 +91,7 @@ class RequestPairingState extends State<RequestPairing> {
                                     width: 50.0,
                                     child: new FlatButton(
                                       child: Icon(Icons.check),
-                                      textColor: Colors.blueAccent,
+                                      textColor: Colors.grey,
                                       onPressed: () {
                                         _handlePressed(context, document);
                                       },
@@ -102,7 +102,7 @@ class RequestPairingState extends State<RequestPairing> {
                                     alignment: Alignment(0.0, 0.0),
                                     child: new FlatButton(
                                       child: Icon(Icons.email),
-                                      textColor: Colors.blueAccent,
+                                      textColor: Colors.grey,
                                       onPressed: () {
                                         String email = document['Email'];
                                         String url = 'mailto:' +
@@ -177,7 +177,7 @@ class RequestPairingState extends State<RequestPairing> {
                                             width: 50.0,
                                             child: new FlatButton(
                                               child: Icon(Icons.email),
-                                              textColor: Colors.blueAccent,
+                                              textColor: Colors.grey,
                                               onPressed: () {
                                                 _handleReceived(
                                                     context, document, "email");
@@ -188,7 +188,7 @@ class RequestPairingState extends State<RequestPairing> {
                                             width: 50.0,
                                             child: new FlatButton(
                                               child: Icon(Icons.done),
-                                              textColor: Colors.blueAccent,
+                                              textColor: Colors.grey,
                                               onPressed: () {
                                                 _handleReceived(
                                                     context, document, "send");
