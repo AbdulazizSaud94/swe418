@@ -550,7 +550,7 @@ class RequestsPageState extends State<HousingRequestsPage> {
                 }),
             new ListTile(
               leading: new Icon(Icons.vpn_key),
-              title: new Text('Room Keys'),
+              title: new Text('Master Keys'),
               onTap: () {
                   Navigator.of(context).pushNamed('/HKeyList');
                 }),

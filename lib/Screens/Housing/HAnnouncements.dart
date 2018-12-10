@@ -64,6 +64,12 @@ class HAnnouncementsState extends State<HAnnouncements> {
             title: Text(
               'Announcements',
             ),
+            leading: new IconButton(
+              icon: new Icon(
+                Icons.arrow_back,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
           body: TabBarView(
             children: [
@@ -204,70 +210,6 @@ class HAnnouncementsState extends State<HAnnouncements> {
                 ),
               ),
             ],
-          ),
-          //Drawer
-          drawer: new Drawer(
-            child: new ListView(
-              children: <Widget>[
-                new Container(
-                  height: 120.0,
-                  child: new DrawerHeader(
-                    padding: new EdgeInsets.all(0.0),
-                    decoration: new BoxDecoration(
-                      color: new Color(0xFFECEFF1),
-                    ),
-                    child: new Center(
-                      child: new FlutterLogo(
-                        colors: Colors.lightGreen,
-                        size: 54.0,
-                      ),
-                    ),
-                  ),
-                ),
-                new Divider(),
-                new ListTile(
-                    leading: new Icon(FontAwesomeIcons.externalLinkAlt),
-                    title: new Text('Requests'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/HousingPage');
-                    }),
-                new ListTile(
-                    leading: new Icon(Icons.pan_tool),
-                    title: new Text('Complaints'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/HComplaintsList');
-                    }),
-                new ListTile(
-                    leading: new Icon(FontAwesomeIcons.fileSignature),
-                    title: new Text('Inspections'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/InspectionForm');
-                    }),
-                new ListTile(
-                    leading: new Icon(FontAwesomeIcons.building),
-                    title: new Text('Building List'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/BuildingList');
-                    }),
-                new ListTile(
-                    leading: new Icon(Icons.vpn_key),
-                    title: new Text('Room Keys'),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/HKeyList');
-                    }),
-                new ListTile(
-                    leading: new Icon(FontAwesomeIcons.signOutAlt),
-                    title: new Text('Sign Out'),
-                    onTap: () {
-                      FirebaseAuth.instance.signOut().then((value) {
-                        Navigator.of(context)
-                            .pushReplacementNamed('/LoginPage');
-                      }).catchError((e) {
-                        print(e);
-                      });
-                    }),
-              ],
-            ),
           ),
         ),
       ),
