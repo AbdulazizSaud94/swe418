@@ -139,8 +139,10 @@ class AddUserPageState extends State<AddUserPage> {
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.black54)),
-                items: <String>['Student', 'Housing',]
-                    .map((String value) {
+                items: <String>[
+                  'Student',
+                  'Housing',
+                ].map((String value) {
                   return new DropdownMenuItem<String>(
                     value: value,
                     child: new Text(value),
@@ -194,10 +196,24 @@ class AddUserPageState extends State<AddUserPage> {
                           Firestore.instance
                               .collection('Users')
                               .document(user.uid)
-                              .setData(
-                                  {'Email': email, 'Avatar': 'https://firebasestorage.googleapis.com/v0/b/swe418-483b9.appspot.com/o/Avatars%2Fdefault.png?alt=media&token=da415113-0c8c-4fb7-b65e-23a41bb201bd','Name': name, 'Role': role, 'Major': 'Not Specified', 'City': 'Dhahran'
-                                    , 'GraduationTerm': 'Not Specified', 'Smoking': 'Not Specified', 'Mobile': 'Not Specified',
-                                  'IntrestsHobbies': 'Not Specified', 'Dislikes': 'Not Specified', 'Status':'Not Specified', 'Room':'0', 'Building': '0', 'Position': '0'});
+                              .setData({
+                            'Email': email,
+                            'Avatar':
+                                'https://firebasestorage.googleapis.com/v0/b/swe418-483b9.appspot.com/o/Avatars%2Fdefault.png?alt=media&token=da415113-0c8c-4fb7-b65e-23a41bb201bd',
+                            'Name': name,
+                            'Role': role,
+                            'Major': 'Not Specified',
+                            'City': 'Dhahran',
+                            'GraduationTerm': 'Not Specified',
+                            'Smoking': 'Not Specified',
+                            'Mobile': 'Not Specified',
+                            'IntrestsHobbies': 'Not Specified',
+                            'Dislikes': 'Not Specified',
+                            'Status': 'single',
+                            'Room': '0',
+                            'Building': '0',
+                            'Position': '0',
+                          });
                           Navigator.of(context)
                               .pushReplacementNamed('/AdminTabs');
                         }
@@ -211,4 +227,3 @@ class AddUserPageState extends State<AddUserPage> {
     );
   }
 }
-
