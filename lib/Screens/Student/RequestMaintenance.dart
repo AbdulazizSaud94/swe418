@@ -142,7 +142,7 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                         stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!bol)
+                          if (!snapshot.hasData)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
