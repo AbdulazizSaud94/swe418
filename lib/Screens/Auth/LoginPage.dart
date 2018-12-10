@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   LoginPageSate createState() => new LoginPageSate();
@@ -53,12 +52,13 @@ class LoginPageSate extends State<LoginPage> {
                   top: 175,
                   left: 295,
                   child: Container(
-                  width: 48,
-                  height: 45,
-                  child: Image.asset('assets/images/newIcon.png',
+                    width: 48,
+                    height: 45,
+                    child: Image.asset(
+                      'assets/images/newIcon.png',
+                    ),
                   ),
-                ),),
-
+                ),
               ],
             ),
           ),
@@ -74,7 +74,11 @@ class LoginPageSate extends State<LoginPage> {
                         validator: (value) {
                           if (value.isEmpty) {
                             // The form is empty
-                            return "Field can\'t be empty";
+                            return "Email field can\'t be empty";
+                          }
+                          if (value.length > 64) {
+                            // The form is empty
+                            return "Email isddd not valid";
                           }
                           // This is just a regular expression for email addresses
                           String p = "[a-zA-Z0-9\+\.\_\%\-\+]{1,256}" +
@@ -96,7 +100,6 @@ class LoginPageSate extends State<LoginPage> {
                         },
                         keyboardType: TextInputType.emailAddress,
                         onSaved: (value) => email = value,
-                        maxLength: 64,
                         decoration: InputDecoration(
                           labelText: 'User Email',
                           labelStyle: TextStyle(
@@ -113,11 +116,17 @@ class LoginPageSate extends State<LoginPage> {
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        validator: (value) => value.isEmpty
-                            ? 'Password field can\'t be empty'
-                            : null,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            // The form is empty
+                            return "Password field can\'t be empty";
+                          }
+                          if (value.length > 64) {
+                            // The form is empty
+                            return "Password is not valid";
+                          }
+                        },
                         onSaved: (value) => password = value,
-                        maxLength: 64,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
@@ -232,7 +241,8 @@ class LoginPageSate extends State<LoginPage> {
 }
 
 _launchEmail() async {
-  String url = 'mailto:admin@admin.com?subject=Forgot%20Password&body=User%20Email:';
+  String url =
+      'mailto:admin@admin.com?subject=Forgot%20Password&body=User%20Email:';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
