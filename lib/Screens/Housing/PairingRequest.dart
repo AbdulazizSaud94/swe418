@@ -367,6 +367,8 @@ class PairingRequestState extends State<PairingRequest> {
                   .document(document['SenderUID'])
                   .updateData({'Building': document['ReceiverBuilding'], 'Room': document['ReceiverRoom'], 'Position': 'B','Status':'paired'});
 
+
+                      if(document['SenderRoom'] != '0'){
                      if(document['SenderPosition']=='A'){
                        Firestore.instance
                            .collection('Room')
@@ -377,7 +379,7 @@ class PairingRequestState extends State<PairingRequest> {
                            .collection('Room')
                            .document('${document['SenderBuilding']}-${document['SenderRoom']}')
                            .updateData({'Email2': '0', 'UID2':'0', 'room_status': 'Vacant'});
-                     }
+                     }}
 
 
                    }
@@ -392,6 +394,7 @@ class PairingRequestState extends State<PairingRequest> {
                   .document(document['SenderUID'])
                   .updateData({'Building': document['ReceiverBuilding'], 'Room': document['ReceiverRoom'],'Position': 'A','Status':'paired'});
 
+                  if(document['SenderRoom'] != '0'){
                      if(document['SenderPosition']=='A'){
                        Firestore.instance
                            .collection('Room')
@@ -403,6 +406,7 @@ class PairingRequestState extends State<PairingRequest> {
                            .document('${document['SenderBuilding']}-${document['SenderRoom']}')
                            .updateData({'Email2': 'empty', 'UID2':'0', 'room_status': 'Vacant'});
                      }
+                  }
                    }
       });
     }
