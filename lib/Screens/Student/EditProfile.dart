@@ -69,7 +69,6 @@ class EditProfileState extends State<EditProfile> {
           setState(() {
             newSmoking = data['Smoking'];
             newCity = data['City'];
-
           });
         }
       });
@@ -327,42 +326,44 @@ class EditProfileState extends State<EditProfile> {
                     onPressed: () async {
                       if (validateAndSave()) {
                         confirmDialog(context).then((bool value) async {
-                          if (newCity == null) {
-                            await Firestore.instance
-                                .collection('Users')
-                                .document(widget.uid)
-                                .updateData({
-                              'Name': newName,
-                              'Email': widget.email,
-                              'Role': 'Student',
-                              'Mobile': newMobile,
-                              'Major': newMajor,
-                              'City': widget.city,
-                              'GraduationTerm': newGraduationTerm,
-                              'Smoking': newSmoking,
-                              'IntrestsHobbies': newIntrestsHobbies,
-                              'Dislikes': newDislike
-                            });
-                          } else {
-                            await Firestore.instance
-                                .collection('Users')
-                                .document(widget.uid)
-                                .updateData({
-                              'Name': newName,
-                              'Email': widget.email,
-                              'Role': 'Student',
-                              'Mobile': newMobile,
-                              'Major': newMajor,
-                              'City': newCity,
-                              'GraduationTerm': newGraduationTerm,
-                              'Smoking': newSmoking,
-                              'IntrestsHobbies': newIntrestsHobbies,
-                              'Dislikes': newDislike
-                            });
-                          }
+                          if (value) {
+                            if (newCity == null) {
+                              await Firestore.instance
+                                  .collection('Users')
+                                  .document(widget.uid)
+                                  .updateData({
+                                'Name': newName,
+                                'Email': widget.email,
+                                'Role': 'Student',
+                                'Mobile': newMobile,
+                                'Major': newMajor,
+                                'City': widget.city,
+                                'GraduationTerm': newGraduationTerm,
+                                'Smoking': newSmoking,
+                                'IntrestsHobbies': newIntrestsHobbies,
+                                'Dislikes': newDislike
+                              });
+                            } else {
+                              await Firestore.instance
+                                  .collection('Users')
+                                  .document(widget.uid)
+                                  .updateData({
+                                'Name': newName,
+                                'Email': widget.email,
+                                'Role': 'Student',
+                                'Mobile': newMobile,
+                                'Major': newMajor,
+                                'City': newCity,
+                                'GraduationTerm': newGraduationTerm,
+                                'Smoking': newSmoking,
+                                'IntrestsHobbies': newIntrestsHobbies,
+                                'Dislikes': newDislike
+                              });
+                            }
 
-                          Navigator.of(context)
-                              .pushReplacementNamed('/ProfilePage');
+                            Navigator.of(context)
+                                .pushReplacementNamed('/ProfilePage');
+                          }
                         });
                       }
                     }),

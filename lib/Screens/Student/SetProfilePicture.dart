@@ -68,8 +68,8 @@ class SetProfilePictureState extends State<SetProfilePicture> {
               Center(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(300, 0, 300, 0),
-                  width: 150.0,
-                  height: 150.0,
+                  width: 165.0,
+                  height: 155.0,
                   decoration: BoxDecoration(
                       color: Colors.blueGrey,
                       image: DecorationImage(
