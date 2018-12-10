@@ -191,7 +191,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                         stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData && !bol)
+                          if (!snapshot.hasData)
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
