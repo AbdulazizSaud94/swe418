@@ -373,12 +373,12 @@ class PairingRequestState extends State<PairingRequest> {
                        Firestore.instance
                            .collection('Room')
                            .document('${document['SenderBuilding']}-${document['SenderRoom']}')
-                           .updateData({'Email1': '0', 'UID1':'0',  'room_status': 'Vacant'});
+                           .updateData({'Email1': 'empty', 'UID1':'0',  'room_status': 'Vacant'});
                      }else{
                        Firestore.instance
                            .collection('Room')
                            .document('${document['SenderBuilding']}-${document['SenderRoom']}')
-                           .updateData({'Email2': '0', 'UID2':'0', 'room_status': 'Vacant'});
+                           .updateData({'Email2': 'empty', 'UID2':'0', 'room_status': 'Vacant'});
                      }}
 
 
@@ -399,7 +399,7 @@ class PairingRequestState extends State<PairingRequest> {
                        Firestore.instance
                            .collection('Room')
                            .document('${document['SenderBuilding']}-${document['SenderRoom']}')
-                           .updateData({'Email1': '0', 'UID1':'0',  'room_status': 'Vacant'});
+                           .updateData({'Email1': 'empty', 'UID1':'0',  'room_status': 'Vacant'});
                      }else{
                        Firestore.instance
                            .collection('Room')
