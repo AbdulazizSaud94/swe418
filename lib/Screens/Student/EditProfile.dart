@@ -68,6 +68,7 @@ class EditProfileState extends State<EditProfile> {
         if (data.exists) {
           setState(() {
             newSmoking = data['Smoking'];
+            newCity = data['City'];
 
           });
         }
