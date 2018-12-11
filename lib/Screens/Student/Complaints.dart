@@ -68,12 +68,14 @@ class ComplaintsState extends State<Complaints> {
       'Attachment': '${uid}_${created}',
     });
 
+    Navigator.of(context).pushReplacementNamed('/Complaints');
+
+
     _showToast(context, "Request is generated successfully!");
     final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
 
-    Navigator.of(context).pop();
   }
 
   void _showToast(BuildContext context, String message) {
@@ -216,7 +218,7 @@ class ComplaintsState extends State<Complaints> {
                         width: 70,
                         child: FlatButton(
                           child: Icon(
-                            Icons.add_a_photo,
+                            Icons.attach_file,
                             size: 35,
                           ),
                           textColor: Colors.grey,
@@ -225,7 +227,11 @@ class ComplaintsState extends State<Complaints> {
                           },
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      Container(
+                        padding: EdgeInsets.only(left: 110),
+                        child: uploaded(),
+                      ),
+                      SizedBox(height: 45.0),
                       Container(
                         height: 50.0,
                         width: 130.0,
@@ -264,6 +270,12 @@ class ComplaintsState extends State<Complaints> {
         validateAndSubmit();
       }
     });
+  }
+  Widget uploaded() {
+    if (_image == null) {
+      return Text('no attachment');
+    }
+    return Text('attachment added');
   }
 }
 

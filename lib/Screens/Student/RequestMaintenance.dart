@@ -299,7 +299,12 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
                           },
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      SizedBox(height: 5.0),
+                      Container(
+                        padding: EdgeInsets.only(left: 115),
+                        child: uploaded(),
+                      ),
+                      SizedBox(height: 40.0),
                       Container(
                         height: 45.0,
                         padding: EdgeInsets.only(left: 70.0, right: 70.0),
@@ -339,6 +344,13 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
         Navigator.of(context).pushReplacementNamed('/RequestMaintenance');
       }
     });
+  }
+
+  Widget uploaded() {
+    if (_image == null) {
+      return Text('no attachment');
+    }
+    return Text('image attached');
   }
 }
 
