@@ -71,7 +71,6 @@ class ComplaintsState extends State<Complaints> {
     Navigator.of(context).pushReplacementNamed('/Complaints');
 
 
-    _showToast(context, "Request is generated successfully!");
     final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
