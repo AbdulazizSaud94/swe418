@@ -347,7 +347,6 @@ class RequestMaintenanceState extends State<RequestMaintenance> {
   }
 
   Widget uploaded() {
-    print('\n\n\n  image: $_image');
     if (_image == null) {
       return Text('no attachment');
     }
