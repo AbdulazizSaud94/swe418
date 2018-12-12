@@ -157,7 +157,7 @@ class RoomContractState extends State<RoomContract> {
                                   Container(
                                       padding: EdgeInsets.only(top: 150.0)),
                                   Text(
-                                    'Contract Duo:$contract',
+                                    'Contract Due:$contract',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16.0),
