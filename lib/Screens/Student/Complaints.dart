@@ -176,7 +176,7 @@ class ComplaintsState extends State<Complaints> {
                                       Row(
                                         children: <Widget>[
                                           Text(
-                                              '   Created: ${document['Created'].toString()}\n   Resoved: ${document['Resolved'].toString()}'),
+                                              '   Created: ${document['Created'].toString()}\n   Resolved: ${document['Resolved'].toString()}'),
                                         ],
                                       ),
 
