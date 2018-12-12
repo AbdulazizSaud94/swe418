@@ -126,7 +126,7 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
                         stream: stream,
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!bol && !snapshot.hasData) {
+                          if (!snapshot.hasData) {
                             return new Center(
                               child: new CircularProgressIndicator(),
                             );
