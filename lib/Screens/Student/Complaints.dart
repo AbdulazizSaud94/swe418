@@ -66,15 +66,15 @@ class ComplaintsState extends State<Complaints> {
       'Created': created,
       'UID': uid,
       'Attachment': '${uid}_${created}',
+      'Resolved': 'Not yet',
+      'Feedback': 'Not yet',
     });
 
     Navigator.of(context).pushReplacementNamed('/Complaints');
 
-
     final StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('Complaints/${uid}_${created}');
     final StorageUploadTask task = firebaseStorageRef.putFile(_image);
-
   }
 
   void _showToast(BuildContext context, String message) {
@@ -152,13 +152,49 @@ class ComplaintsState extends State<Complaints> {
                                   shrinkWrap: true,
                                   children: snapshot.data.documents
                                       .map((DocumentSnapshot document) {
-                                    return new ListTile(
+                                    return new ExpansionTile(
                                       title: new Text(
-                                          'Title: ${document['Title']}'),
-                                      subtitle: new Text(
-                                          //'Status: ${document['Status']}'),
-                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
-                                      onTap: () {}, // view user detaild TODO
+                                          'Title: ${document['Title']}\nStatus: ${document['Status']}'),
+                                      trailing:  new Container(
+                                        width: 50.0,
+                                        child: new FlatButton(
+                                          child: Icon(Icons.delete_forever),
+                                          textColor: Colors.grey,
+                                          onPressed: () {
+                                            confirmDelete(context).then((bool value) async {
+                                              if(value){
+                                                Firestore.instance.runTransaction((transaction) async {
+                                                  DocumentSnapshot ds = await transaction.get(document.reference);
+                                                  await transaction.delete(ds.reference);
+                                                });
+                                              }
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Text(
+                                              '   Created: ${document['Created'].toString()}\n   Resoved: ${document['Resolved'].toString()}'),
+                                        ],
+                                      ),
+
+                                        Row(
+                                          children: <Widget>[
+                                            Text('\n   Feeadback: ',style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),),
+                                            Text('\n ${document['Feedback']}'
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 15,),
+                                      ],
+//                                      subtitle: new Text(
+//                                          //'Status: ${document['Status']}'),
+//                                          'Created: ${document['Created'].toString()}\n Status: ${document['Status']}'),
+//                                      onTap: () {}, // view user detaild TODO
                                     );
                                   }).toList(),
                                 ),
@@ -270,6 +306,7 @@ class ComplaintsState extends State<Complaints> {
       }
     });
   }
+
   Widget uploaded() {
     if (_image == null) {
       return Text('no attachment');
@@ -297,4 +334,28 @@ Future<bool> confirmDialog(BuildContext context) {
           ],
         );
       });
+}
+
+Future<bool> confirmDelete(BuildContext context){
+  return showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text("Delete complaint?"),
+          actions: <Widget>[
+            new FlatButton(
+              child: Text("Yes"),
+              onPressed:() => Navigator.of(context).pop(true),
+            ),
+            new FlatButton(
+              child: Text("No"),
+              onPressed:() => Navigator.of(context).pop(false),
+            ),
+          ],
+        );
+      }
+
+  );
+
 }

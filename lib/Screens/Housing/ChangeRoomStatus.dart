@@ -100,6 +100,21 @@ class ChangeRoomStatusState extends State<ChangeRoomStatus> {
           Row(
             children: <Widget>[
               Radio(
+                value: 'Available',
+                groupValue: roomStatus,
+                onChanged: (String val) => valueRadio(val),
+              ),
+              Text(
+                'Available',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Radio(
                 value: 'Single',
                 groupValue: roomStatus,
                 onChanged: (String val) => valueRadio(val),
@@ -195,7 +210,9 @@ class ChangeRoomStatusState extends State<ChangeRoomStatus> {
         roomStatus = 'Full';
       } else if (val == 'Vacant') {
         roomStatus = 'Vacant';
-      } else {
+      } else if (val == 'Available') {
+        roomStatus = 'Available';
+      }else {
         roomStatus = 'Single';
       }
     });
