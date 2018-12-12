@@ -65,6 +65,7 @@ flutter:
   #  - images/a_dot_ham.jpeg
     - assets/images/BuldingLayout.jpg
     - assets/images/newIcon.png
+    - assets/images/System Logo.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -510,13 +510,10 @@ class RequestsPageState extends State<HousingRequestsPage> {
               child: new DrawerHeader(
                 padding: new EdgeInsets.all(0.0),
                 decoration: new BoxDecoration(
-                  color: new Color(0xFFECEFF1),
+                  color: Colors.white30,
                 ),
                 child: new Center(
-                  child: new FlutterLogo(
-                    colors: Colors.lightGreen,
-                    size: 54.0,
-                  ),
+                  child: Image.asset('assets/images/System Logo.png',width: 260,),
                 ),
               ),
             ),
