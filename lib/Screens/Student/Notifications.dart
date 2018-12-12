@@ -48,7 +48,7 @@ class NotificationPage extends StatelessWidget {
                       width: 50.0,
                       child: new FlatButton(
                         child: Icon(Icons.notifications),
-                        textColor: Colors.blueAccent,
+                        textColor: Colors.grey,
                         onPressed: () {},
                       ),
                     ),

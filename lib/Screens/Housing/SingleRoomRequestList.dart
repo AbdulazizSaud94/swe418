@@ -101,7 +101,7 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                                               width: 50.0,
                                               child: new FlatButton(
                                                 child: Icon(Icons.done),
-                                                textColor: Colors.blueAccent,
+                                                textColor: Colors.grey,
                                                 onPressed: () {
                                                   _approvePressed(
                                                       context, document);
@@ -112,7 +112,7 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                                               width: 50.0,
                                               child: new FlatButton(
                                                 child: Icon(Icons.remove),
-                                                textColor: Colors.blueAccent,
+                                                textColor: Colors.grey,
                                                 onPressed: () {
                                                   _declinePressed(
                                                       context, document);
@@ -123,7 +123,7 @@ class SingleRoomRequestListState extends State<SingleRoomRequestList> {
                                               width: 50.0,
                                               child: new FlatButton(
                                                 child: Icon(Icons.attachment),
-                                                textColor: Colors.blueAccent,
+                                                textColor: Colors.grey,
                                                 onPressed: () {
                                                   _launchURL(context, document);
                                                 },
