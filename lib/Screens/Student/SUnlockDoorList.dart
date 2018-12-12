@@ -90,6 +90,7 @@ class UnlockDoorListState extends State<SUnlockDoorList> {
       body: DefaultTabController(
         length: 3,
         child: Scaffold(
+          resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
