@@ -256,6 +256,10 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
                           getImage();
                         },
                       ),
+                      Container(
+                        padding: EdgeInsets.only(left: 110),
+                        child: uploaded(),
+                      ),
                       SizedBox(height: 20.0),
                       Container(
                         height: 50.0,
@@ -286,5 +290,12 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
         ),
       ),
     );
+  }
+
+  Widget uploaded() {
+    if (_image == null) {
+      return Text('no attachment');
+    }
+    return Text('attachment added');
   }
 }
