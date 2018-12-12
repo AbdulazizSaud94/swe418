@@ -155,6 +155,7 @@ class SingleRoomRequestPageState extends State<SingleRoomRequestPage> {
       body: DefaultTabController(
         length: 3,
         child: Scaffold(
+          resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             bottom: TabBar(
               tabs: [
