@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'HComplaint.dart';
 
 class HComplaintsList extends StatefulWidget {
   HComplaintsListState createState() => new HComplaintsListState();
@@ -61,6 +62,7 @@ class HComplaintsListState extends State<HComplaintsList> {
               );
             if (snapshot.data.documents.isNotEmpty) {
               return new ListView(shrinkWrap: true, children: <Widget>[
+                SizedBox(height: 15,),
               new ListView(
                 shrinkWrap: true,
                 children:
@@ -79,19 +81,36 @@ class HComplaintsListState extends State<HComplaintsList> {
                         new Container(
                           width: 50.0,
                           child: new FlatButton(
-                            child: Icon(FontAwesomeIcons.angleDoubleRight),
+                            child: Icon(Icons.attachment),
+                            textColor: Colors.grey,
                             onPressed: () {
-                              _handlePressed(context, document);
+                              _launchURL(context, document);
                             },
                           ),
                         ),
                         new Container(
                           width: 50.0,
                           child: new FlatButton(
-                            child: Icon(Icons.attachment),
-                            textColor: Colors.grey,
+                            child: Icon(FontAwesomeIcons.angleDoubleRight),
                             onPressed: () {
-                              _launchURL(context, document);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      HComplaint(
+                                        senderID:
+                                        '${document['UID']}',
+                                        sent:
+                                        '${document['Created']}',
+                                        details:
+                                        '${document['Details']}',
+                                        title:
+                                        '${document['Title']}',
+                                        complaintID:
+                                        document.documentID,
+                                      ),
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -101,7 +120,7 @@ class HComplaintsListState extends State<HComplaintsList> {
                 }).toList(),
               ),
             ]);}else {
-              return new Text(' No Complaints Found');
+              return new Text(' \n No Complaints Found');
             }
           }),
     );
@@ -117,31 +136,31 @@ class HComplaintsListState extends State<HComplaintsList> {
   }
  }
 
-  void _handlePressed(BuildContext context, DocumentSnapshot document) {
-    confirmDialog(context).then((bool value) async {
-      if (value) {
-        Firestore.instance.runTransaction((transaction) async {
-          DocumentSnapshot ds = await transaction.get(document.reference);
-          var token ;
-          await Firestore.instance.collection("Users").document(document['UID'])
-              .get().then((data){
-            token = data.data['token'];
-          });
-          await Firestore.instance.collection("Notifications").add({
-            "date": new DateTime.now(),
-            "message":"Your complaint is processed!",
-            "title": "Complaint .",
-            "sender": "Housing department",
-            "to_token": token,
-            "reciever": document['UID']
-          });
-
-          await transaction.update(ds.reference, {'Status' : 'Done'});
-          _showToast(context, "Data is change to done successfully!");
-        });
-      }
-    });
-  }
+//  void _handlePressed(BuildContext context, DocumentSnapshot document) {
+//    confirmDialog(context).then((bool value) async {
+//      if (value) {
+//        Firestore.instance.runTransaction((transaction) async {
+//          DocumentSnapshot ds = await transaction.get(document.reference);
+//          var token ;
+//          await Firestore.instance.collection("Users").document(document['UID'])
+//              .get().then((data){
+//            token = data.data['token'];
+//          });
+//          await Firestore.instance.collection("Notifications").add({
+//            "date": new DateTime.now(),
+//            "message":"Your complaint is processed!",
+//            "title": "Complaint .",
+//            "sender": "Housing department",
+//            "to_token": token,
+//            "reciever": document['UID']
+//          });
+//
+//          await transaction.update(ds.reference, {'Status' : 'Done'});
+//          _showToast(context, "Data is change to done successfully!");
+//        });
+//      }
+//    });
+//  }
 }
 
 Future<bool> confirmDialog(BuildContext context) {

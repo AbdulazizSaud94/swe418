@@ -28,7 +28,7 @@ class UsersList extends StatelessWidget {
                     width: 50.0,
                     child: new FlatButton(
                       child: Icon(Icons.delete_forever),
-                      textColor: Colors.blueAccent, 
+                      textColor: Colors.grey,
                         onPressed: () {_handlePressed(context, document);},
                     ),
                   ),
@@ -38,7 +38,7 @@ class UsersList extends StatelessWidget {
                     alignment: Alignment(0.0, 0.0),
                     child: new FlatButton(
                       child: Icon(Icons.edit),
-                      textColor: Colors.blueAccent, 
+                      textColor: Colors.grey,
                         onPressed: () {
                           Navigator.pop(context);
                           Navigator.push(context, MaterialPageRoute(
