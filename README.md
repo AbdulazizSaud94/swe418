@@ -2,7 +2,5 @@
 
 A new Flutter project.
 
-## Getting Started
-
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+## KFUPM Students Housing System
+The objective of this project is to develop KFUPM Housing Management System. The system is implemented as a mobile application that runs on both IOS and Andriod natively using Flutter.
